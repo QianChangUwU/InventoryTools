@@ -169,19 +169,45 @@ jobs:
 
       - name: Package plugin
         run: |
-          # DalamudPackager 在构建时已自动生成完整的 latest.zip，
-          # 包含所有依赖 DLL、图片、CHANGELOG、运行时文件等。
-          # 路径: InventoryTools\bin\Release\InventoryTools\latest.zip
-          $packagedZip = "InventoryTools\bin\Release\InventoryTools\latest.zip"
-          if (-not (Test-Path $packagedZip)) {
-            Write-Error "DalamudPackager 未生成 latest.zip，请检查构建配置"
-            exit 1
+          $binPath = "InventoryTools\bin\Release"
+          $staging = "staging"
+          # 清理并创建暂存目录
+          if (Test-Path $staging) { Remove-Item $staging -Recurse -Force }
+          New-Item -ItemType Directory -Path $staging | Out-Null
+
+          # ── 1. 复制所有 DLL（插件本体 + 全部依赖）──
+          Get-ChildItem "$binPath\*.dll" | Copy-Item -Destination $staging
+
+          # ── 2. 复制插件清单和依赖描述 ──
+          Copy-Item "$binPath\InventoryTools.json" $staging
+          Copy-Item "$binPath\InventoryTools.deps.json" $staging
+
+          # ── 3. 复制 CHANGELOG.md（插件运行时读取）──
+          if (Test-Path "$binPath\CHANGELOG.md") {
+            Copy-Item "$binPath\CHANGELOG.md" $staging
           }
+
+          # ── 4. 复制运行时本机依赖 ──
+          if (Test-Path "$binPath\runtimes") {
+            Copy-Item "$binPath\runtimes" "$staging\runtimes" -Recurse
+          }
+
+          # ── 5. 复制运行时需要的图片（排除截图和 banner，它们仅通过 URL 引用）──
+          $excludeImages = @('screenshot1.png','screenshot2.png','screenshot3.png','screenshot4.png','screenshot5.png','banner1.png')
+          if (Test-Path "$binPath\Images") {
+            New-Item -ItemType Directory -Path "$staging\Images" -Force | Out-Null
+            Get-ChildItem "$binPath\Images\*.png" | Where-Object { $_.Name -notin $excludeImages } | Copy-Item -Destination "$staging\Images"
+          }
+
+          # ── 6. 打包 ──
           mkdir -Force release
-          # 复制 DalamudPackager 生成的完整包作为 latest.zip
-          Copy-Item $packagedZip "release\latest.zip" -Force
-          # 同时创建带版本号的副本
+          Compress-Archive -Path "$staging\*" -DestinationPath "release\latest.zip" -Force
           Copy-Item "release\latest.zip" "release\InventoryTools-${env:FULL_VERSION}.zip"
+
+          # 显示打包结果
+          Write-Host "===== 打包内容 ====="
+          Get-ChildItem $staging -Recurse | Select-Object @{N='File';E={$_.FullName.Replace("$PWD\$staging\","")}}, Length | Format-Table -AutoSize
+          Write-Host "===== Release 文件 ====="
           Get-ChildItem release\ | Format-Table Name, Length
 
       - name: Generate checksums
