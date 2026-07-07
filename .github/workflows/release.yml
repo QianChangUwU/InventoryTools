@@ -169,28 +169,18 @@ jobs:
 
       - name: Package plugin
         run: |
-          $binPath = "InventoryTools\bin\Release"
+          # DalamudPackager 在构建时已自动生成完整的 latest.zip，
+          # 包含所有依赖 DLL、图片、CHANGELOG、运行时文件等。
+          # 路径: InventoryTools\bin\Release\InventoryTools\latest.zip
+          $packagedZip = "InventoryTools\bin\Release\InventoryTools\latest.zip"
+          if (-not (Test-Path $packagedZip)) {
+            Write-Error "DalamudPackager 未生成 latest.zip，请检查构建配置"
+            exit 1
+          }
           mkdir -Force release
-          # Copy main plugin files (dll, json, deps.json)
-          $files = @(
-            "$binPath\InventoryTools.dll",
-            "$binPath\InventoryTools.json",
-            "$binPath\InventoryTools.deps.json"
-          )
-          foreach ($f in $files) {
-            if (Test-Path $f) { Copy-Item $f "release\" }
-          }
-          # Copy Images folder if it exists in output
-          if (Test-Path "$binPath\Images") {
-            Copy-Item "$binPath\Images" "release\Images" -Recurse -Force
-          }
-          # Copy CHANGELOG.md if it exists in output
-          if (Test-Path "$binPath\CHANGELOG.md") {
-            Copy-Item "$binPath\CHANGELOG.md" "release\CHANGELOG.md"
-          }
-          # Create latest.zip (for Dalamud plugin master)
-          Compress-Archive -Path "release\*" -DestinationPath "release\latest.zip" -Force
-          # Also create a versioned zip for the release assets
+          # 复制 DalamudPackager 生成的完整包作为 latest.zip
+          Copy-Item $packagedZip "release\latest.zip" -Force
+          # 同时创建带版本号的副本
           Copy-Item "release\latest.zip" "release\InventoryTools-${env:FULL_VERSION}.zip"
           Get-ChildItem release\ | Format-Table Name, Length
 
