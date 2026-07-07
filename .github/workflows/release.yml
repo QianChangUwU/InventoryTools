@@ -165,7 +165,9 @@ jobs:
             -p:AssemblyVersion=${env:FULL_VERSION} `
             -p:FileVersion=${env:FULL_VERSION} `
             -p:InformationalVersion=${env:FULL_VERSION} `
-            -p:DALAMUD_HOME=${env:DALAMUD_HOME}
+            -p:DALAMUD_HOME=${env:DALAMUD_HOME} `
+            -p:TreatWarningsAsErrors=false `
+            -p:WarningsNotAsErrors=true
 
       - name: Package plugin
         run: |

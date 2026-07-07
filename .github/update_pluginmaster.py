@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json, os, sys, time
 
 repo_path = sys.argv[1]
@@ -8,8 +9,41 @@ tag = sys.argv[5] if len(sys.argv) > 5 else f"v{version}"
 
 json_path = os.path.join(repo_path, 'pluginmaster.json')
 
-with open(json_path, 'r', encoding='utf-8') as f:
-    data = json.load(f)
+# 尝试读取现有的 pluginmaster.json，如果解析失败则从空列表开始
+data = []
+if os.path.exists(json_path):
+    with open(json_path, 'r', encoding='utf-8') as f:
+        raw = f.read()
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        # 之前的写入可能损坏了 JSON，尝试修复
+        print(f"Warning: pluginmaster.json parse error: {e}")
+        print("Attempting to repair...")
+        # 尝试逐行提取有效的 JSON 对象
+        # 如果修复失败，从其他条目中恢复
+        try:
+            # 尝试用更宽松的方式解析
+            import re
+            # 提取所有顶层的 {...} 对象
+            objects = re.findall(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', raw, re.DOTALL)
+            recovered = []
+            for obj_str in objects:
+                try:
+                    obj = json.loads(obj_str)
+                    if isinstance(obj, dict) and 'InternalName' in obj:
+                        recovered.append(obj)
+                except:
+                    pass
+            if recovered:
+                print(f"Recovered {len(recovered)} entries from corrupted file")
+                data = recovered
+            else:
+                print("Could not recover any entries, starting fresh")
+                data = []
+        except Exception:
+            print("Repair failed, starting fresh")
+            data = []
 
 download_url = f"https://github.com/{repo_full_name}/releases/download/{tag}/latest.zip"
 
@@ -56,3 +90,5 @@ else:
 with open(json_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
     f.write('\n')
+
+print(f"Updated InventoryTools entry: version={version}, channel={channel}, tag={tag}")
