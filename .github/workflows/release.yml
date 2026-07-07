@@ -268,8 +268,6 @@ jobs:
 
       - name: Update pluginmaster.json
         shell: bash
-        env:
-          PYTHONUTF8: '1'
         run: |
           python .github/update_pluginmaster.py \
             dalamud-plugins \

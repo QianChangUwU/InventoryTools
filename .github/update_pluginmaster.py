@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json, os, sys, time
 
 repo_path = sys.argv[1]
