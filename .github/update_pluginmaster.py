@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json, os, sys, time
 
 repo_path = sys.argv[1]
@@ -26,7 +27,7 @@ if channel == 'testing':
 else:
     # stable branch: full update
     entry = {
-        'Name': 'Allagan Tools',
+        'Name': 'Allagan Tools - CN',
         'Author': 'Critical_Impact, QianChangUwU(汉化)',
         'Punchline': '在FFXIV中整理物品，轻松定位/显示物品的存放位置，规划你的制作，以及搜索怪物、任务、飞空艇和潜水艇！',
         'Description': 'Allagan Tool的主要用途是追踪你在各个角色/雇员/部队中的物品。借助其筛选系统，你再也不会找不到物品或不知道它们应该归类到哪里。\n\n虽然这是它的主要功能，但它还拥有一份相当详尽的其他功能列表，包括：\n\t- 制作规划\n\t- 市场板整合\n\t- 在搜索/分类以及挑选制作材料时，在背包中高亮显示物品\n\t- 包含商人及来源等信息的物品窗口\n\t- 完全可搜索的任务/怪物/飞空艇/潜水艇窗口\n\t- 一个筛选系统，让你可以为特定物品设置复杂搜索\n\t- 提示框整合，让你在悬停时即可查看物品位置',
@@ -55,3 +56,4 @@ else:
 
 with open(json_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
+    f.write('\n')
