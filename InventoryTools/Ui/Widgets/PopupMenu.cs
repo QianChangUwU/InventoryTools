@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Utility.Raii;
+using InventoryTools.Services;
 
 namespace InventoryTools.Ui.Widgets;
 
@@ -157,7 +158,7 @@ public class PopupMenu
                 ImGui.CloseCurrentPopup();
             }
             ImGui.SameLine();
-            if (ImGui.Button("Cancel", new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
+            if (ImGui.Button("Cancel".Tr(), new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
             {
                 _callback?.Invoke(_id, false);
                 ImGui.CloseCurrentPopup();

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using CriticalCommonLib.Services.Mediator;
 using DalaMock.Host.Mediator;
@@ -27,13 +27,13 @@ public class ConfigurationWizard : GenericWindow
     private int _currentFeature;
     public override void Initialize()
     {
-        WindowName = "Configuration Wizard";
+        WindowName = "Configuration Wizard".Tr();
         Key = "wizard";
         _availableFeatures = _configurationWizardService.GetNewFeatures();
     }
 
     public override string GenericKey => "wizard";
-    public override string GenericName => "Configuration Wizard";
+    public override string GenericName => "Configuration Wizard".Tr();
     public override bool DestroyOnClose => true;
     public override bool SaveState => false;
     public override Vector2? DefaultSize { get; } = new(750, 500);
@@ -81,7 +81,7 @@ public class ConfigurationWizard : GenericWindow
                         using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.HealerGreen,
                                    _currentFeature == 0))
                         {
-                            ImGui.Text("Welcome");
+                            ImGui.Text("Welcome".Tr());
                         }
 
                         for (var index = 0; index < _availableFeatures.Count; index++)
@@ -119,22 +119,22 @@ public class ConfigurationWizard : GenericWindow
                         {
                             if (_configurationWizardService.ConfiguredOnce)
                             {
-                                ImGui.TextWrapped("Welcome back to the Allagan Tools configuration wizard.");
+                                ImGui.TextWrapped("Welcome back to the Allagan Tools configuration wizard.".Tr());
                                 ImGui.Separator();
                                 ImGui.TextWrapped(
-                                    "There are new features available to configure and you elected to show this window when that occurs.");
+                                    "There are new features available to configure and you elected to show this window when that occurs.".Tr());
                                 ImGui.NewLine();
                             }
                             else
                             {
-                                ImGui.TextWrapped("Welcome to the Allagan Tools configuration wizard.");
+                                ImGui.TextWrapped("Welcome to the Allagan Tools configuration wizard.".Tr());
                                 ImGui.Separator();
                                 ImGui.TextWrapped(
-                                    "This will guide you through the setup of the most commonly used features. This wizard, with your permission will show itself again when a new feature gets released as features are normally left for the user to configure and activate.");
+                                    "This will guide you through the setup of the most commonly used features. This wizard, with your permission will show itself again when a new feature gets released as features are normally left for the user to configure and activate.".Tr());
                                 ImGui.NewLine();
-                                ImGui.TextWrapped("If this is your first time using Allagan Tools, I'd recommend opening the help window and reading the General section. It gives you a run down of what the plugin can do.");
-                                ImGui.TextWrapped("If you are a returning user feel free to close this window.");
-                                if (ImGui.Button("Open Help"))
+                                ImGui.TextWrapped("If this is your first time using Allagan Tools, I'd recommend opening the help window and reading the General section. It gives you a run down of what the plugin can do.".Tr());
+                                ImGui.TextWrapped("If you are a returning user feel free to close this window.".Tr());
+                                if (ImGui.Button("Open Help".Tr()))
                                 {
                                     MediatorService.Publish(new ToggleGenericWindowMessage(typeof(HelpWindow)));
                                 }
@@ -176,13 +176,13 @@ public class ConfigurationWizard : GenericWindow
                         {
                             if (_configurationWizardService.ConfiguredOnce)
                             {
-                                if (ImGui.Button("Continue"))
+                                if (ImGui.Button("Continue".Tr()))
                                 {
                                     NextStep();
                                     _configuration.ShowWizardNewFeatures = true;
                                 }
 
-                                if (ImGui.Button("Close (and show next time the plugin loads)"))
+                                if (ImGui.Button("Close (and show next time the plugin loads)".Tr()))
                                 {
                                     Close();
                                     _configuration.ShowWizardNewFeatures = true;
@@ -190,27 +190,27 @@ public class ConfigurationWizard : GenericWindow
                             }
                             else
                             {
-                                if (ImGui.Button("Continue (and show on new features)"))
+                                if (ImGui.Button("Continue (and show on new features)".Tr()))
                                 {
                                     NextStep();
                                     _configuration.ShowWizardNewFeatures = true;
                                 }
 
                                 ImGui.SameLine();
-                                if (ImGui.Button("Continue (and never show the wizard again)"))
+                                if (ImGui.Button("Continue (and never show the wizard again)".Tr()))
                                 {
                                     NextStep();
                                     _configuration.ShowWizardNewFeatures = false;
                                 }
 
-                                if (ImGui.Button("Close (and show next time the plugin loads)"))
+                                if (ImGui.Button("Close (and show next time the plugin loads)".Tr()))
                                 {
                                     Close();
                                     _configuration.ShowWizardNewFeatures = true;
                                 }
 
                                 ImGui.SameLine();
-                                if (ImGui.Button("Close (and never show the wizard again)"))
+                                if (ImGui.Button("Close (and never show the wizard again)".Tr()))
                                 {
                                     Close();
                                     _configuration.ShowWizardNewFeatures = false;
@@ -222,7 +222,7 @@ public class ConfigurationWizard : GenericWindow
                             var canGoPrevious = CanGoPrevious;
                             using var disabled = ImRaii.Disabled(!canGoPrevious);
 
-                            if (ImGui.Button("Previous"))
+                            if (ImGui.Button("Previous".Tr()))
                             {
                                 PreviousStep();
                             }
@@ -232,12 +232,12 @@ public class ConfigurationWizard : GenericWindow
                             ImGui.SameLine();
                             var canGoNext = CanGoNext;
 
-                            if (canGoNext && ImGui.Button("Next"))
+                            if (canGoNext && ImGui.Button("Next".Tr()))
                             {
                                 NextStep();
                             }
 
-                            if (!canGoNext && ImGui.Button("Finish"))
+                            if (!canGoNext && ImGui.Button("Finish".Tr()))
                             {
                                 Finish();
                             }

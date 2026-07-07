@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,16 +51,16 @@ public class ItemQuestUseRenderer : ItemInfoRenderer<ItemQuestUse>
         var quest = asSource.Quest.Value;
 
         var questName = quest.Name.ToImGuiString();
-        ImGui.Text("Name: " + questName);
-        ImGui.Text("Expansion: " + quest.Expansion.Value.Name.ToImGuiString());
+        ImGui.Text("Name: ".Tr() + questName);
+        ImGui.Text("Expansion: ".Tr() + quest.Expansion.Value.Name.ToImGuiString());
         if (quest.BeastTribe.RowId != 0)
         {
-            ImGui.Text("Allied Society: " + quest.BeastTribe.Value.Name.ToImGuiString());
+            ImGui.Text("Allied Society: ".Tr() + quest.BeastTribe.Value.Name.ToImGuiString());
         }
         if (quest.Festival.RowId != 0 && _festivalNames.ContainsKey(quest.Festival.RowId))
         {
             ImGui.PushTextWrapPos();
-            ImGui.Text("Only available from " + _festivalNames[quest.Festival.RowId]);
+            ImGui.Text("Only available from ".Tr() + _festivalNames[quest.Festival.RowId]);
             ImGui.PopTextWrapPos();
         }
 
@@ -118,16 +119,16 @@ public class ItemQuestSourceRenderer : ItemInfoRenderer<ItemQuestSource>
         var quest = asSource.Quest.Value;
 
         var questName = quest.Name.ToImGuiString();
-        ImGui.Text("Name: " + questName);
-        ImGui.Text("Expansion: " + quest.Expansion.Value.Name.ToImGuiString());
+        ImGui.Text("Name: ".Tr() + questName);
+        ImGui.Text("Expansion: ".Tr() + quest.Expansion.Value.Name.ToImGuiString());
         if (quest.BeastTribe.RowId != 0)
         {
-            ImGui.Text("Allied Society: " + quest.BeastTribe.Value.Name.ToImGuiString());
+            ImGui.Text("Allied Society: ".Tr() + quest.BeastTribe.Value.Name.ToImGuiString());
         }
         if (quest.Festival.RowId != 0 && _festivalNames.ContainsKey(quest.Festival.RowId))
         {
             ImGui.PushTextWrapPos();
-            ImGui.Text("Only available from " + _festivalNames[quest.Festival.RowId]);
+            ImGui.Text("Only available from ".Tr() + _festivalNames[quest.Festival.RowId]);
             ImGui.PopTextWrapPos();
         }
 

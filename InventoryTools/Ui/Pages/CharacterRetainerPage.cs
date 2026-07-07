@@ -96,7 +96,7 @@ namespace InventoryTools.Ui.Pages
                 {
                     var worldIds = _characterMonitor.GetWorldIds();
                     var characters = _characterMonitor.GetPlayerCharacters().Where(c => _currentWorld == 0 || _currentWorld == c.Value.WorldId).OrderBy(c => c.Value.FormattedName).ToList();
-                    ImGui.TextUnformatted("Characters (" + characters.Count + ")");
+                    ImGui.TextUnformatted("Characters (".Tr() + characters.Count + ")");
                     ImGui.Separator();
                     for (var index = 0; index < characters.Count; index++)
                     {
@@ -134,7 +134,7 @@ namespace InventoryTools.Ui.Pages
                     ImGui.NewLine();
 
                     var freeCompanies = _characterMonitor.GetFreeCompanies().Where(c => _currentWorld == 0 || _currentWorld == c.Value.WorldId).OrderBy(c => c.Value.FormattedName).ToList();
-                    ImGui.TextUnformatted("Free Companies (" + freeCompanies.Count + ")");
+                    ImGui.TextUnformatted("Free Companies (".Tr() + freeCompanies.Count + ")");
                     ImGui.Separator();
                     for (var index = 0; index < freeCompanies.Count; index++)
                     {
@@ -164,7 +164,7 @@ namespace InventoryTools.Ui.Pages
                     ImGui.NewLine();
 
                     var houses = _characterMonitor.GetHouses().Where(c => _currentWorld == 0 || _currentWorld == c.Value.WorldId).OrderBy(c => c.Value.FormattedName).ToList();
-                    ImGui.TextUnformatted("Residences (" + houses.Count + ")");
+                    ImGui.TextUnformatted("Residences (".Tr() + houses.Count + ")");
                     ImGui.Separator();
                     for (var index = 0; index < houses.Count; index++)
                     {
@@ -195,7 +195,7 @@ namespace InventoryTools.Ui.Pages
                     ImGui.NewLine();
 
                     var retainers = _characterMonitor.GetRetainerCharacters().Where(c => _currentWorld == 0 || _currentWorld == c.Value.WorldId).OrderBy(c => c.Value.FormattedName).ToList();
-                    ImGui.TextUnformatted("Retainers (" + retainers.Count + ")");
+                    ImGui.TextUnformatted("Retainers (".Tr() + retainers.Count + ")");
                     ImGui.Separator();
 
                     for (var index = 0; index < characters.Count; index++)
@@ -238,7 +238,7 @@ namespace InventoryTools.Ui.Pages
 
                     if (retainers.Count != 0)
                     {
-                        ImGui.TextUnformatted("Orphaned Retainers:");
+                        ImGui.TextUnformatted("Orphaned Retainers:".Tr());
                         ImGui.Separator();
                         for (var index2 = 0; index2 < retainers.Count; index2++)
                         {
@@ -279,11 +279,11 @@ namespace InventoryTools.Ui.Pages
                         selectedWorld = _worldSheet.GetRowOrDefault(_currentWorld);
                     }
 
-                    ImGui.Text("World: ");
+                    ImGui.Text("World: ".Tr());
                     using var combo = ImRaii.Combo("##activeWorld", selectedWorld?.Name.ExtractText() ?? "All");
                     if (combo.Success)
                     {
-                        if (ImGui.Selectable("All"))
+                        if (ImGui.Selectable("All".Tr()))
                         {
                             _currentWorld = 0;
                         }
@@ -332,7 +332,7 @@ namespace InventoryTools.Ui.Pages
                             if (_editMode)
                             {
                                 var newName = _newName;
-                                ImGui.Text("Custom Name: ");
+                                ImGui.Text("Custom Name: ".Tr());
                                 ImGui.SameLine();
                                 if (ImGui.InputText("##customName", ref newName, 100))
                                 {
@@ -341,10 +341,10 @@ namespace InventoryTools.Ui.Pages
 
                                 if (character.AlternativeName != null && character.AlternativeName != character.Name)
                                 {
-                                    ImGui.Text("Original Name: " + character.Name);
+                                    ImGui.Text("Original Name: ".Tr() + character.Name);
                                 }
 
-                                if (ImGui.Button("Save"))
+                                if (ImGui.Button("Save".Tr()))
                                 {
                                     if (_newName == "" || _newName == character.Name)
                                     {
@@ -365,20 +365,20 @@ namespace InventoryTools.Ui.Pages
                             ImGui.Separator();
                             if (character.CharacterType is CharacterType.Character or CharacterType.Retainer )
                             {
-                                ImGui.Text("Level: " + character.Level);
-                                ImGui.Text("Gil: " + character.Gil);
-                                ImGui.Text("Gender: " + character.Gender);
-                                ImGui.Text("Free Company: " + character.FreeCompanyName);
-                                ImGui.Text("World: " + (character.World?.Name.ExtractText() ?? "Unknown"));
-                                ImGui.Text("Class/Job: " +
+                                ImGui.Text("Level: ".Tr() + character.Level);
+                                ImGui.Text("Gil: ".Tr() + character.Gil);
+                                ImGui.Text("Gender: ".Tr() + character.Gender);
+                                ImGui.Text("Free Company: ".Tr() + character.FreeCompanyName);
+                                ImGui.Text("World: ".Tr() + (character.World?.Name.ExtractText() ?? "Unknown"));
+                                ImGui.Text("Class/Job: ".Tr() +
                                            (character.ActualClassJob?.Base.Name.ExtractText().ToTitleCase() ?? "Unknown"));
                             }
                             else if (character.CharacterType is CharacterType.Housing)
                             {
-                                ImGui.Text("World: " + (character.World?.Name.ExtractText() ?? "Unknown"));
-                                ImGui.Text("Plot Size: " + character.GetPlotSize());
-                                ImGui.Text("Location: " + character.HousingName);
-                                ImGui.Text("Owners: ");
+                                ImGui.Text("World: ".Tr() + (character.World?.Name.ExtractText() ?? "Unknown"));
+                                ImGui.Text("Plot Size: ".Tr() + character.GetPlotSize());
+                                ImGui.Text("Location: ".Tr() + character.HousingName);
+                                ImGui.Text("Owners: ".Tr());
                                 foreach (var ownerId in character.Owners)
                                 {
                                     var owner = _characterMonitor.GetCharacterById(ownerId);
@@ -388,8 +388,8 @@ namespace InventoryTools.Ui.Pages
                             }
                             else if (character.CharacterType is CharacterType.FreeCompanyChest)
                             {
-                                ImGui.Text("World: " + (character.World?.Name.ExtractText() ?? "Unknown"));
-                                ImGui.Text("Related Characters: ");
+                                ImGui.Text("World: ".Tr() + (character.World?.Name.ExtractText() ?? "Unknown"));
+                                ImGui.Text("Related Characters: ".Tr());
                                 foreach (var relatedCharacter in _characterMonitor.GetFreeCompanyCharacters(character.CharacterId))
                                 {
                                     var relatedCharacterName = relatedCharacter.Value.FormattedName;
@@ -398,7 +398,7 @@ namespace InventoryTools.Ui.Pages
                             }
 
                             ImGui.NewLine();
-                            ImGui.Text("Inventories: ");
+                            ImGui.Text("Inventories: ".Tr());
                             ImGui.Separator();
                             var inventories =
                                 _inventoryMonitor.Inventories.ContainsKey(character.CharacterId)
@@ -504,13 +504,13 @@ namespace InventoryTools.Ui.Pages
                             }
                             else
                             {
-                                ImGui.Text("No inventories found.");
+                                ImGui.Text("No inventories found.".Tr());
                             }
 
                         }
                         else
                         {
-                            ImGui.Text("Invalid character selected.");
+                            ImGui.Text("Invalid character selected.".Tr());
                         }
                     }
                 }

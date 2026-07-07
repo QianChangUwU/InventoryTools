@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -29,7 +29,7 @@ public class RetainerTasksWindow : GenericTabbedTable<RetainerTaskRow>, IMenuWin
     }
     public override void Initialize()
     {
-        WindowName = "Retainer Ventures";
+        WindowName = "Retainer Ventures".Tr();
         Key = "retainerTasks";
         _columns = new List<TableColumn<RetainerTaskRow>>()
         {
@@ -190,7 +190,7 @@ public class RetainerTasksWindow : GenericTabbedTable<RetainerTaskRow>, IMenuWin
                     ImGui.TextUnformatted(ex.Base.VentureCost.ToString());
                 }
             },
-            new("Average iLvl", 200, ImGuiTableColumnFlags.WidthFixed)
+            new("Average iLvl".Tr(), 200, ImGuiTableColumnFlags.WidthFixed)
             {
                 Sort = (specs, exes) =>
                 {

@@ -77,7 +77,7 @@ public sealed class StringColumnSetting : ColumnSetting<string?>
         if (HasValueSet(configuration) && ShowReset)
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 ResetFilter(configuration);
                 success = true;
@@ -103,7 +103,7 @@ public sealed class StringColumnSetting : ColumnSetting<string?>
         if (HasValueSet(configuration) && ShowReset)
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 ResetFilter(configuration);
                 success = true;

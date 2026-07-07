@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using CriticalCommonLib.Services.Mediator;
 using DalaMock.Host.Mediator;
@@ -40,18 +40,18 @@ public class TeamCraftImportWindow : GenericWindow
 
     public override void DrawWindow()
     {
-        ImGui.Text("Import to Craft List: ");
+        ImGui.Text("Import to Craft List: ".Tr());
         ImGui.SameLine();
-        ImGuiService.HelpMarker("Guide to importing lists.\r\n\r\n" +
-                                "Step 1. Open a list on Teamcraft with the items you wish to craft.\r\n\r\n" +
+        ImGuiService.HelpMarker("Guide to importing lists.\r\n\r\n".Tr() +
+                                "Step 1. Open a list on Teamcraft with the items you wish to craft.\r\n\r\n".Tr() +
                                 "Step 2. Find the 'Items' \"Copy as Text\" button. You only want to copy the output items.\r\n\r\n" +
-                                "Step 3. Paste into the text box below in this window.\r\n\r\n" +
-                                "Step 4. Click import.");
-        ImGui.Text("Paste text here");
+                                "Step 3. Paste into the text box below in this window.\r\n\r\n".Tr() +
+                                "Step 4. Click import.".Tr());
+        ImGui.Text("Paste text here".Tr());
         ImGui.InputTextMultiline("###FinalItems", ref _importListItems, 10000000, new Vector2(ImGui.GetContentRegionAvail().X, 100));
 
 
-        if (ImGui.Button("Import"))
+        if (ImGui.Button("Import".Tr()))
         {
             var importedList = _importExportService.FromTCString(_importListItems ?? "");
             if (importedList is not null)
@@ -62,7 +62,7 @@ public class TeamCraftImportWindow : GenericWindow
 
         }
         ImGui.SameLine();
-        if (ImGui.Button("Cancel"))
+        if (ImGui.Button("Cancel".Tr()))
         {
             Close();
         }

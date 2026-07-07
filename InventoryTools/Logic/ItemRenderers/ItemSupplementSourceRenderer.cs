@@ -400,11 +400,11 @@ public abstract class ItemSupplementUseRenderer<T> : ItemSupplementSourceRendere
                 ImGui.SameLine();
                 if (source.Supplement.Min == source.Supplement.Max)
                 {
-                    ImGui.Text("(Drops 1)");
+                    ImGui.Text("(Drops 1)".Tr());
                 }
                 else
                 {
-                    ImGui.Text("(Drops " + source.Supplement.Min.Value + " - " + source.Supplement.Max.Value + ")");
+                    ImGui.Text("(Drops ".Tr() + source.Supplement.Min.Value + " - " + source.Supplement.Max.Value + ")");
                 }
             }
 
@@ -427,11 +427,11 @@ public abstract class ItemSupplementUseRenderer<T> : ItemSupplementSourceRendere
             ImGui.SameLine();
             if (asSource.Supplement.Min == asSource.Supplement.Max)
             {
-                ImGui.Text("(Drops 1)");
+                ImGui.Text("(Drops 1)".Tr());
             }
             else
             {
-                ImGui.Text("(Drops " + asSource.Supplement.Min.Value + " - " + asSource.Supplement.Max.Value + ")");
+                ImGui.Text("(Drops ".Tr() + asSource.Supplement.Min.Value + " - " + asSource.Supplement.Max.Value + ")");
             }
         }
 

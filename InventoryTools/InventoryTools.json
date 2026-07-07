@@ -1,19 +1,23 @@
 ﻿{
-  "Author": "Critical_Impact",
-  "Name": "Allagan Tools",
-  "Punchline": "Get organized in FFXIV, easily locate/show where to sort items, plan your crafting, and search for mobs, duties, airships, and submarines!",
-  "Description": "Allagan Tool's primary purpose is to keep track of items across your characters/retainers/free company. With it's filter system you'll never lose track of items or not know where they should be sorted.\n\nWhile this is it's primary purpose, it has quite an exhaustive list of other features including:\n\t- Craft planning\n\t- Market board integration\n\t- Item highlighting in inventories when searching/sorting and picking ingredients for crafts\n\t- Item window that includes vendor and source information among other things\n\t- Duty/mob/airship/submarine windows that are fully searchable\n\t- A filtering system that lets you setup complex searches for specific items \n\t- Tooltip integration that'll let you see where the items are on hover",
-  "Tags": ["Inventory", "Sorting", "Filtering"],
+  "Author": "Critical_Impact, QianChangUwU(汉化)",
+  "Name": "Allagan Tools - CN",
+  "Punchline": "在FFXIV中整理物品，轻松定位/显示物品的存放位置，规划你的制作，以及搜索怪物、任务、飞空艇和潜水艇！",
+  "Description": "Allagan Tool的主要用途是追踪你在各个角色/雇员/部队中的物品。借助其筛选系统，你再也不会找不到物品或不知道它们应该归类到哪里。\n\n虽然这是它的主要功能，但它还拥有一份相当详尽的其他功能列表，包括：\n\t- 制作规划\n\t- 市场板整合\n\t- 在搜索/分类以及挑选制作材料时，在背包中高亮显示物品\n\t- 包含商人及来源等信息的物品窗口\n\t- 完全可搜索的任务/怪物/飞空艇/潜水艇窗口\n\t- 一个筛选系统，让你可以为特定物品设置复杂搜索\n\t- 提示框整合，让你在悬停时即可查看物品位置",
+  "Tags": [
+    "Inventory",
+    "Sorting",
+    "Filtering"
+  ],
   "InternalName": "InventoryTools",
-  "RepoUrl": "https://github.com/Critical-Impact/InventoryTools",
+  "RepoUrl": "https://github.com/QianChangUwU/InventoryTools",
   "LoadPriority": 0,
   "CanUnloadAsync": false,
-  "IconUrl": "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/icon.png",
+  "IconUrl": "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/icon.png",
   "ImageUrls": [
-    "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/banner1.png",
-    "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/screenshot1.png",
-    "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/screenshot2.png",
-    "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/screenshot3.png",
-    "https://raw.githubusercontent.com/Critical-Impact/InventoryTools/main/InventoryTools/Images/screenshot4.png"
+    "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/banner1.png",
+    "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/screenshot1.png",
+    "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/screenshot2.png",
+    "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/screenshot3.png",
+    "https://raw.githubusercontent.com/QianChangUwU/InventoryTools/main/InventoryTools/Images/screenshot4.png"
   ]
 }

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -240,15 +241,15 @@ public abstract class ItemGatheringSourceRenderer<T> : ItemInfoRenderer<T> where
         var asSource = (ItemGatheringSource)source;
 
          var level = asSource.GatheringItem.Base.GatheringItemLevel.Value.GatheringItemLevel;
-         ImGui.Text("Level:" + (level == 0 ? "N/A" : level));
+         ImGui.Text("Level:".Tr() + (level == 0 ? "N/A" : level));
          var stars = asSource.GatheringItem.Base.GatheringItemLevel.Value.Stars;
-         ImGui.Text("Stars:" + (stars == 0 ? "N/A" : stars));
+         ImGui.Text("Stars:".Tr() + (stars == 0 ? "N/A" : stars));
          var perceptionRequired = asSource.GatheringItem.Base.PerceptionReq;
-         ImGui.Text("Perception Required:" + (perceptionRequired == 0 ? "N/A" : stars));
+         ImGui.Text("Perception Required:".Tr() + (perceptionRequired == 0 ? "N/A" : stars));
 
          if (asSource.GatheringItem.AvailableAtTimedNode)
          {
-             ImGui.Text("Maps:");
+             ImGui.Text("Maps:".Tr());
              using (ImRaii.PushIndent())
              {
                  foreach (var gatheringPoint in asSource.GatheringItem.GatheringPoints)

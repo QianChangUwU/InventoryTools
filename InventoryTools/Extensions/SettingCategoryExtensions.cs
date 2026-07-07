@@ -1,4 +1,5 @@
 using InventoryTools.Logic.Settings.Abstract;
+using InventoryTools.Services;
 
 namespace InventoryTools.Extensions
 {
@@ -9,39 +10,39 @@ namespace InventoryTools.Extensions
             switch (settingCategory)
             {
                 case SettingCategory.General:
-                    return "General";
+                    return "General".Tr();
                 case SettingCategory.Visuals:
-                    return "Visuals";
+                    return "Visuals".Tr();
                 case SettingCategory.MarketBoard:
-                    return "Marketboard";
+                    return "Marketboard".Tr();
                 case SettingCategory.CraftOverlay:
-                    return "Craft Overlay";
+                    return "Craft Overlay".Tr();
                 case SettingCategory.CraftTracker:
-                    return "Craft Tracker (Legacy)";
+                    return "Craft Tracker (Legacy)".Tr();
                 case SettingCategory.ToolTips:
-                    return "Tooltips";
+                    return "Tooltips".Tr();
                 case SettingCategory.Hotkeys:
-                    return "Hotkeys";
+                    return "Hotkeys".Tr();
                 case SettingCategory.History:
-                    return "History";
+                    return "History".Tr();
                 case SettingCategory.Windows:
-                    return "Windows";
+                    return "Windows".Tr();
                 case SettingCategory.Lists:
-                    return "Lists";
+                    return "Lists".Tr();
                 case SettingCategory.ContextMenu:
-                    return "Context Menu";
+                    return "Context Menu".Tr();
                 case SettingCategory.MobSpawnTracker:
-                    return "Mob Spawn Tracker";
+                    return "Mob Spawn Tracker".Tr();
                 case SettingCategory.TitleMenuButtons:
-                    return "Title Menu Button";
+                    return "Title Menu Button".Tr();
                 case SettingCategory.AutoSave:
-                    return "Auto Save";
+                    return "Auto Save".Tr();
                 case SettingCategory.Items:
-                    return "Items";
+                    return "Items".Tr();
                 case SettingCategory.Highlighting:
-                    return "Highlighting";
+                    return "Highlighting".Tr();
                 case SettingCategory.EquipmentRecommendation:
-                    return "Equipment Recommendations";
+                    return "Equipment Recommendations".Tr();
             }
             return settingCategory.ToString();
         }

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Collections.Generic;
 using AllaganLib.Shared.Debuggers;
 using AllaganLib.Shared.Interfaces;
@@ -102,7 +103,7 @@ public class CharacterDebuggerPane : DebugLogPane
 
     public override unsafe void DrawInfo()
     {
-        if (ImGui.CollapsingHeader("Session / Active State"))
+        if (ImGui.CollapsingHeader("Session / Active State".Tr()))
         {
             ImGui.TextUnformatted($"Is Logged In: {_characterMonitor.IsLoggedIn}");
             ImGui.TextUnformatted($"Local Content ID: {_characterMonitor.LocalContentId}");
@@ -125,7 +126,7 @@ public class CharacterDebuggerPane : DebugLogPane
                 : "<none>");
         }
 
-        if (ImGui.CollapsingHeader("Housing"))
+        if (ImGui.CollapsingHeader("Housing".Tr()))
         {
             ImGui.TextUnformatted($"Active House ID: {_characterMonitor.ActiveHouseId}");
             ImGui.TextUnformatted($"Cached Ward Id: {_characterMonitor.InternalWardId}");
@@ -161,19 +162,19 @@ public class CharacterDebuggerPane : DebugLogPane
         //
         // Worlds
         //
-        if (ImGui.CollapsingHeader("Worlds"))
+        if (ImGui.CollapsingHeader("Worlds".Tr()))
         {
             foreach (var wid in _characterMonitor.GetWorldIds())
                 ImGui.BulletText($"World {wid}");
         }
 
-        if (ImGui.CollapsingHeader("Characters"))
+        if (ImGui.CollapsingHeader("Characters".Tr()))
         {
             foreach (var kv in _characterMonitor.Characters)
                 ImGui.BulletText($"{kv.Key}: {kv.Value.Name}");
         }
 
-        if (ImGui.CollapsingHeader("Retainers"))
+        if (ImGui.CollapsingHeader("Retainers".Tr()))
         {
             using (var table = ImRaii.Table("retainerTable", 6))
             {
@@ -216,7 +217,7 @@ public class CharacterDebuggerPane : DebugLogPane
             }
         }
 
-        if (ImGui.CollapsingHeader("Character Objects"))
+        if (ImGui.CollapsingHeader("Character Objects".Tr()))
         {
             foreach (var kv in _characterMonitor.Characters)
             {
@@ -232,7 +233,7 @@ public class CharacterDebuggerPane : DebugLogPane
             }
         }
 
-        if (ImGui.CollapsingHeader("Acquired Items"))
+        if (ImGui.CollapsingHeader("Acquired Items".Tr()))
         {
             foreach (var characterPair in _configuration.AcquiredItems)
             {

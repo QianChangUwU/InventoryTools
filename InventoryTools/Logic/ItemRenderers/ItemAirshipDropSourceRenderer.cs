@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ public class ItemAirshipDropSourceRenderer : ItemInfoRenderer<ItemAirshipDropSou
             {
                 using (ImRaii.PushIndent())
                 {
-                    ImGui.TextUnformatted("Unlocks via: " + asSource.AirshipExplorationPoint.Unlock.Base.Name.ToImGuiString());
+                    ImGui.TextUnformatted("Unlocks via: ".Tr() + asSource.AirshipExplorationPoint.Unlock.Base.Name.ToImGuiString());
                 }
             }
         }
@@ -67,7 +68,7 @@ public class ItemAirshipDropSourceRenderer : ItemInfoRenderer<ItemAirshipDropSou
         {
             using (ImRaii.PushIndent())
             {
-                ImGui.TextUnformatted("Unlocks via: " + asSource.AirshipExplorationPoint.Unlock.Base.Name.ToImGuiString());
+                ImGui.TextUnformatted("Unlocks via: ".Tr() + asSource.AirshipExplorationPoint.Unlock.Base.Name.ToImGuiString());
             }
         }
     };

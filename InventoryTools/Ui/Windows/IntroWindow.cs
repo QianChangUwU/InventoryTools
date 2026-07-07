@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using CriticalCommonLib.Services.Mediator;
 using DalaMock.Host.Mediator;
 using Dalamud.Bindings.ImGui;
@@ -17,7 +17,7 @@ namespace InventoryTools.Ui
         }
         public override void Initialize()
         {
-            WindowName = "Allagan Tools";
+            WindowName = "Allagan Tools".Tr();
             Flags =
                 ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar;
             Key = "intro";
@@ -52,25 +52,25 @@ namespace InventoryTools.Ui
                     {
                         if (textChild.Success)
                         {
-                            ImGui.TextWrapped("Welcome to Allagan Tools.");
+                            ImGui.TextWrapped("Welcome to Allagan Tools.".Tr());
                             ImGui.TextWrapped(
                                 "Allagan Tools is a plugin for Final Fantasy XIV that provides the following features:");
                             using (ImRaii.PushIndent())
                             {
                                 ImGui.Bullet();
-                                ImGui.Text("Track your inventories");
+                                ImGui.Text("Track your inventories".Tr());
                                 ImGui.Bullet();
-                                ImGui.Text("Plan your crafts");
+                                ImGui.Text("Plan your crafts".Tr());
                                 ImGui.Bullet();
-                                ImGui.Text("Provide information about items, monsters, duties and much more");
+                                ImGui.Text("Provide information about items, monsters, duties and much more".Tr());
                             }
 
                             ImGui.TextWrapped(
-                                "You can open various new windows using command shortcuts(the main filter  or from the main window.");
+                                "You can open various new windows using command shortcuts(the main filter  or from the main window.".Tr());
                             ImGui.TextWrapped(
-                                "If you're unsure, right-click on an item or a table row for more options!");
+                                "If you're unsure, right-click on an item or a table row for more options!".Tr());
                             ImGui.TextWrapped(
-                                "To learn about the different features, I recommend going to the settings section and reading the information provided by the ? icons.");
+                                "To learn about the different features, I recommend going to the settings section and reading the information provided by the ? icons.".Tr());
                         }
                     }
 
@@ -78,13 +78,13 @@ namespace InventoryTools.Ui
                     {
                         if (buttonsChild.Success)
                         {
-                            if (ImGui.Button("Close"))
+                            if (ImGui.Button("Close".Tr()))
                             {
                                 Close();
                             }
 
                             ImGui.SameLine(0, 4);
-                            if (ImGui.Button("Close & Open Main Window"))
+                            if (ImGui.Button("Close & Open Main Window".Tr()))
                             {
                                 Close();
                                 MediatorService.Publish(new OpenGenericWindowMessage(typeof(FiltersWindow)));

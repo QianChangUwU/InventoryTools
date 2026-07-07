@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -186,7 +187,7 @@ public class ImGuiService : AllaganLib.Interface.Services.ImGuiService
         }
         else
         {
-            ImGui.Text("Invalid Icon ID");
+            ImGui.Text("Invalid Icon ID".Tr());
         }
     }
 
@@ -244,7 +245,7 @@ public class ImGuiService : AllaganLib.Interface.Services.ImGuiService
             using (ImRaii.Tooltip())
             {
                 ImGui.PushTextWrapPos(ImGui.GetFontSize() * 35.0f);
-                ImGui.TextUnformatted(helpText);
+                ImGui.TextUnformatted(helpText.Tr());
                 ImGui.PopTextWrapPos();
                 if (imagePath != null)
                 {

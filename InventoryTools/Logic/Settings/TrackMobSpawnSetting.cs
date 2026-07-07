@@ -46,7 +46,7 @@ public class TrackMobSpawnSetting : BooleanSetting
         if (configuration.TrackMobSpawns)
         {
             ImGui.SameLine();
-            if (ImGui.Button("Export CSV"))
+            if (ImGui.Button("Export CSV".Tr()))
             {
                 _fileDialogManager.SaveFileDialog("Save to csv", "*.csv", "mob_spawns.csv", ".csv",
                     (b, s) => { SaveMobSpawns(b, s); }, null, true);

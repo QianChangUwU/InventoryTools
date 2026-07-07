@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Linq;
 using AllaganLib.GameSheets.Sheets;
 using AllaganLib.Shared.Time;
@@ -49,7 +50,7 @@ public class UptimeColumn : TimeIntervalColumn
                 {
                     using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.DalamudRed))
                     {
-                        ImGui.Text("Up in " +
+                        ImGui.Text("Up in ".Tr() +
                                    TimeInterval.DurationString(currentValue.Value.Start, TimeStamp.UtcNow,
                                        true));
                     }
@@ -58,7 +59,7 @@ public class UptimeColumn : TimeIntervalColumn
                 {
                     using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.HealerGreen))
                     {
-                        ImGui.Text("Up for " +
+                        ImGui.Text("Up for ".Tr() +
                                    TimeInterval.DurationString(currentValue.Value.End, TimeStamp.UtcNow,
                                        true));
                     }
@@ -92,7 +93,7 @@ public class UptimeColumn : TimeIntervalColumn
                             {
                                 using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.HealerGreen))
                                 {
-                                    ImGui.Text(" (Up for " +
+                                    ImGui.Text(" (Up for ".Tr() +
                                                TimeInterval.DurationString(nextUptime.Item2.End, TimeStamp.UtcNow,
                                                    true) + ")");
                                 }

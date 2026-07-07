@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Collections.Generic;
 using CriticalCommonLib.Services;
 using CriticalCommonLib.Services.Mediator;
@@ -25,7 +26,7 @@ public class GatherButtonColumn : ButtonColumn
         ImGui.TableNextColumn();
         if (!ImGui.TableGetColumnFlags().HasFlag(ImGuiTableColumnFlags.IsEnabled)) return null;
 
-        if (ImGui.Button("Log##" + rowIndex + "_" + columnIndex))
+        if (ImGui.Button("Log".Tr() + "##" + rowIndex + "_" + columnIndex))
         {
             if (searchResult.Item.ObtainedFishing)
             {

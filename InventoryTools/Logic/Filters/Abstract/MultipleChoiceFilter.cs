@@ -115,7 +115,7 @@ namespace InventoryTools.Logic.Filters.Abstract
                     }
                     var activeChoices = GetActiveChoices(configuration);
                     ImGui.SameLine();
-                    if (ImGui.Button("Add All"))
+                    if (ImGui.Button("Add All".Tr()))
                     {
                         foreach (var item in activeChoices)
                         {
@@ -154,7 +154,7 @@ namespace InventoryTools.Logic.Filters.Abstract
             if (HasValueSet(configuration) && ShowReset)
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Reset##" + Key + "Reset"))
+                if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
                 {
                     ResetFilter(configuration);
                     _cachedChoices = null;

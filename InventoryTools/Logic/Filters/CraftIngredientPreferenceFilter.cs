@@ -151,12 +151,12 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
             ImGui.TableNextRow();
 
             ImGui.TableNextColumn();
-            ImGui.Button("=##DragHandle" + i);
+            ImGui.Button("=".Tr() + "##DragHandle" + i);
             if (ImGui.IsItemHovered())
             {
                 using (ImRaii.Tooltip())
                 {
-                    ImGui.Text("Click and drag to reorder");
+                    ImGui.Text("Click and drag to reorder".Tr());
                 }
             }
 
@@ -166,7 +166,7 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
                 {
                     _draggedItem = itemKey;
                     ImGui.SetDragDropPayload("##IngredientPrefReorder", []);
-                    ImGui.TextUnformatted("Moving: " +entry.Value.Item1);
+                    ImGui.TextUnformatted("Moving: ".Tr() +entry.Value.Item1);
                 }
             }
 
@@ -226,7 +226,7 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
 
         var currentValue = CurrentValue(configuration);
 
-        ImGui.TextUnformatted("Add Preference:");
+        ImGui.TextUnformatted("Add Preference:".Tr());
         ImGui.SameLine();
         ImGui.SetNextItemWidth(LabelSize);
         using (var combo = ImRaii.Combo("##Add" + Key, "", ImGuiComboFlags.HeightLarge))
@@ -243,7 +243,7 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
             }
         }
         ImGui.SameLine();
-        ImGui.TextUnformatted("Add Item Preference:");
+        ImGui.TextUnformatted("Add Item Preference:".Tr());
         ImGui.SameLine();
         ImGui.SetNextItemWidth(LabelSize);
         using (var combo = ImRaii.Combo("##AddItem" + Key, "", ImGuiComboFlags.HeightLarge))
@@ -260,7 +260,7 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
                 ImGui.Separator();
                 if (_searchString == "")
                 {
-                    ImGui.TextUnformatted("Start typing to search...");
+                    ImGui.TextUnformatted("Start typing to search...".Tr());
                 }
 
                 foreach (var item in SearchItems.Where(c => !currentValue.ContainsKey((IngredientPreferenceType.Item, c.RowId))))
@@ -275,7 +275,7 @@ public class CraftIngredientPreferenceFilter : SortedListFilter<(IngredientPrefe
 
         var resetWidth = ImGui.CalcTextSize("Reset to Default").X + ImGui.GetStyle().FramePadding.X * 2;
         ImGui.SameLine(ImGui.GetContentRegionMax().X - resetWidth);
-        if (ImGui.Button("Reset to Default##IngredientPref"))
+        if (ImGui.Button("Reset to Default".Tr() + "##IngredientPref"))
         {
             _popupService.AddPopup(new ConfirmPopup(typeof(CraftsWindow), "resetIngredientPref",
                 "Are you sure you want to reset the ingredient sourcing order to default?",

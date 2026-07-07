@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.GameSheets.Caches;
 using AllaganLib.GameSheets.ItemSources;
@@ -27,7 +28,7 @@ public class ItemStainUseRenderer : ItemInfoRenderer<ItemStainSource>
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var stainSource = AsSource(source);
-        ImGui.Text("Colour: " + stainSource.Stain.Value.Name.ExtractText());
+        ImGui.Text("Colour: ".Tr() + stainSource.Stain.Value.Name.ExtractText());
         var color = Utils.Convert3ChannelUintToColorVector4(stainSource.Stain.Value.Color);
         if (ImGui.ColorButton("ColorPreview", color, ImGuiColorEditFlags.None, new (64,64)))
         {

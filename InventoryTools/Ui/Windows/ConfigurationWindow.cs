@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -93,7 +93,7 @@ namespace InventoryTools.Ui
 
         public override void Initialize()
         {
-            WindowName = "Configuration";
+            WindowName = "Configuration".Tr();
             Key = "configuration";
             _configPages = new List<IConfigPage>();
             _configPages.Add(new SeparatorPageItem("Settings"));
@@ -122,10 +122,10 @@ namespace InventoryTools.Ui
             _addFilterMenu = new PopupMenu("addFilter", PopupMenu.PopupMenuButtons.LeftRight,
                 new List<PopupMenu.IPopupMenuItem>()
                 {
-                    new PopupMenu.PopupMenuItemSelectableAskName("Search List", "adf1", "New Search List", AddSearchFilter, "This will create a new list that let's you search for specific items within your characters and retainers inventories."),
-                    new PopupMenu.PopupMenuItemSelectableAskName("Sort List", "af2", "New Sort Filter", AddSortFilter, "This will create a new list that let's you search for specific items within your characters and retainers inventories then determine where they should be moved to."),
-                    new PopupMenu.PopupMenuItemSelectableAskName("Game Item List", "af3", "New Game Item List", AddGameItemFilter, "This will create a list that lets you search for all items in the game."),
-                    new PopupMenu.PopupMenuItemSelectableAskName("History List", "af4", "New History Item List", AddHistoryFilter, "This will create a list that lets you view historical data of how your inventory has changed."),
+                    new PopupMenu.PopupMenuItemSelectableAskName("Search List".Tr(), "adf1", "New Search List".Tr(), AddSearchFilter, "This will create a new list that let's you search for specific items within your characters and retainers inventories.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectableAskName("Sort List".Tr(), "af2", "New Sort Filter".Tr().Tr(), AddSortFilter, "This will create a new list that let's you search for specific items within your characters and retainers inventories then determine where they should be moved to.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectableAskName("Game Item List".Tr(), "af3", "New Game Item List".Tr(), AddGameItemFilter, "This will create a list that lets you search for all items in the game.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectableAskName("History List".Tr(), "af4", "New History Item List", AddHistoryFilter, "This will create a list that lets you view historical data of how your inventory has changed.".Tr()),
                 });
 
             _addSampleMenu = new PopupMenu("addSampleFilter", PopupMenu.PopupMenuButtons.LeftRight, []);
@@ -167,14 +167,14 @@ namespace InventoryTools.Ui
                     new PopupMenu.PopupMenuItemSelectable("Items Window", "filters", OpenFiltersWindow,"Open the items window."),
                     new PopupMenu.PopupMenuItemSelectable("Craft Window", "crafts", OpenCraftsWindow,"Open the crafts window."),
                     new PopupMenu.PopupMenuItemSeparator(),
-                    new PopupMenu.PopupMenuItemSelectable("Mob Window", "mobs", OpenMobsWindow,"Open the mobs window."),
-                    new PopupMenu.PopupMenuItemSelectable("Npcs Window", "npcs", OpenNpcsWindow,"Open the npcs window."),
-                    new PopupMenu.PopupMenuItemSelectable("Duties Window", "duties", OpenDutiesWindow,"Open the duties window."),
-                    new PopupMenu.PopupMenuItemSelectable("Airships Window", "airships", OpenAirshipsWindow,"Open the airships window."),
-                    new PopupMenu.PopupMenuItemSelectable("Submarines Window", "submarines", OpenSubmarinesWindow,"Open the submarines window."),
-                    new PopupMenu.PopupMenuItemSelectable("Retainer Ventures Window", "ventures", OpenRetainerVenturesWindow,"Open the retainer ventures window."),
+                    new PopupMenu.PopupMenuItemSelectable("Mob Window".Tr(), "mobs", OpenMobsWindow,"Open the mobs window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Npcs Window".Tr(), "npcs", OpenNpcsWindow,"Open the npcs window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Duties Window".Tr(), "duties", OpenDutiesWindow,"Open the duties window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Airships Window".Tr(), "airships", OpenAirshipsWindow,"Open the airships window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Submarines Window".Tr(), "submarines", OpenSubmarinesWindow,"Open the submarines window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Retainer Ventures Window".Tr(), "ventures", OpenRetainerVenturesWindow,"Open the retainer ventures window.".Tr()),
                     new PopupMenu.PopupMenuItemSeparator(),
-                    new PopupMenu.PopupMenuItemSelectable("Help", "help", OpenHelpWindow,"Open the help window."),
+                    new PopupMenu.PopupMenuItemSelectable("Help".Tr(), "help", OpenHelpWindow,"Open the help window.".Tr()),
                 });
 
             _wizardMenu = new PopupMenu("wizardMenu", PopupMenu.PopupMenuButtons.All,
@@ -224,7 +224,7 @@ namespace InventoryTools.Ui
             }
             else
             {
-                _chatUtilities.Print("There are no new settings available to configure.");
+                _chatUtilities.Print("There are no new settings available to configure.".Tr());
             }
         }
 
@@ -285,10 +285,10 @@ namespace InventoryTools.Ui
                 _popupMenus[configuration] = new PopupMenu("fm" + configuration.Key, PopupMenu.PopupMenuButtons.Right,
                     new List<PopupMenu.IPopupMenuItem>()
                     {
-                        new PopupMenu.PopupMenuItemSelectableAskName("Duplicate", "df_" + configuration.Key, configuration.Name, DuplicateFilter, "Duplicate the filter."),
-                        new PopupMenu.PopupMenuItemSelectable("Move Up", "mu_" + configuration.Key, MoveFilterUp, "Move the filter up."),
-                        new PopupMenu.PopupMenuItemSelectable("Move Down", "md_" + configuration.Key, MoveFilterDown, "Move the filter down."),
-                        new PopupMenu.PopupMenuItemSelectableConfirm("Remove", "rf_" + configuration.Key, "Are you sure you want to remove this filter?", RemoveFilter, "Remove the filter."),
+                        new PopupMenu.PopupMenuItemSelectableAskName("Duplicate".Tr(), "df_" + configuration.Key, configuration.Name, DuplicateFilter, "Duplicate the filter.".Tr()),
+                        new PopupMenu.PopupMenuItemSelectable("Move Up".Tr(), "mu_" + configuration.Key, MoveFilterUp, "Move the filter up.".Tr()),
+                        new PopupMenu.PopupMenuItemSelectable("Move Down".Tr(), "md_" + configuration.Key, MoveFilterDown, "Move the filter down.".Tr()),
+                        new PopupMenu.PopupMenuItemSelectableConfirm("Remove".Tr(), "rf_" + configuration.Key, "Are you sure you want to remove this filter?".Tr(), RemoveFilter, "Remove the filter.".Tr()),
                     }
                 );
             }
@@ -416,7 +416,7 @@ namespace InventoryTools.Ui
         public override Vector2? MaxSize { get; } = new(2000, 2000);
         public override Vector2? MinSize { get; } = new(200, 200);
         public override string GenericKey => "configuration";
-        public override string GenericName => "Configuration";
+        public override string GenericName => "Configuration".Tr();
         public override bool DestroyOnClose => true;
         private List<IConfigPage> _configPages = null!;
         public Dictionary<string, IConfigPage> _filterPages = new Dictionary<string,IConfigPage>();
@@ -433,26 +433,26 @@ namespace InventoryTools.Ui
             {
                 if (menuBar)
                 {
-                    using (var menu = ImRaii.Menu("File"))
+                    using (var menu = ImRaii.Menu("File".Tr()))
                     {
                         if (menu)
                         {
-                            if (ImGui.MenuItem("Report a Issue"))
+                            if (ImGui.MenuItem("Report a Issue".Tr()))
                             {
                                 "https://github.com/Critical-Impact/AllaganMarket".OpenBrowser();
                             }
 
-                            if (ImGui.MenuItem("Changelog"))
+                            if (ImGui.MenuItem("Changelog".Tr()))
                             {
                                 MediatorService.Publish(new OpenGenericWindowMessage(typeof(ChangelogWindow)));
                             }
 
-                            if (ImGui.MenuItem("Help"))
+                            if (ImGui.MenuItem("Help".Tr()))
                             {
                                 MediatorService.Publish(new OpenGenericWindowMessage(typeof(HelpWindow)));
                             }
 
-                            if (ImGui.MenuItem("Enable Verbose Logging", "",
+                            if (ImGui.MenuItem("Enable Verbose Logging".Tr(), "",
                                     this._pluginLog.MinimumLogLevel == LogEventLevel.Verbose))
                             {
                                 if (this._pluginLog.MinimumLogLevel == LogEventLevel.Verbose)
@@ -465,37 +465,37 @@ namespace InventoryTools.Ui
                                 }
                             }
 
-                            if (ImGui.MenuItem("Generate Support Dump"))
+                            if (ImGui.MenuItem("Generate Support Dump".Tr()))
                             {
                                 this.MediatorService.Publish(new OpenGenericWindowMessage(typeof(SupportDumpWindow)));
                             }
 
-                            if (ImGui.MenuItem("Ko-Fi"))
+                            if (ImGui.MenuItem("Ko-Fi".Tr()))
                             {
                                 "https://ko-fi.com/critical_impact".OpenBrowser();
                             }
 
-                            if (ImGui.MenuItem("Close"))
+                            if (ImGui.MenuItem("Close".Tr()))
                             {
                                 this.IsOpen = false;
                             }
                         }
                     }
 
-                    using (var menu = ImRaii.Menu("Wizard"))
+                    using (var menu = ImRaii.Menu("Wizard".Tr()))
                     {
                         if (menu)
                         {
                             var hasNewFeatures = this._configurationWizardService.HasNewFeatures;
                             using var disabled = ImRaii.Disabled(!hasNewFeatures);
-                            if (ImGui.MenuItem("Configure New Features"))
+                            if (ImGui.MenuItem("Configure New Features".Tr()))
                             {
                                 MediatorService.Publish(new OpenGenericWindowMessage(typeof(ConfigurationWizard)));
                             }
 
                             disabled.Dispose();
 
-                            if (ImGui.MenuItem("Reconfigure All Features"))
+                            if (ImGui.MenuItem("Reconfigure All Features".Tr()))
                             {
                                 this._configurationWizardService.ClearFeaturesSeen();
                                 MediatorService.Publish(new OpenGenericWindowMessage(typeof(ConfigurationWizard)));
@@ -503,7 +503,7 @@ namespace InventoryTools.Ui
                         }
                     }
 
-                    using (var menu = ImRaii.Menu("Windows"))
+                    using (var menu = ImRaii.Menu("Windows".Tr()))
                     {
                         if (menu)
                         {
@@ -668,7 +668,7 @@ namespace InventoryTools.Ui
                     }
 
                     ImGui.NewLine();
-                    ImGui.TextUnformatted("Item Lists");
+                    ImGui.TextUnformatted("Item Lists".Tr());
                     ImGui.Separator();
 
                     var filterIndex = count;
@@ -717,7 +717,7 @@ namespace InventoryTools.Ui
                     }
 
                     _addFilterMenu.Draw();
-                    ImGuiUtil.HoverTooltip("Add a new list");
+                    ImGuiUtil.HoverTooltip("Add a new list".Tr());
 
                     ImGui.SetCursorPosY(height - 24 * ImGui.GetIO().FontGlobalScale);
                     ImGui.SetCursorPosX(26 * ImGui.GetIO().FontGlobalScale);
@@ -728,7 +728,7 @@ namespace InventoryTools.Ui
                     }
 
                     _addSampleMenu.Draw();
-                    ImGuiUtil.HoverTooltip("Add a sample filter");
+                    ImGuiUtil.HoverTooltip("Add a sample filter".Tr());
 
                     var width = ImGui.GetCursorPosX();
                     width -= 24 * ImGui.GetIO().FontGlobalScale;
@@ -752,7 +752,7 @@ namespace InventoryTools.Ui
                     _wizardMenu.Draw();
 
 
-                    ImGuiUtil.HoverTooltip("Start configuration wizard.");
+                    ImGuiUtil.HoverTooltip("Start configuration wizard.".Tr());
                 }
             }
         }

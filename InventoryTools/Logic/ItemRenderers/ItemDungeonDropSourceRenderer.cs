@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -38,7 +39,7 @@ public class ItemDungeonDropSourceRenderer : ItemInfoRenderer<ItemDungeonDropSou
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var dungeonDropSource = AsSource(source);
-        ImGui.Text("Dungeon: " + dungeonDropSource.ContentFinderCondition.FormattedName);
+        ImGui.Text("Dungeon: ".Tr() + dungeonDropSource.ContentFinderCondition.FormattedName);
     };
 
     public override Func<ItemSource, string> GetName => source =>

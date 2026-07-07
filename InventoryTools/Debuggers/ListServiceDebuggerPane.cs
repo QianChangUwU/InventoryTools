@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.Shared.Interfaces;
 using DalaMock.Host.Mediator;
@@ -36,7 +37,7 @@ public class ListServiceDebuggerPane : IDebugPane
             ImGui.Text($"{list.Name}:");
             ImGui.Text($"{(list.Active ? "Active" : "Not Active")}");
             ImGui.SameLine();
-            if (ImGui.Button("Request Refresh"))
+            if (ImGui.Button("Request Refresh".Tr()))
             {
                 _mediatorService.Publish(new RequestListUpdateMessage(list));
             }

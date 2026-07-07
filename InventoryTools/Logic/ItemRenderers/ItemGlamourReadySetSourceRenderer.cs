@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Linq;
 using AllaganLib.GameSheets.Caches;
@@ -30,7 +31,7 @@ public class ItemGlamourReadySetSourceRenderer : ItemInfoRenderer<ItemGlamourRea
         var asSource = AsSource(source);
         if (asSource.SetItems.Count > 1)
         {
-            ImGui.Text("Set Items:");
+            ImGui.Text("Set Items:".Tr());
             using (ImRaii.PushIndent())
             {
                 foreach (var item in asSource.SetItems)

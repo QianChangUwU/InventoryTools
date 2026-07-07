@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.GameSheets.Caches;
 using AllaganLib.GameSheets.ItemSources;
@@ -28,11 +29,11 @@ public class ItemJobSoulCrystalUseRenderer : ItemInfoRenderer<ItemJobSoulCrystal
         var asSource = AsSource(source);
         if (asSource.ParentClassJob != null)
         {
-            ImGui.Text("Converts " + asSource.ParentClassJob.Base.Name.ExtractText() + " into " + asSource.ClassJob.Base.Name.ExtractText());
+            ImGui.Text("Converts ".Tr() + asSource.ParentClassJob.Base.Name.ExtractText() + " into " + asSource.ClassJob.Base.Name.ExtractText());
         }
         else
         {
-            ImGui.Text("Provides the " + asSource.ClassJob.Base.Name.ExtractText() + " job");
+            ImGui.Text("Provides the ".Tr() + asSource.ClassJob.Base.Name.ExtractText() + " job");
         }
     };
 

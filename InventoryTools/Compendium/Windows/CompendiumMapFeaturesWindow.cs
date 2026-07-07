@@ -182,7 +182,7 @@ public class CompendiumMapFeaturesWindow : UintWindow
                     {
                         var originalX = ImGui.GetCursorScreenPos().X;
 
-                        if (ImGui.Selectable("##" + rowId, false, ImGuiSelectableFlags.SpanAllColumns, new Vector2(0, 50)))
+                        if (ImGui.Selectable("##".Tr() + rowId, false, ImGuiSelectableFlags.SpanAllColumns, new Vector2(0, 50)))
                         {
                             MediatorService.Publish(new ToggleCompendiumViewMessage(_selectedType, rowId));
                         }

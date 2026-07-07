@@ -10,6 +10,7 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using InventoryTools.Localizers;
+using InventoryTools.Services;
 using InventoryTools.Logic.Editors;
 using InventoryTools.Logic.Settings;
 using Microsoft.Extensions.Logging;
@@ -147,7 +148,7 @@ public class AmountOwnedTooltip : BaseTooltip
                 }
                 if (ownedItems.Count > Configuration.TooltipLocationLimit)
                 {
-                    locations.Add(ownedItems.Count - Configuration.TooltipLocationLimit + " other locations.");
+                    locations.Add(ownedItems.Count - Configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                 }
             }
             if (Configuration.TooltipLocationDisplayMode ==
@@ -173,7 +174,7 @@ public class AmountOwnedTooltip : BaseTooltip
                 }
                 if (ownedItems.Count > Configuration.TooltipLocationLimit)
                 {
-                    locations.Add(ownedItems.Count - Configuration.TooltipLocationLimit + " other locations.");
+                    locations.Add(ownedItems.Count - Configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                 }
             }
             else if (Configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterCategoryQuantityQuality)
@@ -206,11 +207,11 @@ public class AmountOwnedTooltip : BaseTooltip
                         typeIcon = "\uE03d";
                     }
 
-                    locations.Add($"{name} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon);
+                    locations.Add($"{name} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon);
                 }
                 if (groupedItems.Count > Configuration.TooltipLocationLimit)
                 {
-                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " other locations.");
+                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                 }
             }
             else if (Configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterWorldCategoryQuantityQuality)
@@ -253,13 +254,13 @@ public class AmountOwnedTooltip : BaseTooltip
                     }
 
                     var locationLine = string.IsNullOrEmpty(worldName)
-                        ? $"{name} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon
-                        : $"{name} - {worldName} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon;
+                        ? $"{name} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon
+                        : $"{name} - {worldName} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon;
                     locations.Add(locationLine);
                 }
                 if (groupedItems.Count > Configuration.TooltipLocationLimit)
                 {
-                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " other locations.");
+                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                 }
             }
             else if (Configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterQuantityQuality)
@@ -296,14 +297,14 @@ public class AmountOwnedTooltip : BaseTooltip
                 }
                 if (groupedItems.Count > Configuration.TooltipLocationLimit)
                 {
-                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " other locations.");
+                    locations.Add(groupedItems.Count - Configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                 }
             }
 
             if (storageCount > 0)
             {
-                textLines.Add($"Owned: {storageCount}\n");
-                textLines.Add($"Locations:\n");
+                textLines.Add($"{"Owned".Tr()}: {storageCount}\n");
+                textLines.Add($"{"Locations".Tr()}:\n");
                 for (var index = 0; index < locations.Count; index++)
                 {
                     var location = locations[index];

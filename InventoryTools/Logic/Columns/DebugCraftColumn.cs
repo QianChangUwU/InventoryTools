@@ -27,13 +27,13 @@ namespace InventoryTools.Logic.Columns
 
             ImGui.TableNextColumn();
             if (!ImGui.TableGetColumnFlags().HasFlag(ImGuiTableColumnFlags.IsEnabled)) return null;
-            ImGui.Text("Required: " +  searchResult.CraftItem.QuantityRequired);
-            ImGui.Text("Needed: " +  searchResult.CraftItem.QuantityNeeded);
-            ImGui.Text("Needed Pre Update: " +  searchResult.CraftItem.QuantityNeededPreUpdate);
-            ImGui.Text("Available: " +  searchResult.CraftItem.QuantityAvailable);
-            ImGui.Text("Ready: " +  searchResult.CraftItem.QuantityReady);
-            ImGui.Text("Can Craft: " +  searchResult.CraftItem.QuantityCanCraft);
-            ImGui.Text("Will Retrieve: " + searchResult.CraftItem.QuantityWillRetrieve);
+            ImGui.Text("Required: ".Tr() +  searchResult.CraftItem.QuantityRequired);
+            ImGui.Text("Needed: ".Tr() +  searchResult.CraftItem.QuantityNeeded);
+            ImGui.Text("Needed Pre Update: ".Tr() +  searchResult.CraftItem.QuantityNeededPreUpdate);
+            ImGui.Text("Available: ".Tr() +  searchResult.CraftItem.QuantityAvailable);
+            ImGui.Text("Ready: ".Tr() +  searchResult.CraftItem.QuantityReady);
+            ImGui.Text("Can Craft: ".Tr() +  searchResult.CraftItem.QuantityCanCraft);
+            ImGui.Text("Will Retrieve: ".Tr() + searchResult.CraftItem.QuantityWillRetrieve);
             return null;
         }
 

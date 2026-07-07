@@ -146,7 +146,7 @@ public class InventoryScopePicker
         {
             if (combo)
             {
-                ImGui.Text("Inventory Scope Editor");
+                ImGui.Text("Inventory Scope Editor".Tr());
                 using(var child = ImRaii.Child("selected", new Vector2(200, 0) * ImGui.GetIO().FontGlobalScale , true, ImGuiWindowFlags.NoScrollbar))
                 {
                     if (child)
@@ -199,14 +199,14 @@ public class InventoryScopePicker
                         {
                             if (commandBar)
                             {
-                                if (ImGui.Button("Add"))
+                                if (ImGui.Button("Add".Tr()))
                                 {
                                     _selectedScope = new InventorySearchScope();
                                     searchScopes.Add(_selectedScope);
                                     changed = true;
                                 }
                                 ImGui.SameLine();
-                                if (ImGui.Button("Save"))
+                                if (ImGui.Button("Save".Tr()))
                                 {
                                     ImGui.CloseCurrentPopup();
                                 }
@@ -235,7 +235,7 @@ public class InventoryScopePicker
                                     var isCharacter = _selectedScope.CharacterId != null;
                                     var isWorld = _selectedScope.WorldId != null;
                                     var isActiveCharacter = _selectedScope.ActiveCharacter != null;
-                                    ImGui.Text("Search Scope:");
+                                    ImGui.Text("Search Scope:".Tr());
                                     ImGui.Separator();
                                     if (ImGui.RadioButton("All",!isCharacter && !isWorld && !isActiveCharacter))
                                     {
@@ -444,13 +444,13 @@ public class InventoryScopePicker
                             {
                                 if (commandBar)
                                 {
-                                    if (ImGui.Button("Save"))
+                                    if (ImGui.Button("Save".Tr()))
                                     {
                                         _selectedScope = null;
                                         changed = true;
                                     }
                                     ImGui.SameLine();
-                                    if (ImGui.Button("Delete"))
+                                    if (ImGui.Button("Delete".Tr()))
                                     {
                                         searchScopes.Remove(_selectedScope);
                                         _selectedScope = null;

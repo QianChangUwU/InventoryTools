@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -170,7 +170,7 @@ public class CraftOverlayWindow : OverlayWindow
                             break;
                     }
                     ImGui.TextUnformatted($"Left Click: {nextState}");
-                    ImGui.TextUnformatted("Right Click: Menu");
+                    ImGui.TextUnformatted("Right Click: Menu".Tr());
                 }
             }
 
@@ -184,7 +184,7 @@ public class CraftOverlayWindow : OverlayWindow
         {
             if (popup)
             {
-                if (ImGui.MenuItem("Close"))
+                if (ImGui.MenuItem("Close".Tr()))
                 {
                     this.Close();
                 }
@@ -271,7 +271,7 @@ public class CraftOverlayWindow : OverlayWindow
         }
         else
         {
-            ImGui.Text("Nothing to do.");
+            ImGui.Text("Nothing to do.".Tr());
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() + (150 + 70 + 80 * ImGui.GetIO().FontGlobalScale));
         }
 
@@ -283,7 +283,7 @@ public class CraftOverlayWindow : OverlayWindow
                 _font,
                 FontAwesomeIcon.Hammer,
                 ref currentCursorPosX,
-                "Open the Allagan Tools crafts window.",
+                "Open the Allagan Tools crafts window.".Tr(),
                 true))
         {
             this.MediatorService.Publish(new ToggleGenericWindowMessage(typeof(CraftsWindow)));
@@ -295,7 +295,7 @@ public class CraftOverlayWindow : OverlayWindow
                 _font,
                 FontAwesomeIcon.Cog,
                 ref currentCursorPosX,
-                "Open the Allagan Tools configuration window.",
+                "Open the Allagan Tools configuration window.".Tr(),
                 true))
         {
             this.MediatorService.Publish(new ToggleGenericWindowMessage(typeof(ConfigurationWindow)));
@@ -306,7 +306,7 @@ public class CraftOverlayWindow : OverlayWindow
                 _font,
                 FontAwesomeIcon.Lightbulb,
                 ref currentCursorPosX,
-                "Toggle highlighting.",
+                "Toggle highlighting.".Tr(),
                 true,
                 isHighlighting ? null : ImGuiColors.ParsedGrey))
         {
@@ -321,7 +321,7 @@ public class CraftOverlayWindow : OverlayWindow
                 _font,
                 FontAwesomeIcon.Bars,
                 ref currentCursorPosX,
-                "Select active craft list",
+                "Select active craft list".Tr(),
                 true))
         {
             ImGui.OpenPopup("SelectCraftList");
@@ -346,7 +346,7 @@ public class CraftOverlayWindow : OverlayWindow
 
         if (SelectedConfiguration == null)
         {
-            ImGui.Text("No craft list active.");
+            ImGui.Text("No craft list active.".Tr());
         }
         else if(craftList != null)
         {
@@ -354,17 +354,17 @@ public class CraftOverlayWindow : OverlayWindow
             {
                 using (ImRaii.Table("CraftList", 6, ImGuiTableFlags.SizingFixedFit))
                 {
-                    ImGui.TableSetupColumn("Icon", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Icon".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         20 * ImGui.GetIO().FontGlobalScale);
-                    ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Name".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         150 * ImGui.GetIO().FontGlobalScale);
-                    ImGui.TableSetupColumn("Step", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Step".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         80 * ImGui.GetIO().FontGlobalScale);
-                    ImGui.TableSetupColumn("Icon", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Icon".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         10 * ImGui.GetIO().FontGlobalScale);
-                    ImGui.TableSetupColumn("Bell", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Bell".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         20 * ImGui.GetIO().FontGlobalScale);
-                    ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed,
+                    ImGui.TableSetupColumn("Action".Tr(), ImGuiTableColumnFlags.WidthFixed,
                         70 * ImGui.GetIO().FontGlobalScale);
                     var index = 1;
                     foreach (var currentItem in nextItems.Take(WindowState == CraftOverlayWindowState.Single ? 1 : maxItems))
@@ -432,7 +432,7 @@ public class CraftOverlayWindow : OverlayWindow
                                                 .Distinct().ToList();
                                             foreach (var result in sortingResults)
                                             {
-                                                ImGui.Text($"{result.Quantity} available to retrieve from {_characterMonitor.GetCharacterById(result.SourceRetainerId)?.FormattedName ?? "Unknown Retainer"} in {result.SourceBag.FormattedName()} at {result.BagLocation.X + 1}/{result.BagLocation.Y + 1}");
+                                                ImGui.Text($"{result.Quantity} available to retrieve from {_characterMonitor.GetCharacterById(result.SourceRetainerId)?.FormattedName ?? "Unknown Retainer".Tr()} in {result.SourceBag.FormattedName()} at {result.BagLocation.X + 1}/{result.BagLocation.Y + 1}");
                                             }
                                         }
                                     }
@@ -480,7 +480,7 @@ public class CraftOverlayWindow : OverlayWindow
                             {
                                 if (popup.Success)
                                 {
-                                    if (ImGui.MenuItem("More Information"))
+                                    if (ImGui.MenuItem("More Information".Tr()))
                                     {
                                         this.MediatorService.Publish(new OpenUintWindowMessage(typeof(ItemWindow), currentItem.ItemId));
                                     }

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,9 @@ public class ItemMonsterDropSourceRenderer : ItemInfoRenderer<ItemMonsterDropSou
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var asSource = AsSource(source);
-        ImGui.Text("Monster: " + asSource.MobDrop.BNpcName.Value.Singular.ExtractText().ToTitleCase());
+        ImGui.Text("Monster: ".Tr() + asSource.MobDrop.BNpcName.Value.Singular.ExtractText().ToTitleCase());
 
-        ImGui.Text("Locations: ");
+        ImGui.Text("Locations: ".Tr());
         using (ImRaii.PushIndent())
         {
             foreach (var groupedSpawns in asSource.BNpcName.MobSpawnPositions.GroupBy(c => c.TerritoryTypeId))

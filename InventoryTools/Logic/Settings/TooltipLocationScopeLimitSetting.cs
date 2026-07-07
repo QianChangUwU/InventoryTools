@@ -54,7 +54,7 @@ public class TooltipLocationScopeLimitSetting : Setting<List<InventorySearchScop
         if (disableReset != true && HasValueSet(configuration))
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 Reset(configuration);
             }

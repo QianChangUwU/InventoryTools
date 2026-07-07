@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.GameSheets.Caches;
 using AllaganLib.GameSheets.ItemSources;
@@ -24,8 +25,8 @@ public class ItemPvpSeriesSourceRenderer : ItemInfoRenderer<ItemPVPSeriesSource>
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var asSource = AsSource(source);
-        ImGui.Text("Reward in PVP Series " + asSource.PvpSeries.Value.RowId);
-        ImGui.Text("Unlocks at level " + asSource.Level);
+        ImGui.Text("Reward in PVP Series ".Tr() + asSource.PvpSeries.Value.RowId);
+        ImGui.Text("Unlocks at level ".Tr() + asSource.Level);
     };
 
     public override Func<ItemSource, string> GetName => source =>

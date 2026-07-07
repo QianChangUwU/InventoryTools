@@ -147,7 +147,7 @@ public abstract class ChoiceColumnSetting<T> : ColumnSetting<T?>
         if (HasValueSet(configuration) && ShowReset)
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 ResetFilter(configuration);
                 success = true;
@@ -215,7 +215,7 @@ public abstract class ChoiceColumnSetting<T> : ColumnSetting<T?>
         if (HasValueSet(configuration) && ShowReset)
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 ResetFilter(configuration);
                 success = true;

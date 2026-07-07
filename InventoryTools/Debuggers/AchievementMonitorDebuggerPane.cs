@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Collections.Generic;
 using System.Linq;
 using AllaganLib.Monitors.Interfaces;
@@ -24,13 +25,13 @@ public class AchievementDebuggerPane : DebugLogPane
 
     public override void DrawInfo()
     {
-        if (ImGui.CollapsingHeader("Status"))
+        if (ImGui.CollapsingHeader("Status".Tr()))
         {
             ImGui.TextUnformatted($"Loaded: {_achievementMonitorService.IsLoaded}");
             ImGui.TextUnformatted($"Completed Achievement Count: {_achievementMonitorService.GetCompletedAchievementIds().Count}");
         }
 
-        if (ImGui.CollapsingHeader("Completed Achievements"))
+        if (ImGui.CollapsingHeader("Completed Achievements".Tr()))
         {
             var completed = _achievementMonitorService.GetCompletedAchievements();
 
@@ -48,7 +49,7 @@ public class AchievementDebuggerPane : DebugLogPane
             }
         }
 
-        if (ImGui.CollapsingHeader("Configuration"))
+        if (ImGui.CollapsingHeader("Configuration".Tr()))
         {
             var config = _achievementMonitorService.Configuration;
             if (config == null)

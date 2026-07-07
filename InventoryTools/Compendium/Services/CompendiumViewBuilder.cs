@@ -452,7 +452,7 @@ public class CompendiumViewBuilder
 
             using (ImRaii.PushId("EditSection" + index))
             {
-                ImGui.Button("=");
+                ImGui.Button("=".Tr());
                 using (var source = ImRaii.DragDropSource())
                 {
                     if (source)

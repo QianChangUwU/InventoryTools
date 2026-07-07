@@ -45,7 +45,7 @@ namespace InventoryTools.Logic.Filters.Abstract
             if (value == null)
             {
                 var isChecked = false;
-                if (ImGui.Checkbox("Override Color##" + Key + "ColorEnable", ref isChecked))
+                if (ImGui.Checkbox("Override Color##".Tr() + Key + "ColorEnable", ref isChecked))
                 {
                     if (isChecked)
                     {
@@ -66,7 +66,7 @@ namespace InventoryTools.Logic.Filters.Abstract
             if (HasValueSet(configuration))
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Clear Color"))
+                if (ImGui.Button("Clear Color".Tr()))
                 {
                     UpdateFilterConfiguration(configuration, null);
                 }
@@ -79,7 +79,7 @@ namespace InventoryTools.Logic.Filters.Abstract
             if (HasValueSet(configuration) && ShowReset)
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Reset##" + Key + "Reset"))
+                if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
                 {
                     ResetFilter(configuration);
                 }

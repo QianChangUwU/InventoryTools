@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -197,7 +198,7 @@ public class MultiLineTextPopup : IPopup
 
         ImGui.SameLine();
 
-        if (ImGui.Button("Cancel", new System.Numerics.Vector2(100, 0)))
+        if (ImGui.Button("Cancel".Tr(), new System.Numerics.Vector2(100, 0)))
         {
             _callback.Invoke((false, _text));
             Finalized?.Invoke(this);
@@ -246,7 +247,7 @@ public class ConfirmPopup : IPopup
             Finalized?.Invoke(this);
         }
         ImGui.SameLine();
-        if (ImGui.Button("Cancel", new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
+        if (ImGui.Button("Cancel".Tr(), new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
         {
             _callback?.Invoke(false);
             ImGui.CloseCurrentPopup();

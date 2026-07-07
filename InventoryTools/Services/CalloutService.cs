@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Utility.Raii;
@@ -52,7 +53,7 @@ public class CalloutService : ICalloutService
                 ImGui.TextUnformatted(body);
                 ImGui.PopTextWrapPos();
                 ImGui.Spacing();
-                if (ImGui.Button("Got it"))
+                if (ImGui.Button("Got it".Tr()))
                 {
                     MarkSeen(popup);
                     ImGui.CloseCurrentPopup();

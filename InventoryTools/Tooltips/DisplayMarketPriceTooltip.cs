@@ -11,6 +11,7 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using InventoryTools.Logic.Settings;
+using InventoryTools.Services;
 using Microsoft.Extensions.Logging;
 
 namespace InventoryTools.Tooltips;
@@ -89,21 +90,21 @@ public class DisplayMarketPriceTooltip : BaseTooltip
                             var marketData = _marketCache.GetPricing((uint)hoverItemId, activeCharacter.WorldId, false);
                             if (marketData != null)
                             {
-                                textLines.Add("Market Board Data:\n");
+                                textLines.Add("Market Board Data".Tr() + ":\n");
                                 if (Configuration.TooltipDisplayMarketAveragePrice)
                                 {
                                     textLines.Add(
-                                        $"{indentation}Average Price: {Math.Round(marketData.AveragePriceNq, 0)}\n");
+                                        $"{indentation}{"Average Price".Tr()}: {Math.Round(marketData.AveragePriceNq, 0)}\n");
                                     textLines.Add(
-                                        $"{indentation}Average Price (HQ): {Math.Round(marketData.AveragePriceHq, 0)}\n");
+                                        $"{indentation}{"Average Price (HQ)".Tr()}: {Math.Round(marketData.AveragePriceHq, 0)}\n");
                                 }
 
                                 if (Configuration.TooltipDisplayMarketLowestPrice)
                                 {
                                     textLines.Add(
-                                        $"{indentation}Minimum Price: {Math.Round(marketData.MinPriceNq, 0)}\n");
+                                        $"{indentation}{"Minimum Price".Tr()}: {Math.Round(marketData.MinPriceNq, 0)}\n");
                                     textLines.Add(
-                                        $"{indentation}Minimum Price (HQ): {Math.Round(marketData.MinPriceHq, 0)}\n");
+                                        $"{indentation}{"Minimum Price (HQ)".Tr()}: {Math.Round(marketData.MinPriceHq, 0)}\n");
                                 }
                             }
                         }

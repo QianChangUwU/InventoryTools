@@ -18,7 +18,7 @@ public class CopyItemNameButtonColumn(IClipboardService clipboardService) : Butt
         ImGui.TableNextColumn();
         if (ImGui.TableGetColumnFlags().HasFlag(ImGuiTableColumnFlags.IsEnabled))
         {
-            if (ImGui.Button("Copy Name##" + rowIndex + "_" + columnIndex))
+            if (ImGui.Button("Copy Name".Tr() + "##" + rowIndex + "_" + columnIndex))
             {
                 clipboardService.CopyToClipboard(searchResult.Item.NameString);
             }

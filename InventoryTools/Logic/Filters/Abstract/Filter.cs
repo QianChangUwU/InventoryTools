@@ -48,12 +48,12 @@ namespace InventoryTools.Logic.Filters.Abstract
         public abstract bool HasValueSet(FilterConfiguration configuration);
         public virtual string GetName(FilterConfiguration configuration)
         {
-            return Name;
+            return Name.Tr();
         }
 
         public virtual string GetHelpText(FilterConfiguration configuration)
         {
-            return HelpText;
+            return HelpText.Tr();
         }
 
         public virtual FilterType AvailableIn { get; set; } =

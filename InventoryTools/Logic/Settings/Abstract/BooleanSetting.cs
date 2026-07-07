@@ -20,14 +20,14 @@ namespace InventoryTools.Logic.Settings.Abstract
             if (disableColouring != true && HasValueSet(configuration))
             {
                 ImGui.PushStyleColor(ImGuiCol.Text,ImGuiColors.HealerGreen);
-                ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+                ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
                 ImGui.PopStyleColor();
             }
             else
             {
-                ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+                ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
             }
-            if (ImGui.Checkbox("##"+Key+"Boolean", ref currentValue))
+            if (ImGui.Checkbox("##".Tr() +Key+"Boolean", ref currentValue))
             {
                 if (currentValue != CurrentValue(configuration))
                 {
@@ -39,7 +39,7 @@ namespace InventoryTools.Logic.Settings.Abstract
             if (disableReset != true && HasValueSet(configuration))
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Reset##" + Key + "Reset"))
+                if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
                 {
                     Reset(configuration);
                 }

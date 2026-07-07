@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
@@ -180,8 +180,8 @@ namespace InventoryTools.Logic
                             color.Pop();
                             using (ImRaii.Tooltip())
                             {
-                                ImGui.Text("Extra Filters");
-                                ImGui.Text("Right Click: Clear All");
+                                ImGui.Text("Extra Filters".Tr());
+                                ImGui.Text("Right Click: Clear All".Tr());
                             }
                         }
                     }

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ public class ItemDungeonBossDropSourceRenderer : ItemInfoRenderer<ItemDungeonBos
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var asSource = AsSource(source);
-        ImGui.Text("Dungeon: " + asSource.ContentFinderCondition.FormattedName);
+        ImGui.Text("Dungeon: ".Tr() + asSource.ContentFinderCondition.FormattedName);
         using (ImRaii.PushIndent())
         {
             ImGui.Text(asSource.BNpcName.Base.Singular.ExtractText().ToTitleCase() + " (Boss " + (asSource.DungeonBoss.FightNo + 1) + ")");
@@ -61,7 +62,7 @@ public class ItemDungeonBossDropSourceRenderer : ItemInfoRenderer<ItemDungeonBos
         var groupedByDungeon = asSources.GroupBy(c => c.DungeonBoss.ContentFinderCondition.RowId);
         foreach (var dungeon in groupedByDungeon)
         {
-            ImGui.Text("Dungeon: " + dungeon.First().DungeonBoss.ContentFinderCondition.Value.Name.ExtractText());
+            ImGui.Text("Dungeon: ".Tr() + dungeon.First().DungeonBoss.ContentFinderCondition.Value.Name.ExtractText());
             using (ImRaii.PushIndent())
             {
                 foreach (var itemSource in dungeon.DistinctBy(c => c.DungeonBoss.BNpcName.RowId))

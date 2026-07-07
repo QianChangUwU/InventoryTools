@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -29,8 +30,8 @@ public class ItemAquariumUseRenderer : ItemInfoRenderer<ItemAquariumSource>
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var aquariumSource = AsSource(source);
-        ImGui.Text("Size: " + aquariumSource.AquariumFish.Size);
-        ImGui.Text("Water Type: " + aquariumSource.AquariumFish.Base.AquariumWater.Value.Name.ExtractText());
+        ImGui.Text("Size: ".Tr() + aquariumSource.AquariumFish.Size);
+        ImGui.Text("Water Type: ".Tr() + aquariumSource.AquariumFish.Base.AquariumWater.Value.Name.ExtractText());
     };
 
     public override Func<ItemSource, string> GetName => source =>

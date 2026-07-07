@@ -34,7 +34,7 @@ public class RemoveButtonColumn : ButtonColumn
             ImGui.Dummy(new Vector2(0,0));
             return null;
         }
-        if (ImGui.Button("X##RM" + rowIndex + "_" + columnIndex))
+        if (ImGui.Button("X".Tr() + "##RM" + rowIndex + "_" + columnIndex))
         {
             if (searchResult.CraftItem != null && searchResult.CraftItem.IsOutputItem)
             {

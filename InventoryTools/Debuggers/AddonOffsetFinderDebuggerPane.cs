@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.Shared.Interfaces;
 using Dalamud.Bindings.ImGui;
@@ -26,7 +27,7 @@ public class AddonOffsetFinderDebuggerPane : DebugLogPane
         ImGui.InputInt("Max Scan Size", ref _maxScanSize);
 
 
-        if (ImGui.Button("Scan"))
+        if (ImGui.Button("Scan".Tr()))
         {
 
             var addon = _gameGui.GetAddonByName(_addonName);

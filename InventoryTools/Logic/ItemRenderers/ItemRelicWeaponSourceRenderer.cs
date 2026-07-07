@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ public abstract class ItemRelicWeaponSourceRenderer<T> : ItemInfoRenderer<T> whe
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var asSource = this.AsSource(source);
-        ImGui.TextUnformatted("Class: " + asSource.RelicWeapon.ClassJob.Value.Name.ToImGuiString().ToTitleCase());
+        ImGui.TextUnformatted("Class: ".Tr() + asSource.RelicWeapon.ClassJob.Value.Name.ToImGuiString().ToTitleCase());
         this.DrawForms("Forms:", asSource.Forms);
     };
 

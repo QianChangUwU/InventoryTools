@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -120,7 +120,7 @@ namespace InventoryTools.Ui
         };
 
         public override string GenericKey => "chocobo_colour";
-        public override string GenericName => "Chocobo Colour Calculator";
+        public override string GenericName => "Chocobo Colour Calculator".Tr();
         public override bool DestroyOnClose => false;
         public override bool SaveState => true;
         public override Vector2? DefaultSize => new(950, 560);
@@ -186,7 +186,7 @@ namespace InventoryTools.Ui
 
         private void DrawCurrentPanel(float panelWidth)
         {
-            ImGui.TextUnformatted("Current Colour");
+            ImGui.TextUnformatted("Current Colour".Tr());
             ImGui.Separator();
             ImGui.Spacing();
 
@@ -199,7 +199,7 @@ namespace InventoryTools.Ui
 
             var disabled = ImRaii.Disabled(_clientState.IsLoggedIn);
 
-            if (ImGui.Button("Copy from your Chocobo"))
+            if (ImGui.Button("Copy from your Chocobo".Tr()))
             {
                 var stainId = _gameInteropService.GetChocoboStainId();
                 if (stainId.HasValue && stainId.Value > 0)
@@ -221,7 +221,7 @@ namespace InventoryTools.Ui
             {
                 using (ImRaii.Tooltip())
                 {
-                    ImGui.TextUnformatted("Log in first.");
+                    ImGui.TextUnformatted("Log in first.".Tr());
                 }
             }
 
@@ -233,7 +233,7 @@ namespace InventoryTools.Ui
 
             ImGui.Spacing();
             ImGui.Separator();
-            ImGui.TextUnformatted("Or pick manually:");
+            ImGui.TextUnformatted("Or pick manually:".Tr());
             ImGui.Spacing();
 
             ImGui.SetNextItemWidth(-1);
@@ -256,13 +256,13 @@ namespace InventoryTools.Ui
 
         private void DrawTargetPanel(float panelWidth)
         {
-            ImGui.TextUnformatted("Target Colour");
+            ImGui.TextUnformatted("Target Colour".Tr());
             ImGui.Separator();
             ImGui.Spacing();
 
             if (_targetStainId == 0)
             {
-                ImGui.TextUnformatted("(none selected)");
+                ImGui.TextUnformatted("(none selected)".Tr());
             }
             else
             {
@@ -274,7 +274,7 @@ namespace InventoryTools.Ui
 
             ImGui.Spacing();
             ImGui.Separator();
-            ImGui.TextUnformatted("Pick a target colour:");
+            ImGui.TextUnformatted("Pick a target colour:".Tr());
             ImGui.Spacing();
 
             ImGui.SetNextItemWidth(-1);
@@ -312,7 +312,7 @@ namespace InventoryTools.Ui
 
         private void DrawResultPanel()
         {
-            ImGui.TextUnformatted("Fruit Sequence");
+            ImGui.TextUnformatted("Fruit Sequence".Tr());
             ImGui.SameLine();
             ImGuiService.HelpMarker(
                 "The fruit sequence is an estimate based on RGB colour math.\n" +
@@ -345,7 +345,7 @@ namespace InventoryTools.Ui
 
             DrawColourSwatch(_currentStainId, "ccResFrom", 20f);
             ImGui.SameLine();
-            ImGui.TextUnformatted("→");
+            ImGui.TextUnformatted("→".Tr());
             ImGui.SameLine();
             if (_targetStainId == 0)
             {
@@ -366,7 +366,7 @@ namespace InventoryTools.Ui
                 ImGui.BeginDisabled();
             }
 
-            if (ImGui.Button("Lock In##ccLockIn"))
+            if (ImGui.Button("Lock In".Tr() + "##ccLockIn"))
             {
                 LockInSolverResult();
             }
@@ -380,8 +380,8 @@ namespace InventoryTools.Ui
             {
                 using (ImRaii.Tooltip())
                 {
-                    ImGui.TextUnformatted("Lock in this sequence to track feeding progress.");
-                    ImGui.TextUnformatted("Check off each fruit as you feed it to your chocobo.");
+                    ImGui.TextUnformatted("Lock in this sequence to track feeding progress.".Tr());
+                    ImGui.TextUnformatted("Check off each fruit as you feed it to your chocobo.".Tr());
                 }
             }
 
@@ -428,7 +428,7 @@ namespace InventoryTools.Ui
 
             ImGui.Spacing();
 
-            if (ImGui.Button("Add to List##ccAddList"))
+            if (ImGui.Button("Add to List".Tr() + "##ccAddList"))
             {
                 ImGui.OpenPopup("ccAddToList");
             }
@@ -437,14 +437,14 @@ namespace InventoryTools.Ui
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Copy to Clipboard##ccCopy"))
+            if (ImGui.Button("Copy to Clipboard".Tr() + "##ccCopy"))
             {
                 CopyResultToClipboard();
             }
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Clear##ccClear"))
+            if (ImGui.Button("Clear".Tr() + "##ccClear"))
             {
                 _solverResult = null;
                 _pathNotFound = false;
@@ -469,15 +469,15 @@ namespace InventoryTools.Ui
                 return;
             }
 
-            using (var hanLemonMenu = ImRaii.Menu("Han Lemon"))
+            using (var hanLemonMenu = ImRaii.Menu("Han Lemon".Tr()))
             {
                 if (ImGui.IsItemHovered())
                 {
                     using (ImRaii.Tooltip())
                     {
-                        ImGui.TextUnformatted("Feed to your chocobo to reset its colour");
-                        ImGui.TextUnformatted("back to Desert Yellow (default),");
-                        ImGui.TextUnformatted("so you can begin recolouring again.");
+                        ImGui.TextUnformatted("Feed to your chocobo to reset its colour".Tr());
+                        ImGui.TextUnformatted("back to Desert Yellow (default),".Tr());
+                        ImGui.TextUnformatted("so you can begin recolouring again.".Tr());
                     }
                 }
 
@@ -493,7 +493,7 @@ namespace InventoryTools.Ui
                         .Where(c => c.FilterType == FilterType.CraftFilter && !c.CraftListDefault).ToArray();
                     if (craftLists.Length != 0)
                     {
-                        using var craftMenu = ImRaii.Menu("Add to Craft List");
+                        using var craftMenu = ImRaii.Menu("Add to Craft List".Tr());
                         if (craftMenu)
                         {
                             foreach (var filter in craftLists)
@@ -508,12 +508,12 @@ namespace InventoryTools.Ui
                         }
                     }
 
-                    if (ImGui.Selectable("Add to new Craft List"))
+                    if (ImGui.Selectable("Add to new Craft List".Tr()))
                     {
                         AddFruitsToCraftList(_listService.AddNewCraftList(), items);
                     }
 
-                    if (ImGui.Selectable("Add to new Craft List (ephemeral)"))
+                    if (ImGui.Selectable("Add to new Craft List (ephemeral)".Tr()))
                     {
                         AddFruitsToCraftList(_listService.AddNewCraftList(null, true), items);
                     }
@@ -524,7 +524,7 @@ namespace InventoryTools.Ui
                         .Where(c => c.FilterType == FilterType.CuratedList).ToArray();
                     if (curatedLists.Length != 0)
                     {
-                        using var curatedMenu = ImRaii.Menu("Add to Curated List");
+                        using var curatedMenu = ImRaii.Menu("Add to Curated List".Tr());
                         if (curatedMenu)
                         {
                             foreach (var filter in curatedLists)
@@ -539,7 +539,7 @@ namespace InventoryTools.Ui
                         }
                     }
 
-                    if (ImGui.Selectable("Add to new Curated List"))
+                    if (ImGui.Selectable("Add to new Curated List".Tr()))
                     {
                         AddFruitsToCuratedList(_listService.AddNewCuratedList(), items);
                     }
@@ -548,7 +548,7 @@ namespace InventoryTools.Ui
 
             ImGui.Separator();
 
-            if (ImGui.MenuItem("Learn More"))
+            if (ImGui.MenuItem("Learn More".Tr()))
             {
                 ChocoboGuideUrl.OpenBrowser();
             }
@@ -557,7 +557,7 @@ namespace InventoryTools.Ui
             {
                 using (ImRaii.Tooltip())
                 {
-                    ImGui.TextUnformatted("Chocobo colour data provided by Lulu.");
+                    ImGui.TextUnformatted("Chocobo colour data provided by Lulu.".Tr());
                     ImGui.TextDisabled(ChocoboGuideUrl);
                 }
             }
@@ -582,7 +582,7 @@ namespace InventoryTools.Ui
                 .Where(c => c.FilterType == FilterType.CraftFilter && !c.CraftListDefault).ToArray();
             if (craftLists.Length != 0)
             {
-                using var menu = ImRaii.Menu("Add to Craft List");
+                using var menu = ImRaii.Menu("Add to Craft List".Tr());
                 if (menu)
                 {
                     foreach (var filter in craftLists)
@@ -597,12 +597,12 @@ namespace InventoryTools.Ui
                 }
             }
 
-            if (ImGui.Selectable("Add to new Craft List"))
+            if (ImGui.Selectable("Add to new Craft List".Tr()))
             {
                 AddFruitsToCraftList(_listService.AddNewCraftList(), fruits);
             }
 
-            if (ImGui.Selectable("Add to new Craft List (ephemeral)"))
+            if (ImGui.Selectable("Add to new Craft List (ephemeral)".Tr()))
             {
                 AddFruitsToCraftList(_listService.AddNewCraftList(null, true), fruits);
             }
@@ -613,7 +613,7 @@ namespace InventoryTools.Ui
                 .Where(c => c.FilterType == FilterType.CuratedList).ToArray();
             if (curatedLists.Length != 0)
             {
-                using var menu = ImRaii.Menu("Add to Curated List");
+                using var menu = ImRaii.Menu("Add to Curated List".Tr());
                 if (menu)
                 {
                     foreach (var filter in curatedLists)
@@ -628,7 +628,7 @@ namespace InventoryTools.Ui
                 }
             }
 
-            if (ImGui.Selectable("Add to new Curated List"))
+            if (ImGui.Selectable("Add to new Curated List".Tr()))
             {
                 AddFruitsToCuratedList(_listService.AddNewCuratedList(), fruits);
             }
@@ -883,7 +883,7 @@ namespace InventoryTools.Ui
 
             DrawColourSwatch(Configuration.ChocoboLockedCurrentStainId, "ccLockedFrom", 20f);
             ImGui.SameLine();
-            ImGui.TextUnformatted("→");
+            ImGui.TextUnformatted("→".Tr());
             ImGui.SameLine();
             DrawColourSwatch(Configuration.ChocoboLockedTargetStainId, "ccLockedTo", 20f);
             ImGui.SameLine();
@@ -916,7 +916,7 @@ namespace InventoryTools.Ui
 
             ImGui.Separator();
 
-            if (ImGui.Button("Reset##ccReset"))
+            if (ImGui.Button("Reset".Tr() + "##ccReset"))
             {
                 _openConfirmReset = true;
             }
@@ -925,13 +925,13 @@ namespace InventoryTools.Ui
             {
                 using (ImRaii.Tooltip())
                 {
-                    ImGui.TextUnformatted("Clear the locked sequence and reset all feeding progress.");
+                    ImGui.TextUnformatted("Clear the locked sequence and reset all feeding progress.".Tr());
                 }
             }
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Add to List##ccTrackAddList"))
+            if (ImGui.Button("Add to List".Tr() + "##ccTrackAddList"))
             {
                 ImGui.OpenPopup("ccAddToList");
             }
@@ -940,7 +940,7 @@ namespace InventoryTools.Ui
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Copy to Clipboard##ccTrackCopy"))
+            if (ImGui.Button("Copy to Clipboard".Tr() + "##ccTrackCopy"))
             {
                 CopyResultToClipboard();
             }
@@ -997,11 +997,11 @@ namespace InventoryTools.Ui
                 return;
             }
 
-            ImGui.TextUnformatted("Reset tracking progress?");
+            ImGui.TextUnformatted("Reset tracking progress?".Tr());
             ImGui.TextDisabled("This will clear the locked colour and all progress.");
             ImGui.Spacing();
 
-            if (ImGui.Button("Reset##ccResetYes"))
+            if (ImGui.Button("Reset".Tr() + "##ccResetYes"))
             {
                 Configuration.ChocoboLockedFruitIds = new List<uint>();
                 Configuration.ChocoboLockedCurrentStainId = 0;
@@ -1014,7 +1014,7 @@ namespace InventoryTools.Ui
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Cancel##ccResetCancel"))
+            if (ImGui.Button("Cancel".Tr() + "##ccResetCancel"))
             {
                 ImGui.CloseCurrentPopup();
             }

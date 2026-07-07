@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,11 +49,11 @@ public class ItemBattleLeveSourceRenderer : ItemInfoRenderer<ItemBattleLeveSourc
     {
         var asSource = AsSource(source);
         var leveRow = asSource.Leve.Value;
-        ImGui.TextUnformatted("Leve: " + leveRow.Name.ExtractText());
-        ImGui.TextUnformatted("Class: " + leveRow.ClassJobCategory.Value.Name.ExtractText());
-        ImGui.TextUnformatted("EXP Reward: " + asSource.ExpReward);
-        ImGui.TextUnformatted("Allowance Cost: " + leveRow.AllowanceCost);
-        ImGui.TextUnformatted("Loot Chance: " + asSource.LeveRewardItem.Value.ProbabilityPercent[asSource.RewardItemIndex] + "%");
+        ImGui.TextUnformatted("Leve: ".Tr() + leveRow.Name.ExtractText());
+        ImGui.TextUnformatted("Class: ".Tr() + leveRow.ClassJobCategory.Value.Name.ExtractText());
+        ImGui.TextUnformatted("EXP Reward: ".Tr() + asSource.ExpReward);
+        ImGui.TextUnformatted("Allowance Cost: ".Tr() + leveRow.AllowanceCost);
+        ImGui.TextUnformatted("Loot Chance: ".Tr() + asSource.LeveRewardItem.Value.ProbabilityPercent[asSource.RewardItemIndex] + "%");
 
         DrawItems("Possible Reward Items: ", asSource.RewardItems);
         DrawMaps(asSource);

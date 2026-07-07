@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -152,7 +153,7 @@ public class ImGuiTooltipService
                                     {
                                         ImGui.NewLine();
                                         ImGui.Separator();
-                                        ImGui.Text("When HQ:");
+                                        ImGui.Text("When HQ:".Tr());
                                         for (var index = 0; index < item.Base.BaseParamSpecial.Count; index++)
                                         {
                                             var baseParamSpecial = item.Base.BaseParamSpecial[index];
@@ -191,7 +192,7 @@ public class ImGuiTooltipService
                     if (item.Sources.Count > 0)
                     {
                         ImGui.NewLine();
-                        ImGui.TextUnformatted("Available From: ");
+                        ImGui.TextUnformatted("Available From: ".Tr());
                         ImGui.Separator();
                         ImGui.PushTextWrapPos();
                         var sources = item.Sources.Select(c => c.Type).Distinct().Select(
@@ -204,7 +205,7 @@ public class ImGuiTooltipService
                     if (item.Uses.Count > 0)
                     {
                         ImGui.NewLine();
-                        ImGui.TextUnformatted("Used In: ");
+                        ImGui.TextUnformatted("Used In: ".Tr());
                         ImGui.Separator();
                         ImGui.PushTextWrapPos();
                         var uses = item.Uses.Select(c => c.Type).Distinct().Select(
@@ -283,7 +284,7 @@ public class ImGuiTooltipService
                         }
                         if (ownedItems.Count > _configuration.TooltipLocationLimit)
                         {
-                            locations.Add(ownedItems.Count - _configuration.TooltipLocationLimit + " other locations.");
+                            locations.Add(ownedItems.Count - _configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                         }
                     }
                     if (_configuration.TooltipLocationDisplayMode ==
@@ -309,7 +310,7 @@ public class ImGuiTooltipService
                         }
                         if (ownedItems.Count > _configuration.TooltipLocationLimit)
                         {
-                            locations.Add(ownedItems.Count - _configuration.TooltipLocationLimit + " other locations.");
+                            locations.Add(ownedItems.Count - _configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                         }
                     }
                     else if (_configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterCategoryQuantityQuality)
@@ -342,11 +343,11 @@ public class ImGuiTooltipService
                                 typeIcon = "\uE03d";
                             }
 
-                            locations.Add($"{name} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon);
+                            locations.Add($"{name} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon);
                         }
                         if (groupedItems.Count > _configuration.TooltipLocationLimit)
                         {
-                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " other locations.");
+                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                         }
                     }
                     else if (_configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterWorldCategoryQuantityQuality)
@@ -389,13 +390,13 @@ public class ImGuiTooltipService
                             }
 
                             var locationLine = string.IsNullOrEmpty(worldName)
-                                ? $"{name} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon
-                                : $"{name} - {worldName} - {oGroup.Key.SortedCategory.FormattedName()} - " + quantity + " " + typeIcon;
+                                ? $"{name} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon
+                                : $"{name} - {worldName} - {oGroup.Key.SortedCategory.FormattedName().Tr()} - " + quantity + " " + typeIcon;
                             locations.Add(locationLine);
                         }
                         if (groupedItems.Count > _configuration.TooltipLocationLimit)
                         {
-                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " other locations.");
+                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                         }
                     }
                     else if (_configuration.TooltipLocationDisplayMode == TooltipLocationDisplayMode.CharacterQuantityQuality)
@@ -432,15 +433,15 @@ public class ImGuiTooltipService
                         }
                         if (groupedItems.Count > _configuration.TooltipLocationLimit)
                         {
-                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " other locations.");
+                            locations.Add(groupedItems.Count - _configuration.TooltipLocationLimit + " " + "other locations.".Tr());
                         }
                     }
 
                     if (storageCount > 0)
                     {
                         ImGui.Separator();
-                        ImGui.TextUnformatted($"Owned: {storageCount}");
-                        ImGui.TextUnformatted($"Locations:");
+                        ImGui.TextUnformatted($"{"Owned".Tr()}: {storageCount}");
+                        ImGui.TextUnformatted("Locations:".Tr());
                         using (Dalamud.Interface.Utility.Raii.ImRaii.PushIndent())
                         {
                             for (var index = 0; index < locations.Count; index++)
@@ -454,10 +455,10 @@ public class ImGuiTooltipService
                     ImGui.Separator();
                     using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.DalamudGrey))
                     {
-                        ImGui.TextUnformatted("Ctrl: Link");
+                        ImGui.TextUnformatted("Ctrl: Link".Tr());
                         if (item.CanTryOn)
                         {
-                            ImGui.TextUnformatted("Shift: Try on");
+                            ImGui.TextUnformatted("Shift: Try on".Tr());
                         }
                     }
                 }
@@ -467,17 +468,17 @@ public class ImGuiTooltipService
 
     private static void DrawBaseAttributes(ItemRow item)
     {
-        ImGui.TextUnformatted($"Item Level {item.Base.LevelItem.RowId}");
+        ImGui.TextUnformatted($"{"Item Level".Tr()} {item.Base.LevelItem.RowId}");
         if (item.ClassJobCategory != null)
         {
-            ImGui.TextUnformatted($"Equip Level {item.Base.LevelEquip}");
+            ImGui.TextUnformatted($"{"Equip Level".Tr()} {item.Base.LevelEquip}");
         }
 
         ImGui.TextUnformatted(item.FormattedRarity);
 
         if (item.EquipRace != CharacterRace.Any && item.EquipRace != CharacterRace.None)
         {
-            ImGui.TextUnformatted($"Only equippable by {item.EquipRace}");
+            ImGui.TextUnformatted($"{"Only equippable by ".Tr()}{item.EquipRace}");
         }
 
         if (item.EquippableByGender != CharacterSex.Both && item.EquippableByGender != CharacterSex.NotApplicable)
@@ -487,17 +488,17 @@ public class ImGuiTooltipService
 
         if (item.Base.CanBeHq)
         {
-            ImGui.TextUnformatted("Can be HQ");
+            ImGui.TextUnformatted("Can be HQ".Tr());
         }
 
         if (item.Base.IsUnique)
         {
-            ImGui.TextUnformatted("Unique");
+            ImGui.TextUnformatted("Unique".Tr());
         }
 
         if (item.Base.IsUntradable)
         {
-            ImGui.TextUnformatted("Untradable");
+            ImGui.TextUnformatted("Untradable".Tr());
         }
     }
 }

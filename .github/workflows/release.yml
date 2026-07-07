@@ -1,0 +1,273 @@
+name: Build and release
+
+on:
+  push:
+    branches: [main, master, dev]
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'LICENSE*'
+  workflow_dispatch:
+    inputs:
+      force_release:
+        description: 'Force create release even if tag exists'
+        required: false
+        default: false
+        type: boolean
+      cn_patch:
+        description: 'CN patch number (00-99, default: auto-increment)'
+        required: false
+        default: ''
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+
+env:
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  detect-version:
+    runs-on: ubuntu-latest
+    outputs:
+      upstream-version: ${{ steps.get-version.outputs.upstream-version }}
+      cn-patch: ${{ steps.get-version.outputs.cn-patch }}
+      full-version: ${{ steps.get-version.outputs.full-version }}
+      tag: ${{ steps.build-tag.outputs.tag }}
+      tag-exists: ${{ steps.check-tag.outputs.exists }}
+      should-release: ${{ steps.check-release.outputs.should-release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version and compute CN version
+        id: get-version
+        run: |
+          # ── 1. Extract changelog version from CHANGELOG.md ──
+          #    Format: ## [15.0.9] - 2026-06-14
+          #    The upstream project prepends "1." to form the assembly version:
+          #    changelog 15.0.9 → assembly 1.15.0.9
+          CHANGELOG_VERSION=$(grep -m1 '^## \[' InventoryTools/CHANGELOG.md | sed 's/^## \[\([0-9.]*\)\].*/\1/' | tr -d '\r' | xargs)
+          if [ -z "$CHANGELOG_VERSION" ]; then
+            echo "Error: Could not extract version from CHANGELOG.md"
+            exit 1
+          fi
+
+          # Upstream assembly version = 1.<changelog_version>
+          UPSTREAM="1.${CHANGELOG_VERSION}"
+          echo "upstream-version=$UPSTREAM" >> $GITHUB_OUTPUT
+          echo "Upstream version: $UPSTREAM"
+
+          # ── 2. Determine CN patch number (EE, 00-99) ──
+          INPUT_CN_PATCH="${{ github.event.inputs.cn_patch }}"
+          if [ -n "$INPUT_CN_PATCH" ]; then
+            CN_PATCH="$INPUT_CN_PATCH"
+          else
+            # Auto-increment: find the highest existing CN patch for this upstream version
+            # Tags look like: v1.15.0.9EE or v1.15.0.9EE-dev
+            BASE_TAG="v${UPSTREAM}"
+            LAST_CN=$(git tag -l "${BASE_TAG}*" \
+                       | sed "s|^${BASE_TAG}||" \
+                       | sed 's/-dev$//' \
+                       | sort -n \
+                       | tail -1)
+            if [ -z "$LAST_CN" ]; then
+              CN_PATCH="00"
+            else
+              CN_PATCH=$(printf "%02d" $((10#$LAST_CN + 1)))
+            fi
+          fi
+
+          # Validate
+          if ! echo "$CN_PATCH" | grep -qE '^[0-9]{2}$'; then
+            echo "Error: CN patch must be 00-99, got: $CN_PATCH"
+            exit 1
+          fi
+          echo "cn-patch=$CN_PATCH" >> $GITHUB_OUTPUT
+
+          # ── 3. Build full version: A.B.C.DEE ──
+          #    A.B.C.D = upstream version  (e.g. 1.15.0.9)
+          #    EE      = CN patch          (e.g. 01)
+          #    Full    = 1.15.0.901
+          FULL_VERSION="${UPSTREAM}${CN_PATCH}"
+          echo "full-version=$FULL_VERSION" >> $GITHUB_OUTPUT
+          echo "Full CN version: $FULL_VERSION"
+
+      - name: Build tag name
+        id: build-tag
+        run: |
+          BASE="v${{ steps.get-version.outputs.full-version }}"
+          if [ "${{ env.BRANCH }}" = "dev" ]; then
+            TAG="${BASE}-dev"
+          else
+            TAG="$BASE"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Tag: $TAG"
+
+      - name: Check if tag already exists
+        id: check-tag
+        run: |
+          TAG="${{ steps.build-tag.outputs.tag }}"
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG$"; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Tag $TAG already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Determine if release should be created
+        id: check-release
+        run: |
+          FORCE_RELEASE="${{ github.event.inputs.force_release }}"
+          TAG_EXISTS="${{ steps.check-tag.outputs.exists }}"
+          if [ "$FORCE_RELEASE" = "true" ] || [ "$TAG_EXISTS" = "false" ]; then
+            echo "should-release=true" >> $GITHUB_OUTPUT
+          else
+            echo "should-release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build:
+    needs: detect-version
+    if: needs.detect-version.outputs.should-release == 'true'
+    runs-on: windows-latest
+    env:
+      FULL_VERSION: ${{ needs.detect-version.outputs.full-version }}
+      UPSTREAM_VERSION: ${{ needs.detect-version.outputs.upstream-version }}
+      CN_PATCH: ${{ needs.detect-version.outputs.cn-patch }}
+      TAG: ${{ needs.detect-version.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download and setup Dalamud
+        run: |
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/stg/latest.zip -OutFile dalamud.zip
+          Expand-Archive -Force dalamud.zip "$env:GITHUB_WORKSPACE\.dalamud"
+          echo "DALAMUD_HOME=$env:GITHUB_WORKSPACE\.dalamud" >> $env:GITHUB_ENV
+
+      - name: Build
+        run: |
+          dotnet build InventoryTools\InventoryTools.csproj `
+            -c Release `
+            -p:AssemblyVersion=${env:FULL_VERSION} `
+            -p:FileVersion=${env:FULL_VERSION} `
+            -p:InformationalVersion=${env:FULL_VERSION} `
+            -p:DALAMUD_HOME=${env:DALAMUD_HOME}
+
+      - name: Package plugin
+        run: |
+          $binPath = "InventoryTools\bin\Release"
+          mkdir -Force release
+          # Copy main plugin files (dll, json, deps.json)
+          $files = @(
+            "$binPath\InventoryTools.dll",
+            "$binPath\InventoryTools.json",
+            "$binPath\InventoryTools.deps.json"
+          )
+          foreach ($f in $files) {
+            if (Test-Path $f) { Copy-Item $f "release\" }
+          }
+          # Copy Images folder if it exists in output
+          if (Test-Path "$binPath\Images") {
+            Copy-Item "$binPath\Images" "release\Images" -Recurse -Force
+          }
+          # Copy CHANGELOG.md if it exists in output
+          if (Test-Path "$binPath\CHANGELOG.md") {
+            Copy-Item "$binPath\CHANGELOG.md" "release\CHANGELOG.md"
+          }
+          # Create latest.zip (for Dalamud plugin master)
+          Compress-Archive -Path "release\*" -DestinationPath "release\latest.zip" -Force
+          # Also create a versioned zip for the release assets
+          Copy-Item "release\latest.zip" "release\InventoryTools-${env:FULL_VERSION}.zip"
+          Get-ChildItem release\ | Format-Table Name, Length
+
+      - name: Generate checksums
+        run: |
+          cd release
+          Get-ChildItem -File | ForEach-Object {
+            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
+            "$hash  $($_.Name)" | Out-File "$($_.Name).sha256" -Encoding ascii
+          }
+
+      - name: Create and push tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          $tagExists = git ls-remote --tags origin | Select-String "refs/tags/$env:TAG$"
+          if ($tagExists) {
+            git tag -d $env:TAG 2>$null
+            git push origin ":refs/tags/$env:TAG" 2>$null
+          }
+          git tag $env:TAG -m "发布版本 $env:FULL_VERSION (CN 补丁 $env:CN_PATCH)"
+          git push origin $env:TAG
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: "Allagan Tools v${{ env.FULL_VERSION }} (${{ env.BRANCH }})"
+          body: |
+            ## Allagan Tools v${{ env.FULL_VERSION }}
+
+            - 上游版本: ${{ env.UPSTREAM_VERSION }}
+            - CN 定制补丁: ${{ env.CN_PATCH }}
+
+            自动构建发布（${{ env.BRANCH }} 分支）。
+          files: |
+            release/latest.zip
+            release/InventoryTools-*
+            release/*.sha256
+          draft: false
+          prerelease: ${{ env.BRANCH == 'dev' }}
+
+      - name: Publish to DalamudPlugins repo
+        uses: actions/checkout@v4
+        with:
+          repository: QianChangUwU/DalamudPlugins
+          token: ${{ secrets.PLUGIN_REPO_TOKEN }}
+          path: dalamud-plugins
+
+      - name: Set channel
+        id: set-channel
+        shell: bash
+        run: |
+          if [ "${{ env.BRANCH }}" = "dev" ]; then
+            echo "channel=testing" >> $GITHUB_OUTPUT
+          else
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update pluginmaster.json
+        shell: bash
+        run: |
+          python .github/update_pluginmaster.py \
+            dalamud-plugins \
+            "${{ env.FULL_VERSION }}" \
+            "${{ github.repository }}" \
+            "${{ steps.set-channel.outputs.channel }}" \
+            "${{ env.TAG }}"
+
+      - name: Commit and push to DalamudPlugins
+        shell: bash
+        run: |
+          cd dalamud-plugins
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pluginmaster.json
+          if ! git diff --cached --quiet; then
+            git commit -m "更新 InventoryTools 至 ${{ env.TAG }}"
+            git push
+          fi

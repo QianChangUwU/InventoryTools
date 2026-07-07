@@ -32,12 +32,12 @@ public abstract class MultipleChoiceSetting<T> : Setting<List<T>> where T:notnul
         if (disableColouring != true && HasValueSet(configuration))
         {
             ImGui.PushStyleColor(ImGuiCol.Text,ImGuiColors.HealerGreen);
-            ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+            ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
             ImGui.PopStyleColor();
         }
         else
         {
-            ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+            ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
         }
 
         var choices = GetChoices(configuration);
@@ -48,14 +48,14 @@ public abstract class MultipleChoiceSetting<T> : Setting<List<T>> where T:notnul
             if (combo.Success)
             {
                 var searchString = SearchString;
-                ImGui.InputText("Start typing to search..##ItemSearch", ref searchString, 50);
+                ImGui.InputText("Start typing to search..##ItemSearch".Tr(), ref searchString, 50);
                 if (_searchString != searchString)
                 {
                     SearchString = searchString;
                 }
                 var activeChoices = GetActiveChoices(configuration);
                 ImGui.SameLine();
-                if (ImGui.Button("Add All"))
+                if (ImGui.Button("Add All".Tr()))
                 {
                     foreach (var item in activeChoices)
                     {
@@ -103,7 +103,7 @@ public abstract class MultipleChoiceSetting<T> : Setting<List<T>> where T:notnul
         if (disableReset != true && HasValueSet(configuration))
         {
             ImGui.SameLine();
-            if (ImGui.Button("Reset##" + Key + "Reset"))
+            if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
             {
                 Reset(configuration);
             }
@@ -179,7 +179,7 @@ public abstract class MultipleChoiceSetting<T> : Setting<List<T>> where T:notnul
 
     public virtual string GetPreviewValue(List<T> items)
     {
-        return items.Count == 0 ? "No items selected" : $"{items.Count} items selected";
+        return items.Count == 0 ? "No items selected".Tr() : $"{items.Count} 个已选择";
     }
 
     public virtual int? ResultLimit { get; } = null;

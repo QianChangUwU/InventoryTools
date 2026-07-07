@@ -128,18 +128,18 @@ namespace InventoryTools.Logic.Settings.Abstract
             if (disableColouring != true && HasValueSet(configuration))
             {
                 ImGui.PushStyleColor(ImGuiCol.Text,ImGuiColors.HealerGreen);
-                ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+                ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
                 ImGui.PopStyleColor();
             }
             else
             {
-                ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+                ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
             }
             var enabled = value != null;
 
             if (DefaultValue == null)
             {
-                if (ImGui.Checkbox("Enable##" + Key + "Boolean", ref enabled))
+                if (ImGui.Checkbox("Enable##".Tr() + Key + "Boolean", ref enabled))
                 {
                     if (value == null)
                     {
@@ -174,7 +174,7 @@ namespace InventoryTools.Logic.Settings.Abstract
                 {
                     using (ImRaii.Tooltip())
                     {
-                        ImGui.Text("Click to open colour selector.");
+                        ImGui.Text("Click to open colour selector.".Tr());
                     }
                 }
             }
@@ -197,7 +197,7 @@ namespace InventoryTools.Logic.Settings.Abstract
             if (disableReset != true && HasValueSet(configuration))
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Reset##" + Key + "Reset"))
+                if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
                 {
                     Reset(configuration);
                 }

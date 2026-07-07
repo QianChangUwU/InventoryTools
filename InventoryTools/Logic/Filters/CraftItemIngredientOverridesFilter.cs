@@ -101,7 +101,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
         ImGuiService.HelpMarker(HelpText);
         ImGui.Separator();
 
-        ImGui.TextUnformatted("Add Override:");
+        ImGui.TextUnformatted("Add Override:".Tr());
         ImGui.SameLine();
 
         var selectedItemName = _selectedItemId != null
@@ -123,7 +123,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
                 ImGui.Separator();
                 if (_itemSearchString == "")
                 {
-                    ImGui.TextUnformatted("Start typing to search...");
+                    ImGui.TextUnformatted("Start typing to search...".Tr());
                 }
                 foreach (var item in SearchItems)
                 {
@@ -169,7 +169,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
 
         using (ImRaii.Disabled(_selectedItemId == null || _selectedPreference == null))
         {
-            if (ImGui.Button("Add##ItemOverride"))
+            if (ImGui.Button("Add".Tr() + "##ItemOverride"))
             {
                 configuration.CraftList.UpdateIngredientPreference(_selectedItemId!.Value, _selectedPreference);
                 configuration.NeedsRefresh = true;
@@ -184,7 +184,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
         {
             var clearButtonWidth = ImGui.CalcTextSize("Clear All").X + ImGui.GetStyle().FramePadding.X * 2;
             ImGui.SameLine(ImGui.GetContentRegionMax().X - clearButtonWidth);
-            if (ImGui.Button("Clear All##ItemOverrides"))
+            if (ImGui.Button("Clear All".Tr() + "##ItemOverrides"))
             {
                 _popupService.AddPopup(new ConfirmPopup(typeof(CraftsWindow), "clearAllItemOverrides",
                     "Are you sure you want to clear all per-item overrides?",
@@ -210,7 +210,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
         var overrides = configuration.CraftList.IngredientPreferences;
         if (overrides.Count == 0)
         {
-            ImGui.TextUnformatted("No per-item overrides set.");
+            ImGui.TextUnformatted("No per-item overrides set.".Tr());
             return;
         }
 
@@ -241,7 +241,7 @@ public class CraftItemIngredientOverridesFilter : Filter<bool>
                 }
                 else
                 {
-                    ImGui.TextUnformatted("Unknown Item (" + itemId + ")");
+                    ImGui.TextUnformatted("Unknown Item (".Tr() + itemId + ")");
                 }
 
                 ImGui.TableNextColumn();

@@ -162,22 +162,22 @@ public class CompendiumListWindow : CompendiumWindow
                     {
                         if (menu)
                         {
-                            if (ImGui.MenuItem("Configuration"))
+                            if (ImGui.MenuItem("Configuration".Tr()))
                             {
                                 this.MediatorService.Publish(new OpenGenericWindowMessage(typeof(ConfigurationWindow)));
                             }
 
-                            if (ImGui.MenuItem("Changelog"))
+                            if (ImGui.MenuItem("Changelog".Tr()))
                             {
                                 this.MediatorService.Publish(new OpenGenericWindowMessage(typeof(ChangelogWindow)));
                             }
 
-                            if (ImGui.MenuItem("Help"))
+                            if (ImGui.MenuItem("Help".Tr()))
                             {
                                 this.MediatorService.Publish(new OpenGenericWindowMessage(typeof(HelpWindow)));
                             }
 
-                            if (ImGui.MenuItem("Enable Verbose Logging", "",
+                            if (ImGui.MenuItem("Enable Verbose Logging".Tr(), "",
                                     this._pluginLog.MinimumLogLevel == LogEventLevel.Verbose))
                             {
                                 if (this._pluginLog.MinimumLogLevel == LogEventLevel.Verbose)
@@ -190,22 +190,22 @@ public class CompendiumListWindow : CompendiumWindow
                                 }
                             }
 
-                            if (ImGui.MenuItem("Generate Support Dump"))
+                            if (ImGui.MenuItem("Generate Support Dump".Tr()))
                             {
                                 this.MediatorService.Publish(new OpenGenericWindowMessage(typeof(SupportDumpWindow)));
                             }
 
-                            if (ImGui.MenuItem("Report a Issue"))
+                            if (ImGui.MenuItem("Report a Issue".Tr()))
                             {
                                 "https://github.com/Critical-Impact/InventoryTools".OpenBrowser();
                             }
 
-                            if (ImGui.MenuItem("Ko-Fi"))
+                            if (ImGui.MenuItem("Ko-Fi".Tr()))
                             {
                                 "https://ko-fi.com/critical_impact".OpenBrowser();
                             }
 
-                            if (ImGui.MenuItem("Close"))
+                            if (ImGui.MenuItem("Close".Tr()))
                             {
                                 this.IsOpen = false;
                             }
@@ -220,7 +220,7 @@ public class CompendiumListWindow : CompendiumWindow
                         {
                             if (groupingMenu)
                             {
-                                if (ImGui.MenuItem("None", _compendiumGrouping == null))
+                                if (ImGui.MenuItem("None".Tr(), _compendiumGrouping == null))
                                 {
                                     _compendiumGrouping = null;
                                     _table.Value.ClearGrouping();

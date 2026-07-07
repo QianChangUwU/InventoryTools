@@ -71,29 +71,29 @@ namespace InventoryTools.Logic.Filters.Abstract
         {
             if (CanRemove && CanRemoveItem(configuration, item.Key))
             {
-                if (ImGui.Button("X##Column" + index))
+                if (ImGui.Button("X".Tr() + "##Column" + index))
                 {
                     RemoveItem(configuration, item.Key);
                 }
                 ImGui.SameLine();
             }
-            if (ImGui.Button("Top##Column" + index))
+            if (ImGui.Button("Top".Tr() + "##Column" + index))
             {
                 MoveItemTop(configuration, item.Key);
             }
             ImGui.SameLine();
-            if (ImGui.Button("Up##Column" + index))
+            if (ImGui.Button("Up".Tr() + "##Column" + index))
             {
                 MoveItemUp(configuration, item.Key);
             }
 
             ImGui.SameLine();
-            if (ImGui.Button("Down##Column" + index))
+            if (ImGui.Button("Down".Tr() + "##Column" + index))
             {
                 MoveItemDown(configuration, item.Key);
             }
             ImGui.SameLine();
-            if (ImGui.Button("Bottom##Column" + index))
+            if (ImGui.Button("Bottom".Tr() + "##Column" + index))
             {
                 MoveItemBottom(configuration, item.Key);
             }
@@ -138,7 +138,7 @@ namespace InventoryTools.Logic.Filters.Abstract
             if (HasValueSet(configuration) && ShowReset)
             {
                 ImGui.SameLine();
-                if (ImGui.Button("Reset##" + Key + "Reset"))
+                if (ImGui.Button("Reset".Tr() + "##" + Key + "Reset"))
                 {
                     ResetFilter(configuration);
                 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
   <PropertyGroup>
     <AssemblyName>InventoryTools</AssemblyName>
     <NoWarn>IDE0003</NoWarn>
@@ -201,4 +201,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Import Project="$(DALAMUD_HOME)\tools\DalamudPackager\DalamudPackager.targets" Condition="Exists('$(DALAMUD_HOME)\tools\DalamudPackager\DalamudPackager.targets')" />
 </Project>

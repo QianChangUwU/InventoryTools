@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -62,7 +63,7 @@ public class OverlayServiceDebuggerPane : IDebugPane
             ImGui.Text($"Should Draw: {(overlay.ShouldDraw ? "Yes" : "No")}");
         }
 
-        if (ImGui.CollapsingHeader("Current State:") && OverlayService.LastState != null)
+        if (ImGui.CollapsingHeader("Current State:".Tr()) && OverlayService.LastState != null)
         {
             Utils.PrintOutObject(OverlayService.LastState, 0, new List<string>());
             if (OverlayService.LastState.FilterResult != null)

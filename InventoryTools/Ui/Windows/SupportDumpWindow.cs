@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using CriticalCommonLib.Services;
 using CriticalCommonLib.Services.Mediator;
@@ -26,7 +26,7 @@ namespace InventoryTools.Ui
 
         public override void Initialize()
         {
-            WindowName = "Generate Support Dump";
+            WindowName = "Generate Support Dump".Tr();
             Key = "supportdump";
         }
 
@@ -42,13 +42,13 @@ namespace InventoryTools.Ui
         {
             ImGui.PushTextWrapPos();
             ImGui.TextWrapped(
-                "Only press this if you have been instructed to, it will generate a zip file containing your inventory, the allagan tools configuration, and your logs. If you are attempting to provide this information to help fix a bug, turn on Verbose Logging in File, replicate the bug and then generate this dump. Proceed?");
+                "Only press this if you have been instructed to, it will generate a zip file containing your inventory, the allagan tools configuration, and your logs. If you are attempting to provide this information to help fix a bug, turn on Verbose Logging in File, replicate the bug and then generate this dump. Proceed?".Tr());
             ImGui.PopTextWrapPos();
             ImGui.NewLine();
 
-            if (ImGui.Button("Proceed"))
+            if (ImGui.Button("Proceed".Tr()))
             {
-                _fileDialogManager.SaveFileDialog("Save support dump", "*.zip", "support_dump.zip", ".zip",
+                _fileDialogManager.SaveFileDialog("Save support dump".Tr(), "*.zip", "support_dump.zip", ".zip",
                     (success, path) =>
                     {
                         if (success)
@@ -60,7 +60,7 @@ namespace InventoryTools.Ui
 
             ImGui.SameLine();
 
-            if (ImGui.Button("Cancel"))
+            if (ImGui.Button("Cancel".Tr()))
             {
                 this.IsOpen = false;
             }
@@ -80,7 +80,7 @@ namespace InventoryTools.Ui
             }
             else
             {
-                _chatUtilities.PrintError("Failed to generate the support dump. Please check your Dalamud log for details.");
+                _chatUtilities.PrintError("Failed to generate the support dump. Please check your Dalamud log for details.".Tr());
             }
 
             this.IsOpen = false;

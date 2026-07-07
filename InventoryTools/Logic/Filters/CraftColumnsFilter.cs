@@ -129,7 +129,7 @@ namespace InventoryTools.Logic.Filters
         {
             base.DrawButtons(configuration, item, index);
             ImGui.SameLine();
-            if (ImGui.Button("Edit##Column" + index))
+            if (ImGui.Button("Edit".Tr() + "##Column" + index))
             {
                 EditItem(configuration, item.Key);
             }
@@ -159,7 +159,7 @@ namespace InventoryTools.Logic.Filters
                     var groupedItems = GetGroupedItems(configuration);
                     if (_selectedColumnKey == "")
                     {
-                        ImGui.Text("Add Column");
+                        ImGui.Text("Add Column".Tr());
                         ImGui.Separator();
                         var searchString = SearchString;
                         ImGui.InputText("##ItemSearch", ref searchString, 50);
@@ -171,7 +171,7 @@ namespace InventoryTools.Logic.Filters
                         ImGui.Separator();
                         if (_searchString == "")
                         {
-                            ImGui.TextUnformatted("Start typing to search...");
+                            ImGui.TextUnformatted("Start typing to search...".Tr());
                         }
 
                         ImGui.Separator();
@@ -245,7 +245,7 @@ namespace InventoryTools.Logic.Filters
                                         ImGui.PushTextWrapPos();
                                         ImGui.Text(column.Value.HelpText);
                                         ImGui.PopTextWrapPos();
-                                        if (ImGui.Button("Add"))
+                                        if (ImGui.Button("Add".Tr()))
                                         {
                                             _selectedColumnName = column.Value.Name;
                                             _selectedColumnHelp = column.Value.HelpText;
@@ -335,7 +335,7 @@ namespace InventoryTools.Logic.Filters
                         }
                         ImGui.SameLine();
                         ImGui.SetCursorPosX(posX - ImGui.GetStyle().ItemSpacing.X - 50);
-                        if (ImGui.Button("Cancel", new Vector2(50, 20)))
+                        if (ImGui.Button("Cancel".Tr(), new Vector2(50, 20)))
                         {
                             _selectedColumnName = "";
                             _selectedColumnKey = "";
@@ -355,7 +355,7 @@ namespace InventoryTools.Logic.Filters
             {
                 if (table.Success)
                 {
-                    ImGui.Text("Current Columns:");
+                    ImGui.Text("Current Columns:".Tr());
                     ImGui.Separator();
                     DrawTable(configuration);
                 }

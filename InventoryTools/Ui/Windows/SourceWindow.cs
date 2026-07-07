@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AllaganLib.GameSheets.Caches;
@@ -60,7 +60,7 @@ public class SourceWindow : GenericTabbedTable<(SourceType, ItemInfoType)>
 
     public override FilterConfiguration? SelectedConfiguration => null;
     public override string GenericKey => "sources";
-    public override string GenericName => "Sources";
+    public override string GenericName => "Sources".Tr();
     public override bool DestroyOnClose => true;
     public override bool SaveState => false;
     public override Vector2? DefaultSize => new Vector2(500, 500);
@@ -69,7 +69,7 @@ public class SourceWindow : GenericTabbedTable<(SourceType, ItemInfoType)>
     public override void Initialize()
     {
         Key = "submarines";
-        WindowName = "Submarines";
+        WindowName = "Submarines".Tr();
         _columns = new List<TableColumn<(SourceType, ItemInfoType)>>()
         {
             new("Name", 200, ImGuiTableColumnFlags.WidthFixed)

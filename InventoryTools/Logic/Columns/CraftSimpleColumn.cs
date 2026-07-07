@@ -95,7 +95,7 @@ namespace InventoryTools.Logic.Columns
                 }
                 else
                 {
-                    ImGui.Text("N/A");
+                    ImGui.Text("N/A".Tr());
                 }
 
                 var craftPrices = searchResult.CraftItem.CraftPrices;
@@ -120,11 +120,11 @@ namespace InventoryTools.Logic.Columns
                                 totalAvailable += price.Left;
                             }
 
-                            ImGui.Text("Available: " + totalAvailable);
+                            ImGui.Text("Available: ".Tr() + totalAvailable);
 
                             if (searchResult.CraftItem.MarketAvailable != searchResult.CraftItem.QuantityNeeded)
                             {
-                                ImGui.Text("Missing: " + (searchResult.CraftItem.QuantityNeeded - searchResult.CraftItem.MarketAvailable));
+                                ImGui.Text("Missing: ".Tr() + (searchResult.CraftItem.QuantityNeeded - searchResult.CraftItem.MarketAvailable));
                             }
                         }
                     }
@@ -141,7 +141,7 @@ namespace InventoryTools.Logic.Columns
                 if (ImGui.IsItemHovered(ImGuiHoveredFlags.None))
                 {
                     using var tt = ImRaii.Tooltip();
-                    ImGui.Text("Missing Ingredients: ");
+                    ImGui.Text("Missing Ingredients: ".Tr());
                     foreach (var missingIngredient in searchResult.CraftItem.MissingIngredients)
                     {
                         var itemId = missingIngredient.Key.Item1;

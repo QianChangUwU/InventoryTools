@@ -79,14 +79,14 @@ public class CharacterScopePickerColumnSetting : ColumnSetting<List<CharacterSea
             ImGui.SameLine();
             using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.DalamudWhite))
             {
-                ImGui.Text("?");
+                ImGui.Text("?".Tr());
             }
             ImGuiUtil.HoverTooltip(helpText);
         }
 
         var currentValue = CurrentValue(configuration);
         using var disabled = ImRaii.Disabled(currentValue == null);
-        if (ImGui.Button("Test Scopes"))
+        if (ImGui.Button("Test Scopes".Tr()))
         {
             if (currentValue != null)
             {
@@ -98,7 +98,7 @@ public class CharacterScopePickerColumnSetting : ColumnSetting<List<CharacterSea
         if (_characters is not null && currentValue is not null)
         {
             ImGui.Separator();
-            ImGui.Text("The following characters will be searched in: ");
+            ImGui.Text("The following characters will be searched in: ".Tr());
             foreach (var s in _characters)
             {
                 ImGui.TextUnformatted(s.Name);

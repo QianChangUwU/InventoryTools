@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,14 +165,14 @@ public class ShopHighlighting : IDisposable
                     }
                     itemIdString = itemId.ToString();
                 }
-                if (ImGui.Button("Add Item"))
+                if (ImGui.Button("Add Item".Tr()))
                 {
                     if (uint.TryParse(itemIdString, out itemId))
                     {
                         _highlightedItems.Add(itemId);
                     }
                 }
-                if (ImGui.Button("Remove Item"))
+                if (ImGui.Button("Remove Item".Tr()))
                 {
                     if (uint.TryParse(itemIdString, out itemId))
                     {

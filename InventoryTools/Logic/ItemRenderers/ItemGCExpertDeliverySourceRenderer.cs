@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using AllaganLib.GameSheets.Caches;
 using AllaganLib.GameSheets.ItemSources;
@@ -26,7 +27,7 @@ public class ItemGcExpertDeliverySourceRenderer : ItemInfoRenderer<ItemGCExpertD
     {
         var asSource = AsSource(source);
         var sealsRewarded = asSource.SealsRewarded;
-        ImGui.Text("Seals rewarded: " + sealsRewarded);
+        ImGui.Text("Seals rewarded: ".Tr() + sealsRewarded);
     };
 
     public override Func<ItemSource, string> GetName => _ =>

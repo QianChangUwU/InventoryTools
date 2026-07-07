@@ -82,14 +82,14 @@ public class ScopePickerColumnSetting : ColumnSetting<List<InventorySearchScope>
             ImGui.SameLine();
             using (ImRaii.PushColor(ImGuiCol.Text, ImGuiColors.DalamudWhite))
             {
-                ImGui.Text("?");
+                ImGui.Text("?".Tr());
             }
             ImGuiUtil.HoverTooltip("Please make sure you include at least one inventory that contains crystals otherwise the craft calculator will not work.");
         }
 
         var currentValue = CurrentValue(configuration);
         using var disabled = ImRaii.Disabled(currentValue == null);
-        if (ImGui.Button("Test Scopes"))
+        if (ImGui.Button("Test Scopes".Tr()))
         {
             if (currentValue != null)
             {
@@ -101,7 +101,7 @@ public class ScopePickerColumnSetting : ColumnSetting<List<InventorySearchScope>
         if (_categories is not null)
         {
             ImGui.Separator();
-            ImGui.Text("The following inventories will be searched in: ");
+            ImGui.Text("The following inventories will be searched in: ".Tr());
             foreach (var s in _categories)
             {
                 ImGui.TextUnformatted((s.Character?.Name ?? "Unknown Character") + " - " + (string.Join(", ", s.Category.Select(c => c.FormattedDetailedName()).ToList())));

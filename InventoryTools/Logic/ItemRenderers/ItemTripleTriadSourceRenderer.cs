@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Linq;
 using AllaganLib.GameSheets.Caches;
@@ -30,8 +31,8 @@ public class ItemTripleTriadSourceRenderer : ItemInfoRenderer<ItemTripleTriadSou
     {
         var asSource = this.AsSource(source);
 
-        ImGui.TextUnformatted("Match Cost: " + asSource.TripleTriadRow.Base.Fee + SeIconChar.Gil.ToIconString());
-        ImGui.TextUnformatted("Uses Regional Rules: " + (asSource.TripleTriadRow.Base.UsesRegionalRules ? "Yes" : "No"));
+        ImGui.TextUnformatted("Match Cost: ".Tr() + asSource.TripleTriadRow.Base.Fee + SeIconChar.Gil.ToIconString());
+        ImGui.TextUnformatted("Uses Regional Rules: ".Tr() + (asSource.TripleTriadRow.Base.UsesRegionalRules ? "Yes" : "No"));
 
         DrawSection("Rules: ", asSource.TripleTriadRow.Base.TripleTriadRule.Where(c => c.RowId != 0).DistinctBy(c => c.RowId).Select(c => c.Value.Name.ToImGuiString()).ToList());
 

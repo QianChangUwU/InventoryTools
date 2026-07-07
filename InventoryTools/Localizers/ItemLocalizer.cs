@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CriticalCommonLib.Enums;
 using CriticalCommonLib.Models;
+using InventoryTools.Services;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
 
@@ -27,7 +28,7 @@ public class ItemLocalizer
         var cabinetCategory = inventoryItem.Item.CabinetCategory;
         if (cabinetCategory == null)
         {
-            return "Unknown Cabinet";
+            return "Unknown Cabinet".Tr();
         }
 
         if (_cabinetNames.TryGetValue(cabinetCategory.Base.Category.RowId, out string? cabinetName))
@@ -36,7 +37,7 @@ public class ItemLocalizer
         }
 
         cabinetName = _addonSheet.GetRowOrDefault(cabinetCategory.Base.Category.RowId)?.Text.ExtractText() ??
-                      "Addon Text Not Found";
+                      "Addon Text Not Found".Tr();
 
         _cabinetNames[cabinetCategory.Base.Category.RowId] = cabinetName;
 
@@ -47,21 +48,21 @@ public class ItemLocalizer
     {
         if (inventoryItem.IsEmpty)
         {
-            return "Empty";
+            return "空";
         }
 
         var _item = inventoryItem.Item.NameString.ToString();
         if (inventoryItem.IsHQ)
         {
-            _item += " (HQ)";
+            _item += " (优质)";
         }
         else if (inventoryItem.IsCollectible)
         {
-            _item += " (Collectible)";
+            _item += " (收藏品)";
         }
         else
         {
-            _item += " (NQ)";
+            _item += " (普通)";
         }
 
         if (inventoryItem.SortedCategory == InventoryCategory.Currency)
@@ -87,6 +88,11 @@ public class ItemLocalizer
     }
 
     public string SortedContainerName(InventoryItem inventoryItem)
+    {
+        return SortedContainerNameRaw(inventoryItem).Tr();
+    }
+
+    private string SortedContainerNameRaw(InventoryItem inventoryItem)
     {
         if(inventoryItem.SortedContainer is InventoryType.Bag0 or InventoryType.RetainerBag0)
         {
@@ -238,7 +244,7 @@ public class ItemLocalizer
         }
         if(inventoryItem.SortedContainer is InventoryType.Armoire)
         {
-            return "Armoire - " + CabinetName(inventoryItem);
+            return "装备柜 - " + CabinetName(inventoryItem);
         }
         if(inventoryItem.SortedContainer is InventoryType.Currency)
         {

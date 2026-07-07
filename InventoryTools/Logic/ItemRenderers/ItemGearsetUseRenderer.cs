@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Linq;
 using AllaganLib.GameSheets.Caches;
@@ -36,7 +37,7 @@ public class ItemGearsetUseRenderer : ItemInfoRenderer<ItemGearsetSource>
         var asSource = AsSource(source);
         if (asSource.SetItems.Count > 1)
         {
-            ImGui.Text("Set Name: " +  asSource.Gearset.Name);
+            ImGui.Text("Set Name: ".Tr() +  asSource.Gearset.Name);
             this.DrawItems("Set Items:", asSource.RelatedItems.First().Value);
         }
     };

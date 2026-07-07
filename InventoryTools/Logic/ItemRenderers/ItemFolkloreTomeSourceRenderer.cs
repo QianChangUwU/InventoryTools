@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ public class ItemFolkloreTomeSourceRenderer : ItemInfoRenderer<ItemFolkloreTomeS
         var divisionName = asSource.NotebookDivision.ValueNullable?.Name.ToImGuiString();
         if (!string.IsNullOrEmpty(divisionName))
         {
-            ImGui.Text("Unlocks: " + divisionName);
+            ImGui.Text("Unlocks: ".Tr() + divisionName);
         }
 
         if (asSource.RelatedItems.Count > 0)

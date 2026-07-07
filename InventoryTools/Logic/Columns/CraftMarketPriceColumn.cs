@@ -71,7 +71,7 @@ public class CraftMarketPriceColumn : GilColumn
         }
         else
         {
-            ImGui.Text("N/A");
+            ImGui.Text("N/A".Tr());
         }
 
         var craftPrices = searchResult.CraftItem.CraftPrices;
@@ -98,11 +98,11 @@ public class CraftMarketPriceColumn : GilColumn
                             totalAvailable += price.Left;
                         }
 
-                        ImGui.Text("Available: " + totalAvailable);
+                        ImGui.Text("Available: ".Tr() + totalAvailable);
 
                         if (searchResult.CraftItem.MarketAvailable != searchResult.CraftItem.QuantityNeeded)
                         {
-                            ImGui.Text("Missing: " + (searchResult.CraftItem.QuantityNeeded - searchResult.CraftItem.MarketAvailable));
+                            ImGui.Text("Missing: ".Tr() + (searchResult.CraftItem.QuantityNeeded - searchResult.CraftItem.MarketAvailable));
                         }
                     }
                 }

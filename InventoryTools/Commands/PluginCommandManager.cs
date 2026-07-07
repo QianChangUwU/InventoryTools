@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Dalamud.Game.Command;
 using Dalamud.Plugin.Services;
 using InventoryTools.Attributes;
+using InventoryTools.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 

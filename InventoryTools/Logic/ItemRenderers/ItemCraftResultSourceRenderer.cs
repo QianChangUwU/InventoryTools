@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ public class ItemCraftResultSourceRenderer : ItemInfoRenderer<ItemCraftResultSou
         ImGui.Text($"Difficulty: {asSource.Recipe.Base.DifficultyFactor}");
         ImGui.Text($"Required Craftsmanship: {asSource.Recipe.Base.RequiredCraftsmanship}");
 
-        ImGui.Text("Ingredients:");
+        ImGui.Text("Ingredients:".Tr());
         using (ImRaii.PushIndent())
         {
             foreach (var ingredient in asSource.Recipe.IngredientCounts)

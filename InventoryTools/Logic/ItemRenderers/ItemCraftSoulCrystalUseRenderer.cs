@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -30,7 +31,7 @@ public class ItemCraftSoulCrystalUseRenderer : ItemInfoRenderer<ItemCraftSoulCry
     public override Action<ItemSource> DrawTooltip => source =>
     {
         var asSource = AsSource(source);
-        ImGui.Text("Equip to specialize as " + asSource.ClassJob.Base.Name.ExtractText());
+        ImGui.Text("Equip to specialize as ".Tr() + asSource.ClassJob.Base.Name.ExtractText());
     };
 
     public override Func<ItemSource, string> GetName => source =>

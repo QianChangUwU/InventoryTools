@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -70,11 +71,11 @@ public abstract class ItemInfoRenderer<T> : IItemInfoRenderer where T : ItemSour
                     ImGui.SameLine();
                     if (itemInfo.Min == itemInfo.Max)
                     {
-                        ImGui.Text("(Drops 1)");
+                        ImGui.Text("(Drops 1)".Tr());
                     }
                     else
                     {
-                        ImGui.Text("(Drops " + itemInfo.Min.Value + " - " + itemInfo.Max.Value + ")");
+                        ImGui.Text("(Drops ".Tr() + itemInfo.Min.Value + " - " + itemInfo.Max.Value + ")");
                     }
                 }
             }
@@ -119,7 +120,7 @@ public abstract class ItemInfoRenderer<T> : IItemInfoRenderer where T : ItemSour
 
         if (maps.Count != 0)
         {
-            ImGui.Text("Maps:");
+            ImGui.Text("Maps:".Tr());
             using (ImRaii.PushIndent())
             {
                 foreach (var map in maps)
@@ -141,7 +142,7 @@ public abstract class ItemInfoRenderer<T> : IItemInfoRenderer where T : ItemSour
 
         if (maps.Count != 0)
         {
-            ImGui.Text("Maps:");
+            ImGui.Text("Maps:".Tr());
             using (ImRaii.PushIndent())
             {
                 foreach (var map in maps)

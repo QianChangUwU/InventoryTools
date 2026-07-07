@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ public class ItemFishingSourceRenderer : ItemInfoRenderer<ItemFishingSource>
         var asSources = AsSource(sources);
 
         var level = asSources.First().FishParameter.Base.GatheringItemLevel.Value.GatheringItemLevel;
-        ImGui.Text("Level:" + (level == 0 ? "N/A" : level));
+        ImGui.Text("Level:".Tr() + (level == 0 ? "N/A" : level));
 
         DrawMaps(sources);
     };
@@ -46,7 +47,7 @@ public class ItemFishingSourceRenderer : ItemInfoRenderer<ItemFishingSource>
         var asSource = AsSource(source);
 
         var level = asSource.FishParameter.Base.GatheringItemLevel.Value.GatheringItemLevel;
-        ImGui.Text("Level:" + (level == 0 ? "N/A" : level));
+        ImGui.Text("Level:".Tr() + (level == 0 ? "N/A" : level));
 
         DrawMaps(source);
     };

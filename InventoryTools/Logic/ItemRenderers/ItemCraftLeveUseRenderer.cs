@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,13 +50,13 @@ public class ItemCraftLeveUseRenderer : ItemInfoRenderer<ItemCraftLeveUse>
         var asSource = AsSource(source);
         var leveRow = asSource.Leve.Value;
 
-        ImGui.TextUnformatted("Leve: " + leveRow.Name.ExtractText());
-        ImGui.TextUnformatted("Class: " + leveRow.ClassJobCategory.Value.Name.ExtractText());
-        ImGui.TextUnformatted("EXP Reward: " + asSource.ExpReward);
-        ImGui.TextUnformatted("Allowance Cost: " + leveRow.AllowanceCost);
+        ImGui.TextUnformatted("Leve: ".Tr() + leveRow.Name.ExtractText());
+        ImGui.TextUnformatted("Class: ".Tr() + leveRow.ClassJobCategory.Value.Name.ExtractText());
+        ImGui.TextUnformatted("EXP Reward: ".Tr() + asSource.ExpReward);
+        ImGui.TextUnformatted("Allowance Cost: ".Tr() + leveRow.AllowanceCost);
         ImGui.Separator();
 
-        ImGui.TextUnformatted("Required Items: ");
+        ImGui.TextUnformatted("Required Items: ".Tr());
         using (ImRaii.PushIndent())
         {
             for (var index = 0; index < asSource.CraftLeve.Value.Item.Count; index++)
@@ -77,7 +78,7 @@ public class ItemCraftLeveUseRenderer : ItemInfoRenderer<ItemCraftLeveUse>
             }
         }
 
-        ImGui.TextUnformatted("Reward Items: ");
+        ImGui.TextUnformatted("Reward Items: ".Tr());
         using (ImRaii.PushIndent())
         {
             for (var itemGroupIndex = 0; itemGroupIndex < asSource.Leve.Value.LeveRewardItem.Value.LeveRewardItemGroup.Count; itemGroupIndex++)
@@ -87,7 +88,7 @@ public class ItemCraftLeveUseRenderer : ItemInfoRenderer<ItemCraftLeveUse>
                 {
                     continue;
                 }
-                ImGui.TextUnformatted("Loot Chance: " + asSource.Leve.Value.LeveRewardItem.Value.ProbabilityPercent[itemGroupIndex] + "%");
+                ImGui.TextUnformatted("Loot Chance: ".Tr() + asSource.Leve.Value.LeveRewardItem.Value.ProbabilityPercent[itemGroupIndex] + "%");
                 for (var index = 0; index < itemGroup.Value.Item.Count; index++)
                 {
                     var itemId = itemGroup.Value.Item[index].RowId;

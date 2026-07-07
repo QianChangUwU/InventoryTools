@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -35,11 +36,11 @@ public class ItemCompanyLeveSourceRenderer : ItemInfoRenderer<ItemCompanyLeveSou
     {
         var asSource = AsSource(source);
         var leveRow = asSource.Leve.Value;
-        ImGui.TextUnformatted("Leve: " + leveRow.Name.ExtractText());
-        ImGui.TextUnformatted("Class: " + leveRow.ClassJobCategory.Value.Name.ExtractText());
-        ImGui.TextUnformatted("EXP Reward: " + asSource.ExpReward);
-        ImGui.TextUnformatted("Seals Rewarded: " + asSource.SealsRewarded);
-        ImGui.TextUnformatted("Allowance Cost: " + leveRow.AllowanceCost);
+        ImGui.TextUnformatted("Leve: ".Tr() + leveRow.Name.ExtractText());
+        ImGui.TextUnformatted("Class: ".Tr() + leveRow.ClassJobCategory.Value.Name.ExtractText());
+        ImGui.TextUnformatted("EXP Reward: ".Tr() + asSource.ExpReward);
+        ImGui.TextUnformatted("Seals Rewarded: ".Tr() + asSource.SealsRewarded);
+        ImGui.TextUnformatted("Allowance Cost: ".Tr() + leveRow.AllowanceCost);
     };
 
     public override Func<ItemSource, string> GetName => source =>

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ public class ItemSecretRecipeBookUseRenderer : ItemInfoRenderer<ItemSecretRecipe
         var bookName = asSource.SecretRecipeBook.ValueNullable?.Name.ExtractText();
         if (!string.IsNullOrEmpty(bookName))
         {
-            ImGui.Text("Unlocks: " + bookName);
+            ImGui.Text("Unlocks: ".Tr() + bookName);
         }
 
         if (asSource.RelatedItems.Count > 0)

@@ -67,7 +67,7 @@ namespace InventoryTools.Ui.Pages
                 }
 
                 ImGui.NewLine();
-                if (ImGui.Button("Export Configuration to Clipboard"))
+                if (ImGui.Button("Export Configuration to Clipboard".Tr()))
                 {
                     var base64 = _importExportService.ToBase64(filterConfiguration);
                     _clipboardService.CopyToClipboard(base64);

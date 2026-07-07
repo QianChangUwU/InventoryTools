@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AllaganLib.GameSheets.Sheets;
@@ -35,7 +35,7 @@ public class SubmarinesWindow : GenericTabbedTable<SubmarineExplorationRow>, IMe
     public override void Initialize()
     {
         Key = "submarines";
-        WindowName = "Submarines";
+        WindowName = "Submarines".Tr();
         _columns = new List<TableColumn<SubmarineExplorationRow>>()
         {
             new("Icon", 32, ImGuiTableColumnFlags.WidthFixed)

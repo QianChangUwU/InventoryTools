@@ -37,7 +37,7 @@ namespace InventoryTools.Logic.Settings.Abstract
         {
             get
             {
-                return Name;
+                return Name.Tr();
             }
         }
 

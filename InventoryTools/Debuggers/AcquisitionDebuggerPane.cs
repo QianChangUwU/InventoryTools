@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System.Collections.Generic;
 using AllaganLib.Monitors.Enums;
 using AllaganLib.Monitors.Interfaces;
@@ -40,7 +41,7 @@ public class AcquisitionDebuggerPane : DebugLogPane
 
     public override void DrawInfo()
     {
-        if (ImGui.CollapsingHeader("Configuration"))
+        if (ImGui.CollapsingHeader("Configuration".Tr()))
         {
             var config = _acquisitionMonitorService.Configuration;
 
@@ -55,7 +56,7 @@ public class AcquisitionDebuggerPane : DebugLogPane
             }
         }
 
-        if (ImGui.CollapsingHeader("Recent Activity"))
+        if (ImGui.CollapsingHeader("Recent Activity".Tr()))
         {
             ImGui.TextUnformatted(
                 "See the log pane below for a chronological list of acquisition events."

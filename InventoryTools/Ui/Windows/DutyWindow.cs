@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AllaganLib.GameSheets.Caches;
@@ -85,7 +85,7 @@ namespace InventoryTools.Ui
             }
             else
             {
-                WindowName = "Invalid Duty";
+                WindowName = "Invalid Duty".Tr();
                 Key = "cfcid_unknown";
                 DungeonChestItems = new HashSet<uint>();
             }
@@ -102,20 +102,20 @@ namespace InventoryTools.Ui
 
         private Dictionary<uint, List<DungeonBossChest>> DungeonBossChests { get; set; } = null!;
         public override string GenericKey => "duty";
-        public override string GenericName => "Duty";
+        public override string GenericName => "Duty".Tr();
         public override bool DestroyOnClose => true;
         public override void DrawWindow()
         {
             if (ContentFinderCondition == null)
             {
-                ImGui.TextUnformatted("Dungeon with the ID " + _contentFinderConditionId + " could not be found.");
+                ImGui.TextUnformatted("Dungeon with the ID ".Tr() + _contentFinderConditionId + " could not be found.");
             }
             else
             {
                 ImGui.TextUnformatted(ContentFinderCondition.Base.Name.ExtractText());
-                ImGui.TextUnformatted(ContentFinderCondition.Base.ContentType.ValueNullable?.Name.ToString() ?? "Unknown Content Type");
-                ImGui.TextUnformatted("Level Required: " + ContentFinderCondition.Base.ClassJobLevelRequired);
-                ImGui.TextUnformatted("Item Level Required: " + ContentFinderCondition.Base.ItemLevelRequired);
+                ImGui.TextUnformatted(ContentFinderCondition.Base.ContentType.ValueNullable?.Name.ToString() ?? "Unknown Content Type".Tr());
+                ImGui.TextUnformatted("Level Required: ".Tr() + ContentFinderCondition.Base.ClassJobLevelRequired);
+                ImGui.TextUnformatted("Item Level Required: ".Tr() + ContentFinderCondition.Base.ItemLevelRequired);
                 ;
                 var itemIcon = ImGuiService.GetIconTexture((int)(ContentFinderCondition.Base.ContentType.ValueNullable?.IconDutyFinder ?? Icons.DutyIcon));
                 ImGui.Image(itemIcon.Handle, new Vector2(100, 100) * ImGui.GetIO().FontGlobalScale);
@@ -137,7 +137,7 @@ namespace InventoryTools.Ui
                             var chests = DungeonBossChests[dungeonBoss.FightNo];
                             foreach (var chest in chests.GroupBy(c => c.CofferNo))
                             {
-                                if (ImGui.CollapsingHeader("Coffer " + (chest.Key + 1),
+                                if (ImGui.CollapsingHeader("Coffer ".Tr() + (chest.Key + 1),
                                         ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
                                 {
                                     ImGuiStylePtr style = ImGui.GetStyle();
@@ -251,7 +251,7 @@ namespace InventoryTools.Ui
                     }
                 }
 
-                if (ImGui.CollapsingHeader("Other Chests (" + DungeonChestItems.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
+                if (ImGui.CollapsingHeader("Other Chests (".Tr() + DungeonChestItems.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
                 {
                     ImGuiStylePtr style = ImGui.GetStyle();
                     float windowVisibleX2 = ImGui.GetWindowPos().X + ImGui.GetWindowContentRegionMax().X;
@@ -294,7 +294,7 @@ namespace InventoryTools.Ui
                     }
                 }
 
-                if (ImGui.CollapsingHeader("Rewards (" + DungeonRewards.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
+                if (ImGui.CollapsingHeader("Rewards (".Tr() + DungeonRewards.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
                 {
                     ImGuiStylePtr style = ImGui.GetStyle();
                     float windowVisibleX2 = ImGui.GetWindowPos().X + ImGui.GetWindowContentRegionMax().X;
@@ -339,9 +339,9 @@ namespace InventoryTools.Ui
                 }
 
                 #if DEBUG
-                if (ImGui.CollapsingHeader("Debug"))
+                if (ImGui.CollapsingHeader("Debug".Tr()))
                 {
-                    ImGui.TextUnformatted("Duty ID: " + _contentFinderConditionId);
+                    ImGui.TextUnformatted("Duty ID: ".Tr() + _contentFinderConditionId);
                     Utils.PrintOutObject(ContentFinderCondition, 0, new List<string>());
                 }
                 #endif

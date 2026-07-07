@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -32,17 +33,17 @@ public class ItemBuddySourceRenderer : ItemInfoRenderer<ItemBuddySource>
 
         if (usedField)
         {
-            ImGui.Text("Battle: Increases EXP earned by your chocobo companion.");
+            ImGui.Text("Battle: Increases EXP earned by your chocobo companion.".Tr());
         }
 
         if (usedTraining)
         {
-            ImGui.Text("Stable: Training food for a stabled Chocobo companion.");
+            ImGui.Text("Stable: Training food for a stabled Chocobo companion.".Tr());
         }
 
         if (usedDyeing)
         {
-            ImGui.Text("Dying: Used in Chocobo Dyeing.");
+            ImGui.Text("Dying: Used in Chocobo Dyeing.".Tr());
         }
     };
     public override Func<ItemSource, string> GetName => source =>

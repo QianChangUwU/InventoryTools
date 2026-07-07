@@ -52,7 +52,7 @@ public class ChangelogWindow : GenericWindow, IMenuWindow
 
                     using var color = ImRaii.PushColor(ImGuiCol.Text, new Vector4(1f, 0.8f, 0.3f, 1f), isSelected);
 
-                    if (ImGui.Selectable("  1." + changelog, isSelected))
+                    if (ImGui.Selectable("  1.".Tr() + changelog, isSelected))
                     {
                         scrollTo = changelog;
                     }
@@ -69,7 +69,7 @@ public class ChangelogWindow : GenericWindow, IMenuWindow
                 bool currentVersionSet = false;
                 foreach (var changelog in _changelogService.ChangeLogs)
                 {
-                    if (ImGui.CollapsingHeader("1." + changelog.Item1.ToString(), ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen))
+                    if (ImGui.CollapsingHeader("1.".Tr() + changelog.Item1.ToString(), ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen))
                     {
                         if (ImGui.IsItemVisible() && !currentVersionSet)
                         {
@@ -109,7 +109,7 @@ public class ChangelogWindow : GenericWindow, IMenuWindow
 
             if (trimmed.StartsWith("- "))
             {
-                ImGui.Text("-");
+                ImGui.Text("-".Tr());
                 ImGui.SameLine();
                 ImGui.PushTextWrapPos();
                 ImGui.TextUnformatted(trimmed.Substring(2).Trim());

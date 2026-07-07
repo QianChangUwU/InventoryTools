@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AllaganLib.GameSheets.Sheets;
@@ -31,7 +31,7 @@ public class DutiesWindow : GenericTabbedTable<ContentFinderConditionRow>, IMenu
     }
     public override void Initialize()
     {
-        WindowName = "Duties";
+        WindowName = "Duties".Tr();
         Key = "duties";
 
         _columns = new List<TableColumn<ContentFinderConditionRow>>()
@@ -351,7 +351,7 @@ public class DutiesWindow : GenericTabbedTable<ContentFinderConditionRow>, IMenu
 
     public override bool UseClipper => _useClipper;
     public override string GenericKey => "duties";
-    public override string GenericName => "Duties";
+    public override string GenericName => "Duties".Tr();
     public override bool DestroyOnClose => false;
     public override bool SaveState => true;
     public override Vector2? MaxSize { get; } = new(2000, 2000);

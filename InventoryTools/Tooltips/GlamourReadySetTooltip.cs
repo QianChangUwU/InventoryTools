@@ -13,6 +13,7 @@ using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using InventoryTools.Logic.Editors;
 using InventoryTools.Logic.Settings;
+using InventoryTools.Services;
 using Microsoft.Extensions.Logging;
 
 namespace InventoryTools.Tooltips;
@@ -106,7 +107,7 @@ public class GlamourReadySetTooltip : BaseTooltip
                 .Where(i => i.ItemId == itemId)
                 .Select(i => i.SortedCategory)
                 .Distinct();
-            return string.Concat(categories.Select(c => $"Already in {c.FormattedDetailedName()}\n"));
+            return string.Concat(categories.Select(c => $"{"Already in".Tr()} {c.FormattedDetailedName().Tr()}\n"));
         }
 
         var newText = "";
@@ -137,7 +138,7 @@ public class GlamourReadySetTooltip : BaseTooltip
                         }
                     }
 
-                    newText += $"\nOutfit Glamour: {ownedCount}/{source.SetItems.Count} {visualizer}\n";
+                    newText += $"\n{"Outfit Glamour".Tr()}: {ownedCount}/{source.SetItems.Count} {visualizer}\n";
                     newText += ownershipLine;
                 }
                 else
@@ -145,7 +146,7 @@ public class GlamourReadySetTooltip : BaseTooltip
                     var acquiredColor = (ushort)(_acquiredColorSetting.CurrentValue(Configuration) ?? baseColor);
                     var notAcquiredColor = (ushort)(_notAcquiredColorSetting.CurrentValue(Configuration) ?? baseColor);
                     detailedPayloads = new List<Payload>();
-                    var header = "\nOutfit Glamour\n" + ownershipLine;
+                    var header = "\n" + "Outfit Glamour".Tr() + "\n" + ownershipLine;
                     detailedPayloads.Add(new UIForegroundPayload(baseColor));
                     detailedPayloads.Add(new UIGlowPayload(0));
                     detailedPayloads.Add(new TextPayload(header.TrimEnd('\n')));
@@ -186,7 +187,7 @@ public class GlamourReadySetTooltip : BaseTooltip
                         }
                     }
 
-                    newText += $"\nPart of: {source.ConvertedItem.NameString} ({ownedCount}/{source.SetItems.Count} {visualizer})\n";
+                    newText += $"\n{"Part of".Tr()}: {source.ConvertedItem.NameString} ({ownedCount}/{source.SetItems.Count} {visualizer})\n";
                     newText += ownershipLine;
                 }
                 else
@@ -194,7 +195,7 @@ public class GlamourReadySetTooltip : BaseTooltip
                     var acquiredColor = (ushort)(_acquiredColorSetting.CurrentValue(Configuration) ?? baseColor);
                     var notAcquiredColor = (ushort)(_notAcquiredColorSetting.CurrentValue(Configuration) ?? baseColor);
                     detailedPayloads = new List<Payload>();
-                    var header = "\nPart of: " + source.ConvertedItem.NameString + "\n" + ownershipLine;
+                    var header = "\n" + "Part of".Tr() + ": " + source.ConvertedItem.NameString + "\n" + ownershipLine;
                     detailedPayloads.Add(new UIForegroundPayload(baseColor));
                     detailedPayloads.Add(new UIGlowPayload(0));
                     detailedPayloads.Add(new TextPayload(header.TrimEnd('\n')));

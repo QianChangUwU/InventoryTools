@@ -12,6 +12,7 @@ using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using InventoryTools.Logic;
 using InventoryTools.Logic.Settings;
+using InventoryTools.Services;
 using InventoryTools.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -89,11 +90,11 @@ public class LocationDisplayTooltip : BaseTooltip
                                 var willRetrieve = craftItem.QuantityWillRetrieve;
                                 if (missingOverall != 0 || willRetrieve != 0)
                                 {
-                                    var missingText = "Missing: ";
+                                    var missingText = "Missing: ".Tr();
                                     if (craftItem.IngredientPreference.Type is IngredientPreferenceType.Buy
                                         or IngredientPreferenceType.Item or IngredientPreferenceType.HouseVendor)
                                     {
-                                        missingText = "Buy: ";
+                                        missingText = "Buy: ".Tr();
                                     }
                                     var needText = missingText + missingOverall;
                                     if (filterResult != null)
@@ -105,7 +106,7 @@ public class LocationDisplayTooltip : BaseTooltip
                                             var sortedItem = sortedItems.First();
                                             if (sortedItem.InventoryItem!.Quantity != 0)
                                             {
-                                                needText += " / (" + Math.Min(willRetrieve,sortedItem.InventoryItem!.Quantity) + " should be retrieved)";
+                                                needText += " / (" + Math.Min(willRetrieve,sortedItem.InventoryItem!.Quantity) + " " + "should be retrieved".Tr() + ")";
                                             }
                                         }
                                     }

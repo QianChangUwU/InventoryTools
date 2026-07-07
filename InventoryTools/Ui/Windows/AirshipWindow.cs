@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using AllaganLib.GameSheets.Sheets;
@@ -40,7 +40,7 @@ namespace InventoryTools.Ui
             else
             {
                 Key = "aepid_unknown";
-                WindowName = "Unknown Airship Point";
+                WindowName = "Unknown Airship Point".Tr();
                 _drops = new List<ItemRow>();
             }
         }
@@ -52,25 +52,25 @@ namespace InventoryTools.Ui
         private AirshipExplorationPointRow? AirshipExplorationPoint => _airshipExplorationPointSheet.GetRowOrDefault(_airshipExplorationPointId);
 
         public override string GenericKey => "airship";
-        public override string GenericName => "Airship";
+        public override string GenericName => "Airship".Tr();
         public override bool DestroyOnClose => true;
         public override void DrawWindow()
         {
             if (AirshipExplorationPoint == null)
             {
-                ImGui.TextUnformatted("Airship Exploration Point with the ID " + _airshipExplorationPointId + " could not be found.");
+                ImGui.TextUnformatted("Airship Exploration Point with the ID ".Tr() + _airshipExplorationPointId + " could not be found.");
             }
             else
             {
                 ImGui.TextUnformatted(AirshipExplorationPoint.Base.NameShort.ExtractText());
-                ImGui.TextUnformatted("Unlocked Via: " + AirshipExplorationPoint.Unlock?.Base.NameShort.ExtractText() ?? "N/A");
-                ImGui.TextUnformatted("Rank Required: " + AirshipExplorationPoint.Base.RankReq);
+                ImGui.TextUnformatted("Unlocked Via: ".Tr() + AirshipExplorationPoint.Unlock?.Base.NameShort.ExtractText() ?? "N/A");
+                ImGui.TextUnformatted("Rank Required: ".Tr() + AirshipExplorationPoint.Base.RankReq);
                 ;
                 var itemIcon = ImGuiService.GetIconTexture(Icons.AirshipIcon);
                 ImGui.Image(itemIcon.Handle, new Vector2(100, 100) * ImGui.GetIO().FontGlobalScale);
 
 
-                if (ImGui.CollapsingHeader("Rewards (" + _drops.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
+                if (ImGui.CollapsingHeader("Rewards (".Tr() + _drops.Count + ")", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.CollapsingHeader))
                 {
                     ImGuiStylePtr style = ImGui.GetStyle();
                     float windowVisibleX2 = ImGui.GetWindowPos().X + ImGui.GetWindowContentRegionMax().X;
@@ -112,9 +112,9 @@ namespace InventoryTools.Ui
                 }
 
                 #if DEBUG
-                if (ImGui.CollapsingHeader("Debug"))
+                if (ImGui.CollapsingHeader("Debug".Tr()))
                 {
-                    ImGui.TextUnformatted("Duty ID: " + _airshipExplorationPointId);
+                    ImGui.TextUnformatted("Duty ID: ".Tr() + _airshipExplorationPointId);
                     Utils.PrintOutObject(AirshipExplorationPoint, 0, new List<string>());
                 }
                 #endif

@@ -1,3 +1,4 @@
+using InventoryTools.Services;
 using System;
 using System.Collections.Generic;
 using AllaganLib.GameSheets.Caches;
@@ -40,14 +41,14 @@ public class ItemCustomDeliverySourceRenderer : ItemInfoRenderer<ItemCustomDeliv
             var collectabilityLow = asSource.SupplyRow.Base.CollectabilityLow;
             var collectabilityMid = asSource.SupplyRow.Base.CollectabilityMid;
             var collectabilityHigh = asSource.SupplyRow.Base.CollectabilityHigh;
-            ImGui.Text("NPC: " + eNpcResident.Value.Singular.ExtractText());
-            ImGui.Text("Collectability (Low): " + collectabilityLow);
-            ImGui.Text("Collectability (Mid): " + collectabilityMid);
-            ImGui.Text("Collectability (High): " + collectabilityHigh);
+            ImGui.Text("NPC: ".Tr() + eNpcResident.Value.Singular.ExtractText());
+            ImGui.Text("Collectability (Low): ".Tr() + collectabilityLow);
+            ImGui.Text("Collectability (Mid): ".Tr() + collectabilityMid);
+            ImGui.Text("Collectability (High): ".Tr() + collectabilityHigh);
         }
         else
         {
-            ImGui.Text("Unknown Npc");
+            ImGui.Text("Unknown Npc".Tr());
         }
     };
 
