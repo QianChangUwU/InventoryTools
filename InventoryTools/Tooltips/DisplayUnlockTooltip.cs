@@ -9,6 +9,7 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using InventoryTools.Logic.Settings;
+using InventoryTools.Services;
 using Microsoft.Extensions.Logging;
 
 namespace InventoryTools.Tooltips;
@@ -92,7 +93,7 @@ public class DisplayUnlockTooltip : BaseTooltip
 
             if (displayModeSetting == TooltipDisplayUnlockDisplayMode.CharacterPerLine)
             {
-                var textLines = unlockStatuses.Select(c => _characterMonitor.GetCharacterById(c.Key)!.FormattedName + " - " + (c.Item2 ? "Acquired" : "Not Acquired") + "\n").OrderBy(c => c).ToList();
+                var textLines = unlockStatuses.Select(c => _characterMonitor.GetCharacterById(c.Key)!.FormattedName + " - " + (c.Item2 ? "Acquired".Tr() : "Not Acquired".Tr()) + "\n").OrderBy(c => c).ToList();
                 if (textLines.Count != 0)
                 {
                     newText += "\n";

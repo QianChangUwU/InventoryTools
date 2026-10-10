@@ -10,6 +10,7 @@ using AllaganLib.GameSheets.Sheets.Rows;
 using AllaganLib.Shared.Extensions;
 using AllaganLib.Shared.Misc;
 using CriticalCommonLib.Crafting;
+using InventoryTools.Services;
 using CriticalCommonLib.Services;
 using DalaMock.Host.Mediator;
 using Dalamud.Game.Text;
@@ -101,8 +102,8 @@ public class ItemCompendiumType : CompendiumType<ItemRow>
                 () =>
                 {
                     var isUnlocked = _unlockTrackerService.IsUnlocked(row);
-                    if (isUnlocked == null) return "Acquired?";
-                    return isUnlocked.Value ? "Acquired" : "Not Acquired";
+                    if (isUnlocked == null) return "Acquired?".Tr();
+                    return isUnlocked.Value ? "Acquired".Tr() : "Not Acquired".Tr();
                 },
                 () => "Is the item acquired?",
                 () =>

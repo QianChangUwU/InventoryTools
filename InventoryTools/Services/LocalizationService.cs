@@ -458,6 +458,8 @@ public static class LocalizationService
         d["Unknown"] = "未知";
         d["Acquired"] = "已获得";
         d["Not Acquired"] = "未获得";
+        d["Ingredient Patch: "] = "素材版本:";
+        d["Acquired?"] = "已获得?";
         d["Teleport"] = "传送";
         d["Map Link"] = "地图链接";
         d["Open Wiki"] = "打开 Wiki";
