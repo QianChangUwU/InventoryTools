@@ -196,7 +196,7 @@ public class ImGuiTooltipService
                         ImGui.Separator();
                         ImGui.PushTextWrapPos();
                         var sources = item.Sources.Select(c => c.Type).Distinct().Select(
-                                              c => this.InfoRenderService.GetSourceTypeName(c).Singular).Select(c => c!);
+                                              c => this.InfoRenderService.GetSourceTypeName(c).Singular.Tr()).Select(c => c!);
                         ImGui.TextUnformatted(string.Join(", ", sources));
                         ImGui.PopTextWrapPos();
                     }
@@ -209,7 +209,7 @@ public class ImGuiTooltipService
                         ImGui.Separator();
                         ImGui.PushTextWrapPos();
                         var uses = item.Uses.Select(c => c.Type).Distinct().Select(
-                                              c => this.InfoRenderService.GetUseTypeName(c).Singular).Select(c => c!);
+                                              c => this.InfoRenderService.GetUseTypeName(c).Singular.Tr()).Select(c => c!);
                         ImGui.TextUnformatted(string.Join(", ", uses));
                         ImGui.PopTextWrapPos();
                     }

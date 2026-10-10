@@ -37,7 +37,7 @@ public class TooltipSourceInformationEnabledSetting : GenericBooleanSetting
     {
     }
 
-    public override string WizardName { get; } = "Show Source Information";
+    public override string WizardName { get; } = "Show Source Information".Tr();
 }
 
 public class TooltipSourceInformationModifierSetting : GenericEnumChoiceSetting<TooltipSourceModifier>
@@ -64,9 +64,9 @@ public class TooltipSourceInformationSetting : Setting<Dictionary<ItemInfoType, 
         _itemInfoRenderers = itemInfoRenderers.Where(c => c.RendererType == RendererType.Source).ToDictionary(c => c.Type, c => c);
         _choices = new Dictionary<SourceIconGrouping, string>()
         {
-            {SourceIconGrouping.Default, "Default"},
-            {SourceIconGrouping.Grouped, "Grouped"},
-            {SourceIconGrouping.Ungrouped, "Ungrouped"}
+            {SourceIconGrouping.Default, "Default".Tr()},
+            {SourceIconGrouping.Grouped, "Grouped".Tr()},
+            {SourceIconGrouping.Ungrouped, "Ungrouped".Tr()}
         };
     }
 
@@ -80,7 +80,7 @@ public class TooltipSourceInformationSetting : Setting<Dictionary<ItemInfoType, 
 
     public override void Draw(InventoryToolsConfiguration configuration, string? customName, bool? disableReset, bool? disableColouring)
     {
-        ImGui.LabelText("##" + Key + "Label", customName ?? Name);
+        ImGui.LabelText("##" + Key + "Label", (customName ?? Name).Tr());
 
         using (var table = ImRaii.Table("SourceConfiguration", 4, ImGuiTableFlags.SizingFixedFit))
         {
@@ -117,9 +117,9 @@ public class TooltipSourceInformationSetting : Setting<Dictionary<ItemInfoType, 
 
 
                 ImGui.TableSetupColumn("Settings", ImGuiTableColumnFlags.NoHeaderLabel);
-                ImGui.TableSetupColumn("Name");
-                ImGui.TableSetupColumn("Show");
-                ImGui.TableSetupColumn("Group Mode");
+                ImGui.TableSetupColumn("Name".Tr());
+                ImGui.TableSetupColumn("Show".Tr());
+                ImGui.TableSetupColumn("Group Mode".Tr());
 
                 ImGui.TableHeadersRow();
 
@@ -197,7 +197,7 @@ public class TooltipSourceInformationSetting : Setting<Dictionary<ItemInfoType, 
 
                     using var _ = ImRaii.PushId(tooltipSourceSetting.Type.ToString());
                     ImGui.TableNextColumn();
-                    ImGui.TextUnformatted(sourceRenderer.SingularName);
+                    ImGui.TextUnformatted(sourceRenderer.SingularName.Tr());
                     ImGui.TableNextColumn();
                     if (ImGui.Checkbox("##Show", ref show))
                     {

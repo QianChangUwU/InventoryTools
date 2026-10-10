@@ -112,7 +112,7 @@ public class SourceInformationTooltip : BaseTooltip
                 }
                 else
                 {
-                    textLines.Add(_itemInfoRenderService.GetSourceTypeName(groupedLine.Key).Singular);
+                    textLines.Add(_itemInfoRenderService.GetSourceTypeName(groupedLine.Key).Singular.Tr());
                 }
             }
 

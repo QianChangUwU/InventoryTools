@@ -112,7 +112,7 @@ public class UseInformationTooltip : BaseTooltip
                 }
                 else
                 {
-                    textLines.Add(_itemInfoRenderService.GetUseTypeName(groupedLine.Key).Singular);
+                    textLines.Add(_itemInfoRenderService.GetUseTypeName(groupedLine.Key).Singular.Tr());
                 }
             }
 
