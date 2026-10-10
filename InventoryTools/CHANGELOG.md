@@ -8,7 +8,16 @@ Instead the changelog reader and automation surrounding plugin PRs will add the 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.html).
 
-## [15.0.12]
+## [15.0.13] - 2026-09-13
+
+### Changed
+- Data update for 7.56
+
+### Fixed
+- Stop potential boot issues on slow PCs
+- Fixed error when viewing BST in compendium
+
+## [15.0.12] - 2026-08-31
 
 ### Added
 - Added a tooltip that lists which of your curated lists contain the hovered item

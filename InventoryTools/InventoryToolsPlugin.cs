@@ -548,7 +548,7 @@ namespace InventoryTools
             _loadConfigStopwatch.Start();
         }
 
-        public override async Task StartedAsync(CancellationToken cancellationToken)
+        public override async Task StartedAsync()
         {
             _loadConfigStopwatch?.Stop();
             this.Host?.Services.GetRequiredService<MediatorService>().Publish(new PluginLoadedMessage());
