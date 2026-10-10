@@ -29,10 +29,24 @@ jobs:
           restore-keys: |
             exd-files-data-
       - name: Download EXD Files
+        id: exd-download
         uses: WorkingRobot/ffxiv-downloader@v23.0.0
         with:
           output-path: exd-data
           regex: '^sqpack\/ffxiv\/0a0000\..+$'
+      - name: Retry Download EXD Files
+        if: failure() && steps.exd-download.outcome == 'failure'
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 4
+          retry_wait_seconds: 45
+          command: |
+            docker run --rm \
+              -v "$PWD":"$PWD" \
+              --workdir "$PWD" \
+              ghcr.io/workingrobot/ffxiv-downloader:v23.0.0 \
+              --gha download -s 4e9a232b -v "" -f '^sqpack\/ffxiv\/0a0000\..+$' -p 4 -o exd-data -c https://raw.githubusercontent.com/WorkingRobot/ffxiv-lut/refs/heads/main/cluts -u true
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
