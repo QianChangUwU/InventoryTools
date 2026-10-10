@@ -1253,7 +1253,7 @@ public static class LocalizationService
         d["Gardening Crossbreed Seed"] = "园艺杂交种子";
         d["Grand Company Expert Delivery"] = "军团专家交付";
         d["Grand Company Shop"] = "军团商店";
-        d["Grand Company Supply & Provisioning"] = "军团补给与配给";
+        d["Grand Company Supply & Provisioning"] = "大国防联军补给与筹备";
         d["Harvesting"] = "割草";
         d["Harvesting (Ephemeral)"] = "割草 (临时)";
         d["Harvesting (Hidden)"] = "割草 (隐藏)";
@@ -1308,7 +1308,7 @@ public static class LocalizationService
         d["Triple Triad Card"] = "九宫幻卡";
         d["Used on Chocobo Companion"] = "用于陆行鸟宠物";
         d["Venture (Botany)"] = "森林探索 (园艺)";
-        d["Venture (Combat)"] = "平地探索 (战斗)";
+        d["Venture (Combat)"] = "探索委托 (战斗)";
         d["Venture (Fishing)"] = "水岸探索 (钓鱼)";
         d["Venture (Mining)"] = "山岳探索 (采矿)";
         d["Waterside Exploration Venture (Fishing)"] = "水岸探索委托 (钓鱼)";
