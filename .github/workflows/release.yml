@@ -154,7 +154,7 @@ jobs:
 
       - name: Download and setup Dalamud
         run: |
-          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/stg/latest.zip -OutFile dalamud.zip
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile dalamud.zip
           Expand-Archive -Force dalamud.zip "$env:GITHUB_WORKSPACE\.dalamud"
           echo "DALAMUD_HOME=$env:GITHUB_WORKSPACE\.dalamud" >> $env:GITHUB_ENV
 
