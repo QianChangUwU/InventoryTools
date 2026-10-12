@@ -1247,11 +1247,11 @@ public static class LocalizationService
         d["Eurekan Weapon"] = "禁地兵装";
         d["Exterior Furniture"] = "屋外家具";
         d["Fate"] = "临危受命";
-        d["Field Exploration Venture (Combat)"] = "平地探索委托 (战斗)";
+        d["Field Exploration Venture (Combat)"] = "平地探索委托(战职)";
         d["Free Company Shop"] = "部队商店";
-        d["Gardening"] = "花园种植";
+        d["Gardening"] = "栽培";
         d["Gardening Crossbreed Seed"] = "园艺杂交种子";
-        d["Grand Company Expert Delivery"] = "军团专家交付";
+        d["Grand Company Expert Delivery"] = "大国防联军筹备稀有品";
         d["Grand Company Shop"] = "军团商店";
         d["Grand Company Supply & Provisioning"] = "大国防联军补给与筹备";
         d["Harvesting"] = "割草";
@@ -1259,7 +1259,7 @@ public static class LocalizationService
         d["Harvesting (Hidden)"] = "割草 (隐藏)";
         d["Harvesting (Timed)"] = "割草 (限时)";
         d["Heaven on High"] = "天之御柱";
-        d["Highland Exploration Venture (Mining)"] = "山岳探索委托 (采矿)";
+        d["Highland Exploration Venture (Mining)"] = "山岳探索委托(采矿工)";
         d["House Fixture (Door)"] = "房屋部件 (门)";
         d["House Fixture (Flooring)"] = "房屋部件 (地板)";
         d["House Fixture (Lighting)"] = "房屋部件 (照明)";
@@ -1298,21 +1298,21 @@ public static class LocalizationService
         d["Sky Builder Hand In"] = "伊修加德复兴上交";
         d["Sky Builder Inspection"] = "伊修加德复兴验收";
         d["Skysteel Tool"] = "天钢工具";
-        d["Logging"] = "采伐";
-        d["Logging (Ephemeral)"] = "采伐 (临时)";
-        d["Logging (Hidden)"] = "采伐 (隐藏)";
-        d["Logging (Timed)"] = "采伐 (限时)";
+        d["Logging"] = "伐木";
+        d["Logging (Ephemeral)"] = "伐木(临时)";
+        d["Logging (Hidden)"] = "伐木(隐藏)";
+        d["Logging (Timed)"] = "伐木(限时)";
         d["Splendorous Tool"] = "巧手之巅工具";
         d["Stored in Armoire"] = "存于装备柜";
         d["Submarine Exploration"] = "潜水艇探索";
         d["Triple Triad Card"] = "九宫幻卡";
         d["Used on Chocobo Companion"] = "用于陆行鸟宠物";
-        d["Venture (Botany)"] = "森林探索 (园艺)";
-        d["Venture (Combat)"] = "探索委托 (战斗)";
-        d["Venture (Fishing)"] = "水岸探索 (钓鱼)";
-        d["Venture (Mining)"] = "山岳探索 (采矿)";
-        d["Waterside Exploration Venture (Fishing)"] = "水岸探索委托 (钓鱼)";
-        d["Woodland Exploration Venture (Botany)"] = "森林探索委托 (园艺)";
+        d["Venture (Botany)"] = "筹集委托(园艺工)";
+        d["Venture (Combat)"] = "筹集委托(战职)";
+        d["Venture (Fishing)"] = "筹集委托(捕鱼人)";
+        d["Venture (Mining)"] = "筹集委托(采矿工)";
+        d["Waterside Exploration Venture (Fishing)"] = "水边探索委托(捕鱼人)";
+        d["Woodland Exploration Venture (Botany)"] = "森林探索委托(园艺工)";
         d["Zodiac Weapon"] = "上古武器";
 
         // ===== 其他 =====
