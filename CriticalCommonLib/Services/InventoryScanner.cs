@@ -1746,29 +1746,21 @@ namespace CriticalCommonLib.Services
             }
         }
 
-        private static unsafe bool AreRetainerInventoriesAccessible()
-        {
-            var inventoryManager = InventoryManager.Instance();
-            if (inventoryManager == null)
-            {
-                return false;
-            }
-
-            return inventoryManager->GetInventoryContainer(InventoryType.RetainerPage1) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerPage2) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerPage3) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerPage4) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerPage5) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerEquippedItems) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerGil) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerCrystals) != null
-                   && inventoryManager->GetInventoryContainer(InventoryType.RetainerMarket) != null;
-        }
-
         public unsafe void ParseRetainerBags(InventorySortOrder currentSortOrder, BagChangeContainer changeSet)
         {
             var currentRetainer = _characterMonitor.ActiveRetainerId;
-            if (currentRetainer != 0 && AreRetainerInventoriesAccessible())
+            if (currentRetainer != 0 && _loadedInventories.Contains(InventoryType.RetainerPage1) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage2) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage3) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage4) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage5) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage6) &&
+                _loadedInventories.Contains(InventoryType.RetainerPage7) &&
+                _loadedInventories.Contains(InventoryType.RetainerEquippedItems) &&
+                _loadedInventories.Contains(InventoryType.RetainerGil) &&
+                _loadedInventories.Contains(InventoryType.RetainerCrystals) &&
+                _loadedInventories.Contains(InventoryType.RetainerMarket)
+               )
             {
                 if (!InMemoryRetainers.ContainsKey(currentRetainer))
                     InMemoryRetainers.Add(currentRetainer, new HashSet<InventoryType>());
@@ -1941,11 +1933,6 @@ namespace CriticalCommonLib.Services
                                 break;
                             default:
                                 continue;
-                        }
-
-                        if (currentBag == null)
-                        {
-                            continue;
                         }
 
                         if (sort.slotIndex >= currentBag->Size)
