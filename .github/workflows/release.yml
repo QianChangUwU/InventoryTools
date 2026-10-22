@@ -215,7 +215,7 @@ jobs:
       - name: Generate checksums
         run: |
           cd release
-          Get-ChildItem -File | ForEach-Object {
+          Get-ChildItem -File | Where-Object { $_.Name -notlike '*.sha256' } | ForEach-Object {
             $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
             "$hash  $($_.Name)" | Out-File "$($_.Name).sha256" -Encoding ascii
           }
@@ -246,8 +246,9 @@ jobs:
             自动构建发布（${{ env.BRANCH }} 分支）。
           files: |
             release/latest.zip
-            release/InventoryTools-*
-            release/*.sha256
+            release/latest.zip.sha256
+            release/InventoryTools-*.zip
+            release/InventoryTools-*.zip.sha256
           draft: false
           prerelease: ${{ env.BRANCH == 'dev' }}
 
