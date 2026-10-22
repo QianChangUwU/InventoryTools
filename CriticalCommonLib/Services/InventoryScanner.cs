@@ -420,37 +420,49 @@ namespace CriticalCommonLib.Services
 
         public event ContainerInfoReceivedDelegate? ContainerInfoReceived;
 
-        private unsafe delegate void* ContainerInfoNetworkData(int a2, int* a3);
+        private unsafe delegate void ContainerInfoNetworkData(nint dispatcher, uint targetId, nint packet);
 
         private unsafe delegate void* ItemMarketBoardInfoData(nint networkInstance, int a2, int* a3);
 
         private unsafe delegate void* NpcSpawnData(int* a1, int a2, int* a3);
 
-        //If the signature for these are ever lost, find the ProcessZonePacketDown signature in Dalamud and then find the relevant function based on the opcode.
-        [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B D7 41 8B CE E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B D7 41 8B CE E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B D7 41 8B CE E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8D 57 10", DetourName = nameof(ContainerInfoDetour), UseFlags = SignatureUseFlags.Hook)]
+        [Signature("48 89 5C 24 20 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ?? ?? ?? ?? B8 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 2B E0 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 ?? ?? ?? ?? 45 0F B7 78 02 4D 8B E8 8B F2", DetourName = nameof(ContainerInfoDetour), UseFlags = SignatureUseFlags.Hook)]
         private Hook<ContainerInfoNetworkData>? _containerInfoNetworkHook = null;
+
+        private const ushort ContainerInfoOpcode = 0x02DB;
 
         private readonly HashSet<InventoryType> _loadedInventories = new();
 
-        private unsafe void* ContainerInfoDetour(int seq, int* a3)
+        private unsafe void ContainerInfoDetour(nint dispatcher, uint targetId, nint packet)
         {
             try
             {
-                if (a3 != null)
+                // 2-byte length prefix, then the zone opcode
+                if (packet != nint.Zero && *(ushort*)(packet + 2) == ContainerInfoOpcode)
                 {
-                    var ptr = (IntPtr)a3 + 16;
-                    var containerInfo = NetworkDecoder.DecodeContainerInfo(ptr);
-                    if (Enum.IsDefined(typeof(InventoryType), containerInfo.containerId))
+                    for (var offset = 0; offset <= 64; offset += 2)
                     {
+                        var containerInfo = NetworkDecoder.DecodeContainerInfo(packet + offset);
+                        if (containerInfo.numItems > 1000 || containerInfo.startOrFinish > 8)
+                        {
+                            continue;
+                        }
+
+                        if (containerInfo.containerId < 1000 || !Enum.IsDefined(typeof(InventoryType), containerInfo.containerId))
+                        {
+                            continue;
+                        }
+
                         var inventoryType = (InventoryType)containerInfo.containerId;
+                        var captured = containerInfo;
                         //Delay just in case the items haven't loaded.
                         _framework.RunOnTick(() =>
                             {
                                 _loadedInventories.Add(inventoryType);
-                                ContainerInfoReceived?.Invoke(containerInfo, inventoryType);
+                                ContainerInfoReceived?.Invoke(captured, inventoryType);
                             },
                             TimeSpan.FromMilliseconds(100));
-                        ;
+                        break;
                     }
                 }
             }
@@ -462,7 +474,7 @@ namespace CriticalCommonLib.Services
                 });
             }
 
-            return _containerInfoNetworkHook!.Original(seq, a3);
+            _containerInfoNetworkHook!.Original(dispatcher, targetId, packet);
         }
 
         public void ParseBags()
