@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using AllaganLib.Interface.Grid;
@@ -104,7 +104,7 @@ public class CompendiumLinkTableColumn<TData> : StringColumn<WindowState, TData,
             ImGui.SetMouseCursor(ImGuiMouseCursor.Hand);
             using (ImRaii.Tooltip())
             {
-                ImGui.TextUnformatted("Open " + link.Value.CompendiumType.Singular);
+                ImGui.TextUnformatted("Open ".Tr() + link.Value.CompendiumType.Singular);
             }
         }
 

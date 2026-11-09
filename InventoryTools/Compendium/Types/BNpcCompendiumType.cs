@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AllaganLib.GameSheets.Extensions;
@@ -14,6 +14,7 @@ using InventoryTools.Compendium.Interfaces;
 using InventoryTools.Compendium.Models;
 using InventoryTools.Compendium.Sections.Options;
 using InventoryTools.Compendium.Services;
+using InventoryTools.Services;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
 using LuminaSupplemental.Excel.Model;
@@ -29,8 +30,8 @@ public record BNpcZoneInfo(
 
 public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
 {
-    private const string OpenWorldZoneType = "Open World";
-    private const string OtherZoneType = "Other";
+    private const string OpenWorldZoneType = "野外";
+    private const string OtherZoneType = "其他";
     private const string NotAHuntMark = "Not a Hunt Mark";
 
     private static readonly EquipSlot[] SharedModelSlots =
@@ -72,9 +73,9 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         _mobsByTerritory = new Lazy<Dictionary<uint, List<uint>>>(BuildMobsByTerritory);
     }
 
-    public override string Singular => "Mob";
-    public override string Plural => "Mobs";
-    public override string Description => "Monsters, where they spawn and what they drop.";
+    public override string Singular => "Mob".Tr();
+    public override string Plural => "Mobs".Tr();
+    public override string Description => "Monsters, where they spawn and what they drop.".Tr();
     public override string Key => "mobs";
     public override (string?, uint?) Icon => (null, Icons.MobIcon);
 
@@ -138,28 +139,28 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             new CompendiumGrouping<BNpcNameRow>()
             {
                 Key = "zone_type",
-                Name = "Zone Type",
+                Name = "Zone Type".Tr(),
                 GroupsFunc = row => GetZoneInfo(row).ZoneTypes,
                 GroupMapping = zoneType => (string)zoneType,
             },
             new CompendiumGrouping<BNpcNameRow>()
             {
                 Key = "zone",
-                Name = "Zone",
+                Name = "Zone".Tr(),
                 GroupsFunc = row => GetZoneInfo(row).ZoneNames,
                 GroupMapping = zoneName => (string)zoneName,
             },
             new CompendiumGrouping<BNpcNameRow>()
             {
                 Key = "expansion",
-                Name = "Expansion",
+                Name = "Expansion".Tr(),
                 GroupsFunc = row => GetZoneInfo(row).Expansions,
                 GroupMapping = expansion => (string)expansion,
             },
             new CompendiumGrouping<BNpcNameRow>()
             {
                 Key = "hunt_rank",
-                Name = "Hunt Rank",
+                Name = "Hunt Rank".Tr(),
                 GroupFunc = GetHuntRank,
                 GroupMapping = huntRank => (string)huntRank,
             },
@@ -174,7 +175,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         {
             Key = "icon",
             Name = "##Icon",
-            HelpText = "Open the mob",
+            HelpText = "Open the mob".Tr(),
             Version = "15.0.14",
             ValueSelector = GetIcon,
             CompendiumType = this,
@@ -183,16 +184,16 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         builder.AddStringColumn(new()
         {
             Key = "name",
-            Name = "Name",
-            HelpText = "The name of the mob",
+            Name = "Name".Tr(),
+            HelpText = "The name of the mob".Tr(),
             Version = "15.0.14",
             ValueSelector = GetName,
         });
         builder.AddStringColumn(new()
         {
             Key = "type",
-            Name = "Type",
-            HelpText = "The type of mob",
+            Name = "Type".Tr(),
+            HelpText = "The type of mob".Tr(),
             Version = "15.0.14",
             ValueSelector = GetMobTypes,
         });
@@ -202,8 +203,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             builder.AddStringColumn(new()
             {
                 Key = "hunt_rank",
-                Name = "Hunt Rank",
-                HelpText = "The hunt rank of the mob, if it is a hunt mark",
+                Name = "Hunt Rank".Tr(),
+                HelpText = "The hunt rank of the mob, if it is a hunt mark".Tr(),
                 Version = "15.0.14",
                 ValueSelector = row => GetHuntRank(row) != NotAHuntMark ? GetHuntRank(row) : null,
             });
@@ -212,8 +213,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         builder.AddStringColumn(new()
         {
             Key = "zones",
-            Name = "Zones",
-            HelpText = "The zones the mob spawns in",
+            Name = "Zones".Tr(),
+            HelpText = "The zones the mob spawns in".Tr(),
             Version = "15.0.14",
             ValueSelector = row => string.Join(", ", GetZoneInfo(row).ZoneNames),
         });
@@ -223,8 +224,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             builder.AddStringColumn(new()
             {
                 Key = "zone_type",
-                Name = "Zone Type",
-                HelpText = "The types of zone the mob spawns in, for example open world, dungeon or raid",
+                Name = "Zone Type".Tr(),
+                HelpText = "The types of zone the mob spawns in, for example open world, dungeon or raid".Tr(),
                 Version = "15.0.14",
                 ValueSelector = row => string.Join(", ", GetZoneInfo(row).ZoneTypes),
             });
@@ -233,8 +234,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         builder.AddBooleanColumn(new()
         {
             Key = "open_world",
-            Name = "Open World?",
-            HelpText = "Does the mob spawn in an open world zone?",
+            Name = "Open World?".Tr(),
+            HelpText = "Does the mob spawn in an open world zone?".Tr(),
             Version = "15.0.14",
             ValueSelector = row => GetZoneInfo(row).IsInOpenWorld,
         });
@@ -244,8 +245,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             builder.AddStringColumn(new()
             {
                 Key = "expansion",
-                Name = "Expansion",
-                HelpText = "The expansions of the zones the mob spawns in",
+                Name = "Expansion".Tr(),
+                HelpText = "The expansions of the zones the mob spawns in".Tr(),
                 Version = "15.0.14",
                 ValueSelector = row => string.Join(", ", GetZoneInfo(row).Expansions),
             });
@@ -254,16 +255,16 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         builder.AddItemsColumn(new()
         {
             Key = "drops",
-            Name = "Drops",
-            HelpText = "The items the mob drops",
+            Name = "Drops".Tr(),
+            HelpText = "The items the mob drops".Tr(),
             Version = "15.0.14",
             ValueSelector = GetDrops,
         });
         builder.AddIntegerColumn(new()
         {
             Key = "id",
-            Name = "ID",
-            HelpText = "The ID of the mob (BNpcName)",
+            Name = "ID".Tr(),
+            HelpText = "The ID of the mob (BNpcName)".Tr(),
             Version = "15.0.14",
             ValueSelector = row => row.RowId.ToString(),
         });
@@ -275,47 +276,47 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
 
         foreach (var mobType in row.MobTypes)
         {
-            viewBuilder.AddTag(() => mobType.ToString(), () => "The type of mob");
+            viewBuilder.AddTag(() => mobType.ToString(), () => "The type of mob".Tr());
         }
 
         var huntRank = GetHuntRank(row);
         if (huntRank != NotAHuntMark)
         {
-            viewBuilder.AddTag(() => huntRank + " Rank Hunt", () => "The mob is a hunt mark", () => ImGuiColors.DalamudOrange);
+            viewBuilder.AddTag(() => huntRank + " Rank Hunt".Tr(), () => "The mob is a hunt mark".Tr(), () => ImGuiColors.DalamudOrange);
         }
 
         var zoneInfo = GetZoneInfo(row);
         if (zoneInfo.IsInOpenWorld)
         {
-            viewBuilder.AddTag(() => OpenWorldZoneType, () => "The mob spawns in an open world zone");
+            viewBuilder.AddTag(() => OpenWorldZoneType, () => "The mob spawns in an open world zone".Tr());
         }
 
         var garlandToolsId = row.GarlandToolsId;
         if (garlandToolsId != null)
         {
-            viewBuilder.AddLink($"https://www.garlandtools.org/db/#mob/{garlandToolsId}", "Open in Garland Tools", "garlandtools");
+            viewBuilder.AddLink($"https://www.garlandtools.org/db/#mob/{garlandToolsId}", "Open in Garland Tools".Tr(), "garlandtools");
         }
 
-        viewBuilder.AddLink($"https://ffxivteamcraft.com/db/en/mob/{row.RowId}", "Open in Teamcraft", "teamcraft");
+        viewBuilder.AddLink($"https://ffxivteamcraft.com/db/en/mob/{row.RowId}", "Open in Teamcraft".Tr(), "teamcraft");
 
         viewBuilder.AddItemListSection(new ItemListSectionOptions()
         {
             SectionKey = "drops",
-            SectionName = "Drops",
+            SectionName = "Drops".Tr(),
             Items = GetDrops(row).Select(c => new ItemInfo(c)).ToList(),
         });
 
         viewBuilder.AddMapLinksSectionSection(new MapLinksViewSectionOptions()
         {
             SectionKey = "spawn_locations",
-            SectionName = "Spawn Locations",
+            SectionName = "Spawn Locations".Tr(),
             MapLinks = GetMapLinks(row),
         });
 
         viewBuilder.AddCollectionRowRefSection(new CollectionRowRefSectionOptions()
         {
             SectionKey = "zones",
-            SectionName = "Zones",
+            SectionName = "Zones".Tr(),
             RelatedRefs = zoneInfo.Zones.Select(c => c.Base.AsUntypedRowRef()).ToList(),
         });
 
@@ -327,7 +328,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
                 viewBuilder.AddItemListSection(new ItemListSectionOptions()
                 {
                     SectionKey = "shared_models_" + slot,
-                    SectionName = "Shared Models - " + slot.Humanize(),
+                    SectionName = "Shared Models - ".Tr() + slot.Humanize(),
                     Items = firstBase.GetRelatedItems(slot).Select(c => new ItemInfo(c)).ToList(),
                 });
             }

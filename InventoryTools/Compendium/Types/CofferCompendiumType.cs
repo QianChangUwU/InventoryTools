@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AllaganLib.GameSheets.Caches;
@@ -16,6 +16,7 @@ using InventoryTools.Compendium.Interfaces;
 using InventoryTools.Compendium.Models;
 using InventoryTools.Compendium.Sections.Options;
 using InventoryTools.Compendium.Services;
+using InventoryTools.Services;
 using InventoryTools.Compendium.Types.Extra;
 using InventoryTools.Ui;
 
@@ -80,9 +81,9 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         _characterMonitor.OnCharacterRemoved += CharacterRemoved;
     }
 
-    public override string Singular => "Coffer";
-    public override string Plural => "Coffers";
-    public override string Description => "What drops from coffers, card packs, etc";
+    public override string Singular => "Coffer".Tr();
+    public override string Plural => "Coffers".Tr();
+    public override string Description => "What drops from coffers, card packs, etc".Tr();
     public override string Key => "coffers";
     public override (string?, uint?) Icon => (null, 26531);
 
@@ -152,14 +153,14 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
             new CompendiumGrouping<CofferContents>()
             {
                 Key = "category",
-                Name = "Category",
+                Name = "Category".Tr(),
                 GroupFunc = row => row.Category,
                 GroupMapping = category => GetCategoryName((CofferCategory)category),
             },
             new CompendiumGrouping<CofferContents>()
             {
                 Key = "type",
-                Name = "Type",
+                Name = "Type".Tr(),
                 GroupFunc = row => row.SourceType,
                 GroupMapping = sourceType => GetSourceTypeName((ItemInfoType)sourceType),
             },
@@ -172,7 +173,7 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         {
             Key = "icon",
             Name = "##Icon",
-            HelpText = "The icon of the coffer",
+            HelpText = "The icon of the coffer".Tr(),
             Version = ColumnVersion,
             ValueSelector = GetIcon,
             CompendiumType = this,
@@ -181,8 +182,8 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         builder.AddStringColumn(new()
         {
             Key = "name",
-            Name = "Name",
-            HelpText = "The name of the coffer",
+            Name = "Name".Tr(),
+            HelpText = "The name of the coffer".Tr(),
             Version = ColumnVersion,
             ValueSelector = GetName,
         });
@@ -192,8 +193,8 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
             builder.AddStringColumn(new()
             {
                 Key = "category",
-                Name = "Category",
-                HelpText = "The category of container. Loot containers are sorted by the items they give.",
+                Name = "Category".Tr(),
+                HelpText = "The category of container. Loot containers are sorted by the items they give.".Tr(),
                 Version = ColumnVersion,
                 ValueSelector = row => GetCategoryName(row.Category),
             });
@@ -204,8 +205,8 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
             builder.AddStringColumn(new()
             {
                 Key = "type",
-                Name = "Type",
-                HelpText = "The type of container",
+                Name = "Type".Tr(),
+                HelpText = "The type of container".Tr(),
                 Version = ColumnVersion,
                 ValueSelector = row => GetSourceTypeName(row.SourceType),
             });
@@ -214,32 +215,32 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         builder.AddIntegerColumn(new()
         {
             Key = "contents",
-            Name = "Contents",
-            HelpText = "The number of different items the coffer can give",
+            Name = "Contents".Tr(),
+            HelpText = "The number of different items the coffer can give".Tr(),
             Version = ColumnVersion,
             ValueSelector = row => row.Contents.Count.ToString(),
         });
         builder.AddIntegerColumn(new()
         {
             Key = "owned",
-            Name = "Owned",
-            HelpText = "The number of items from the coffer that you own. " + ScopeHelpText,
+            Name = "Owned".Tr(),
+            HelpText = "The number of items from the coffer that you own. ".Tr() + ScopeHelpText.Tr(),
             Version = ColumnVersion,
             ValueSelector = row => GetOwnedCount(row).ToString(),
         });
         builder.AddStringColumn(new()
         {
             Key = "completion",
-            Name = "Completion",
-            HelpText = "Owned items out of all items the coffer can give. " + ScopeHelpText,
+            Name = "Completion".Tr(),
+            HelpText = "Owned items out of all items the coffer can give. ".Tr() + ScopeHelpText.Tr(),
             Version = ColumnVersion,
             ValueSelector = GetCompletionText,
         });
         builder.AddBooleanColumn(new()
         {
             Key = "complete",
-            Name = "Complete?",
-            HelpText = "Do you own every item the coffer can give? " + ScopeHelpText,
+            Name = "Complete?".Tr(),
+            HelpText = "Do you own every item the coffer can give? ".Tr() + ScopeHelpText.Tr(),
             Version = ColumnVersion,
             ValueSelector = row => IsComplete(row),
         });
@@ -251,27 +252,27 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         viewBuilder.Description = row.Item.Base.Description.ToImGuiString();
 
         viewBuilder.AddTag(
-            () => GetCompletionText(row) + " owned",
-            () => ScopeHelpText,
+            () => GetCompletionText(row) + " owned".Tr(),
+            () => ScopeHelpText.Tr(),
             () => IsComplete(row) ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudYellow);
 
         viewBuilder.AddMetadataSection(new MetadataSectionOptions()
         {
             SectionKey = "details",
-            SectionName = "Details",
+            SectionName = "Details".Tr(),
             Rows =
             [
-                new MetadataSectionOptions.Row { Label = "Category", Value = () => GetCategoryName(row.Category) },
-                new MetadataSectionOptions.Row { Label = "Type", Value = () => GetSourceTypeName(row.SourceType) },
-                new MetadataSectionOptions.Row { Label = "Contents", Value = () => row.Contents.Count.ToString() },
-                new MetadataSectionOptions.Row { Label = "Owned", Value = () => GetCompletionText(row) },
+                new MetadataSectionOptions.Row { Label = "Category".Tr(), Value = () => GetCategoryName(row.Category) },
+                new MetadataSectionOptions.Row { Label = "Type".Tr(), Value = () => GetSourceTypeName(row.SourceType) },
+                new MetadataSectionOptions.Row { Label = "Contents".Tr(), Value = () => row.Contents.Count.ToString() },
+                new MetadataSectionOptions.Row { Label = "Owned".Tr(), Value = () => GetCompletionText(row) },
             ],
         });
 
         viewBuilder.AddItemListSection(new ItemListSectionOptions()
         {
             SectionKey = "contents",
-            SectionName = "Contents",
+            SectionName = "Contents".Tr(),
             Items = row.Contents,
             IsOwned = IsOwned,
         });
@@ -279,14 +280,14 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
         viewBuilder.AddSingleRowRefSection(new SingleRowRefSectionOptions()
         {
             SectionKey = "coffer_item",
-            SectionName = "Coffer Item",
+            SectionName = "Coffer Item".Tr(),
             RelatedRef = row.Item.Base.AsUntypedRowRef(),
         });
 
         viewBuilder.AddItemSourcesSection(new ItemSourcesSectionOptions()
         {
             SectionKey = "coffer_sources",
-            SectionName = "Coffer Sources",
+            SectionName = "Coffer Sources".Tr(),
             Sources = row.Item.Sources,
             SourceType = SourceType.Source,
         });
@@ -527,19 +528,19 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
     {
         return category switch
         {
-            CofferCategory.WeaponCoffers => "Weapon Coffers",
-            CofferCategory.JobArms => "Job Arms",
-            CofferCategory.ArmourCoffers => "Armour Coffers",
-            CofferCategory.AccessoryCoffers => "Accessory Coffers",
-            CofferCategory.GearSets => "Gear Sets",
-            CofferCategory.TreasureMaps => "Treasure Maps",
-            CofferCategory.TalesOfAdventure => "Tales of Adventure",
-            CofferCategory.Miscellaneous => "Miscellaneous",
-            CofferCategory.Coffers => "Coffers",
-            CofferCategory.CardPacks => "Card Packs",
-            CofferCategory.Logograms => "Logograms",
-            CofferCategory.AncientRecords => "Ancient Records",
-            _ => "Unknown",
+            CofferCategory.WeaponCoffers => "Weapon Coffers".Tr(),
+            CofferCategory.JobArms => "Job Arms".Tr(),
+            CofferCategory.ArmourCoffers => "Armour Coffers".Tr(),
+            CofferCategory.AccessoryCoffers => "Accessory Coffers".Tr(),
+            CofferCategory.GearSets => "Gear Sets".Tr(),
+            CofferCategory.TreasureMaps => "Treasure Maps".Tr(),
+            CofferCategory.TalesOfAdventure => "Tales of Adventure".Tr(),
+            CofferCategory.Miscellaneous => "Miscellaneous".Tr(),
+            CofferCategory.Coffers => "Coffers".Tr(),
+            CofferCategory.CardPacks => "Card Packs".Tr(),
+            CofferCategory.Logograms => "Logograms".Tr(),
+            CofferCategory.AncientRecords => "Ancient Records".Tr(),
+            _ => "Unknown".Tr(),
         };
     }
 
@@ -547,13 +548,13 @@ public class CofferCompendiumType : CompendiumType<CofferContents>, IDisposable
     {
         return sourceType switch
         {
-            ItemInfoType.Loot => "Loot Container",
-            ItemInfoType.Coffer => "Coffer",
-            ItemInfoType.CardPack => "Card Pack",
-            ItemInfoType.Logogram => "Logogram",
-            ItemInfoType.Oizys => "Ancient Record (Oizys)",
-            ItemInfoType.Auxesia => "Ancient Record (Auxesia)",
-            _ => "Unknown",
+            ItemInfoType.Loot => "Loot Container".Tr(),
+            ItemInfoType.Coffer => "Coffer".Tr(),
+            ItemInfoType.CardPack => "Card Pack".Tr(),
+            ItemInfoType.Logogram => "Logogram".Tr(),
+            ItemInfoType.Oizys => "Ancient Record (Oizys)".Tr(),
+            ItemInfoType.Auxesia => "Ancient Record (Auxesia)".Tr(),
+            _ => "Unknown".Tr(),
         };
     }
 }

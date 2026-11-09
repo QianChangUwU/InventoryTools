@@ -1,4 +1,4 @@
-#pragma warning disable PendingExcelSchema
+﻿#pragma warning disable PendingExcelSchema
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,7 @@ using InventoryTools.Compendium.Interfaces;
 using InventoryTools.Compendium.Models;
 using InventoryTools.Compendium.Sections.Options;
 using InventoryTools.Compendium.Services;
+using InventoryTools.Services;
 using InventoryTools.Ui;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
@@ -128,14 +129,14 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             new CompendiumGrouping<AllaganLib.GameSheets.LuminaSheets.XBMPet>()
             {
                 Key = "family",
-                Name = "Family",
+                Name = "Family".Tr(),
                 GroupFunc = row => row.Classification,
                 GroupMapping = family => GetFamilyName((byte)family),
             },
             new CompendiumGrouping<AllaganLib.GameSheets.LuminaSheets.XBMPet>()
             {
                 Key = "location_type",
-                Name = "Location Type",
+                Name = "Location Type".Tr(),
                 GroupFunc = row => GetLocationType(row),
                 GroupMapping = locationType => GetLocationTypeName((XBMPetLocationType)locationType),
             },
@@ -148,7 +149,7 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         {
             Key = "icon",
             Name = "##Icon",
-            HelpText = "The icon of the familiar",
+            HelpText = "The icon of the familiar".Tr(),
             Version = "15.0.14",
             ValueSelector = GetIcon,
             CompendiumType = this,
@@ -157,8 +158,8 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         builder.AddStringColumn(new()
         {
             Key = "name",
-            Name = "Name",
-            HelpText = "The name of the familiar",
+            Name = "Name".Tr(),
+            HelpText = "The name of the familiar".Tr(),
             Version = "15.0.14",
             ValueSelector = GetName,
         });
@@ -169,8 +170,8 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             builder.AddStringColumn(new()
             {
                 Key = "family",
-                Name = "Family",
-                HelpText = "The monster family of the familiar",
+                Name = "Family".Tr(),
+                HelpText = "The monster family of the familiar".Tr(),
                 Version = "15.0.14",
                 ValueSelector = row => GetFamilyName(row.Classification),
             });
@@ -179,8 +180,8 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         builder.AddCompendiumLinkColumn(new()
         {
             Key = "location",
-            Name = "Location",
-            HelpText = "The zone or duty where the familiar is found. Click to open the zone or duty.",
+            Name = "Location".Tr(),
+            HelpText = "The zone or duty where the familiar is found. Click to open the zone or duty.".Tr(),
             Version = "15.0.14",
             ValueSelector = GetLocationName,
             RowRefSelector = GetLocationRowRef,
@@ -191,8 +192,8 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             builder.AddStringColumn(new()
             {
                 Key = "location_type",
-                Name = "Location Type",
-                HelpText = "Is the familiar found in a zone or in a duty?",
+                Name = "Location Type".Tr(),
+                HelpText = "Is the familiar found in a zone or in a duty?".Tr(),
                 Version = "15.0.14",
                 ValueSelector = row => GetLocationTypeName(GetLocationType(row)),
             });
@@ -201,40 +202,40 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         builder.AddStringColumn(new()
         {
             Key = "weaponskill",
-            Name = "Weaponskill",
-            HelpText = "The weaponskill the familiar can be ordered to use",
+            Name = "Weaponskill".Tr(),
+            HelpText = "The weaponskill the familiar can be ordered to use".Tr(),
             Version = "15.0.14",
             ValueSelector = row => FormatSkillSummary(GetAbility(row, WeaponskillAbilityIndex), row.Description.ToImGuiString()),
         });
         builder.AddStringColumn(new()
         {
             Key = "ability",
-            Name = "Ability",
-            HelpText = "The ability the familiar can use under the effect of One with Nature",
+            Name = "Ability".Tr(),
+            HelpText = "The ability the familiar can use under the effect of One with Nature".Tr(),
             Version = "15.0.14",
             ValueSelector = row => FormatSkillSummary(GetAbility(row, NatureAbilityIndex), row.TrickDescription.ToImGuiString()),
         });
         builder.AddStringColumn(new()
         {
             Key = "auto_attack",
-            Name = "Auto-attack",
-            HelpText = "Is the familiar's auto-attack melee or ranged?",
+            Name = "Auto-attack".Tr(),
+            HelpText = "Is the familiar's auto-attack melee or ranged?".Tr(),
             Version = "15.0.14",
             ValueSelector = GetAutoAttackType,
         });
         builder.AddItemColumn(new()
         {
             Key = "unlock_item",
-            Name = "Unlock Item",
-            HelpText = "The item that unlocks the familiar, if one exists",
+            Name = "Unlock Item".Tr(),
+            HelpText = "The item that unlocks the familiar, if one exists".Tr(),
             Version = "15.0.14",
             ValueSelector = row => GetUnlockItem(row)?.Item.RowId,
         });
         builder.AddItemSourcesColumn(new()
         {
             Key = "unlock_item_sources",
-            Name = "Unlock Item Sources",
-            HelpText = "The sources of the item that unlocks the familiar",
+            Name = "Unlock Item Sources".Tr(),
+            HelpText = "The sources of the item that unlocks the familiar".Tr(),
             Version = "15.0.14",
             ValueSelector = GetUnlockItemSources,
         });
@@ -246,19 +247,19 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         viewBuilder.Description = row.Description.ToImGuiString();
 
         var locationType = GetLocationType(row);
-        viewBuilder.AddTag(() => GetFamilyName(row.Classification), () => "The monster family of the familiar.");
-        viewBuilder.AddTag(() => "Auto-attack: " + GetAutoAttackType(row), () => "The range of the familiar's auto-attack.");
+        viewBuilder.AddTag(() => GetFamilyName(row.Classification), () => "The monster family of the familiar.".Tr());
+        viewBuilder.AddTag(() => "Auto-attack: ".Tr() + GetAutoAttackType(row), () => "The range of the familiar's auto-attack.".Tr());
 
         viewBuilder.AddMetadataSection(new MetadataSectionOptions()
         {
             SectionKey = "details",
-            SectionName = "Details",
+            SectionName = "Details".Tr(),
             Rows =
             [
                 new MetadataSectionOptions.Row { Label = "Family", Value = () => GetFamilyName(row.Classification) },
                 new MetadataSectionOptions.Row { Label = "Location", Value = () => GetLocationName(row) },
                 new MetadataSectionOptions.Row { Label = "Location Type", Value = () => GetLocationTypeName(locationType) },
-                new MetadataSectionOptions.Row { Label = "Auto-attack", Value = () => GetAutoAttackType(row) },
+                new MetadataSectionOptions.Row { Label = "Auto-attack".Tr(), Value = () => GetAutoAttackType(row) },
             ],
         });
 
@@ -267,7 +268,7 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
         viewBuilder.AddMetadataSection(new MetadataSectionOptions()
         {
             SectionKey = "skills",
-            SectionName = "Skills",
+            SectionName = "Skills".Tr(),
             Rows =
             [
                 new MetadataSectionOptions.Row
@@ -289,7 +290,7 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             viewBuilder.AddSingleRowRefSection(new SingleRowRefSectionOptions()
             {
                 SectionKey = "location",
-                SectionName = locationType == XBMPetLocationType.Duty ? "Related Duty" : "Related Zone",
+                SectionName = locationType == XBMPetLocationType.Duty ? "Related Duty".Tr() : "Related Zone".Tr(),
                 RelatedRef = locationRef.Value,
             });
         }
@@ -300,13 +301,13 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             viewBuilder.AddSingleRowRefSection(new SingleRowRefSectionOptions()
             {
                 SectionKey = "unlock_item",
-                SectionName = "Unlock Item",
+                SectionName = "Unlock Item".Tr(),
                 RelatedRef = unlockItem.Item.Base.AsUntypedRowRef(),
             });
             viewBuilder.AddItemSourcesSection(new ItemSourcesSectionOptions()
             {
                 SectionKey = "unlock_item_sources",
-                SectionName = "Unlock Item Sources",
+                SectionName = "Unlock Item Sources".Tr(),
                 Sources = GetUnlockItemSources(row),
                 SourceType = SourceType.Source,
             });
@@ -488,7 +489,7 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             return "Unknown";
         }
 
-        return action.Value.Range > 5 ? "Ranged" : "Melee";
+        return action.Value.Range > 5 ? "Ranged".Tr() : "Melee".Tr();
     }
 
     private string GetFamilyName(byte family)
@@ -503,7 +504,7 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
             6 => "Scalekin",
             7 => "Soulkin",
             8 => "Ashkin",
-            _ => "Unknown",
+            _ => "Unknown".Tr(),
         };
     }
 
@@ -511,15 +512,15 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
     {
         return locationType switch
         {
-            XBMPetLocationType.Zone => "Zone",
-            XBMPetLocationType.Duty => "Duty",
-            _ => "None",
+            XBMPetLocationType.Zone => "Zone".Tr(),
+            XBMPetLocationType.Duty => "Duty".Tr(),
+            _ => "None".Tr(),
         };
     }
 
-    public override string Singular => "Familiar";
-    public override string Plural => "Familiars";
-    public override string Description => "Familiars that can be tamed by the beastmaster.";
+    public override string Singular => "Familiar".Tr();
+    public override string Plural => "Familiars".Tr();
+    public override string Description => "Familiars that can be tamed by the beastmaster.".Tr();
     public override string Key => "familiars";
     public override (string?, uint?) Icon => (null, 242001);
 }

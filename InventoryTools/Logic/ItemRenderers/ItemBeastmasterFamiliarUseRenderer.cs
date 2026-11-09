@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using AllaganLib.GameSheets.Caches;
 using AllaganLib.GameSheets.ItemSources;
 using AllaganLib.GameSheets.Sheets;
 using CriticalCommonLib.Models;
+using InventoryTools.Services;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -20,9 +21,9 @@ public class ItemBeastmasterFamiliarUseRenderer : ItemInfoRenderer<ItemBeastmast
 
     public override RendererType RendererType => RendererType.Use;
     public override ItemInfoType Type => ItemInfoType.BeastmasterFamiliar;
-    public override string SingularName => "Beastmaster Familiar";
-    public override string PluralName => "Beastmaster Familiars";
-    public override string HelpText => "Does this item unlock a beastmaster familiar?";
+    public override string SingularName => "Beastmaster Familiar".Tr();
+    public override string PluralName => "Beastmaster Familiars".Tr();
+    public override string HelpText => "Does this item unlock a beastmaster familiar?".Tr();
     public override bool ShouldGroup => false;
 
     public override Func<ItemSource, (Type, uint)>? RelatedType => source =>
@@ -52,12 +53,12 @@ public class ItemBeastmasterFamiliarUseRenderer : ItemInfoRenderer<ItemBeastmast
     public override Func<ItemSource, string> GetDescription => source =>
     {
         var asSource = AsSource(source);
-        return "Unlocks the " + GetFamiliarName(asSource) + " familiar for beastmasters";
+        return "Unlocks the ".Tr() + GetFamiliarName(asSource) + " familiar for beastmasters".Tr();
     };
 
     private string GetFamiliarName(ItemBeastmasterFamiliarUse source)
     {
         var name = source.Pet.ValueNullable?.Name.ExtractText();
-        return string.IsNullOrEmpty(name) ? "Unknown" : name.FirstCharToUpper();
+        return string.IsNullOrEmpty(name) ? "Unknown".Tr() : name.FirstCharToUpper();
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -97,17 +97,17 @@ namespace InventoryTools.Ui.Pages
                 return;
             }
 
-            ImGui.TextUnformatted("Are you sure you want to delete this " + character.CharacterType.FormattedName() + "?\nThis operation cannot be undone!\n\n");
+            ImGui.TextUnformatted("Are you sure you want to delete this ".Tr() + character.CharacterType.FormattedName() + "?\nThis operation cannot be undone!\n\n".Tr());
             ImGui.Separator();
 
-            if (ImGui.Button("OK", new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
+            if (ImGui.Button("OK".Tr(), new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
             {
                 RemoveCharacter(character.CharacterId);
                 ImGui.CloseCurrentPopup();
             }
 
             ImGui.SameLine();
-            if (ImGui.Button("Cancel", new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
+            if (ImGui.Button("Cancel".Tr(), new Vector2(120, 0) * ImGui.GetIO().FontGlobalScale))
             {
                 ImGui.CloseCurrentPopup();
             }
@@ -371,7 +371,7 @@ namespace InventoryTools.Ui.Pages
                                 ImGui.OpenPopup("deleteCharacterConfirm");
                             }
 
-                            ImGuiUtil.HoverTooltip("Delete this " + character.CharacterType.FormattedName() + " and its inventories.");
+                            ImGuiUtil.HoverTooltip("Delete this ".Tr() + character.CharacterType.FormattedName() + " and its inventories.".Tr());
                             DrawDeleteConfirmPopup(character);
 
                             if (_editMode)
