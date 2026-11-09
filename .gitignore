@@ -4,3 +4,5 @@ packages
 InventoryToolsCLI/*
 InventoryTools.sln.DotSettings.user
 exd-data
+# local backups
+backups/
