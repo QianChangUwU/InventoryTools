@@ -1309,7 +1309,7 @@ public static class LocalizationService
         d["Zone Type"] = "区域类型";
         d["Zones"] = "区域";
         d["Expansion"] = "版本";
-        d["Hunt Rank"] = "狩猎等级";
+        d["Hunt Rank"] = "怪物等级";
         d["Spawn Locations"] = "刷新地点";
         d["Open World?"] = "野外？";
         d[" Rank Hunt"] = "级恶名精英";
@@ -1356,7 +1356,7 @@ public static class LocalizationService
         d["Open the mob"] = "打开怪物";
         d["The name of the mob"] = "怪物名称";
         d["The type of mob"] = "怪物类型";
-        d["The hunt rank of the mob, if it is a hunt mark"] = "怪物的狩猎等级（若为恶名精英）";
+        d["The hunt rank of the mob, if it is a hunt mark"] = "怪物的等级（若为恶名精英）";
         d["The zones the mob spawns in"] = "怪物刷新的区域";
         d["The types of zone the mob spawns in, for example open world, dungeon or raid"] = "怪物刷新区域的类型，例如野外、副本或团队任务";
         d["Does the mob spawn in an open world zone?"] = "怪物是否刷新在野外区域？";
