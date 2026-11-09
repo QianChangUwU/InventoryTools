@@ -496,14 +496,14 @@ public class XBMPetCompendiumType : CompendiumType<AllaganLib.GameSheets.LuminaS
     {
         return family switch
         {
-            1 => "Beastkin",
-            2 => "Vilekin",
-            3 => "Cloudkin",
-            4 => "Seedkin",
-            5 => "Wavekin",
-            6 => "Scalekin",
-            7 => "Soulkin",
-            8 => "Ashkin",
+            1 => "Beastkin".Tr(),
+            2 => "Vilekin".Tr(),
+            3 => "Cloudkin".Tr(),
+            4 => "Seedkin".Tr(),
+            5 => "Wavekin".Tr(),
+            6 => "Scalekin".Tr(),
+            7 => "Soulkin".Tr(),
+            8 => "Ashkin".Tr(),
             _ => "Unknown".Tr(),
         };
     }

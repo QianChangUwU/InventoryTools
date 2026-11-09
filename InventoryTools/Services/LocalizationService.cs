@@ -1336,6 +1336,13 @@ public static class LocalizationService
         d[" owned"] = " 已拥有";
         d["Monsters, where they spawn and what they drop."] = "怪物、其刷新地点以及掉落物。";
         d["What drops from coffers, card packs, etc"] = "宝箱、卡包等容器能开出什么";
+        d["Beastkin"] = "百兽纲";
+        d["Vilekin"] = "百虫纲";
+        d["Scalekin"] = "甲鳞纲";
+        d["Cloudkin"] = "有翼纲";
+        d["Wavekin"] = "水栖纲";
+        d["Ashkin"] = "死尸纲";
+        d["Soulkin"] = "咒具纲";
         d["Familiar"] = "魔兽";
         d["Familiars"] = "魔兽";
         d["Familiars that can be tamed by the beastmaster."] = "驯兽师可以驯服的魔兽。";
