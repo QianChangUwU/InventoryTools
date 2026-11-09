@@ -1337,6 +1337,7 @@ public static class LocalizationService
         d["Monsters, where they spawn and what they drop."] = "怪物、其刷新地点以及掉落物。";
         d["What drops from coffers, card packs, etc"] = "宝箱、卡包等容器能开出什么";
         d["Beastkin"] = "百兽纲";
+        d["Seedkin"] = "草木纲";
         d["Vilekin"] = "百虫纲";
         d["Scalekin"] = "甲鳞纲";
         d["Cloudkin"] = "有翼纲";
