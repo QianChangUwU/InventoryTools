@@ -68,8 +68,8 @@ namespace InventoryTools.Ui
             _settingsMenu = new PopupMenu("configMenu", PopupMenu.PopupMenuButtons.All,
                 new List<PopupMenu.IPopupMenuItem>()
                 {
-                    new PopupMenu.PopupMenuItemSelectable("Mob Window".Tr(), "mobs", _ => MediatorService.Publish(new OpenGenericWindowMessage(typeof(BNpcsWindow))),
-                        "Open the mobs window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Mobs".Tr(), "mobs", _ => MediatorService.Publish(new InventoryTools.Mediator.OpenCompendiumListByTypeMessage(typeof(InventoryTools.Compendium.Types.BNpcCompendiumType))),
+                        "Open the mobs compendium.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Npcs Window".Tr(), "npcs", _ => MediatorService.Publish(new OpenGenericWindowMessage(typeof(ENpcsWindow))),
                         "Open the npcs window.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Duties Window".Tr(), "duties", _ => MediatorService.Publish(new OpenGenericWindowMessage(typeof(DutiesWindow))),

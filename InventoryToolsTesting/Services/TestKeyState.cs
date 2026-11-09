@@ -44,26 +44,27 @@ namespace InventoryToolsTesting.Services
         public bool IsExtendedVirtualKeyValid(VirtualKey vkCode)
         {
             return false;
+
         }
 
-        public bool TryGetSeVirtualKey(int vkCode, out int value)
+        public bool TryGetSeVirtualKey(int vkCode, out int seVkCode)
         {
-            value = 0;
+            seVkCode = 0;
             return false;
         }
 
-        public bool TryGetSeVirtualKey(VirtualKey vkCode, out int value)
+        public bool TryGetSeVirtualKey(VirtualKey vkCode, out int seVkCode)
         {
-            value = 0;
+            seVkCode = 0;
             return false;
         }
 
-        public IEnumerable<VirtualKey> GetExtendedVirtualKeys()
+        public IEnumerable<VirtualKey> GetValidVirtualKeys()
         {
             return new List<VirtualKey>();
         }
 
-        public IEnumerable<VirtualKey> GetValidVirtualKeys()
+        public IEnumerable<VirtualKey> GetExtendedVirtualKeys()
         {
             return new List<VirtualKey>();
         }
@@ -87,6 +88,8 @@ namespace InventoryToolsTesting.Services
             {
             }
         }
+
+
 
         public string ServiceName { get; set; } = "Key State";
     }

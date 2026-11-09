@@ -178,7 +178,7 @@ namespace InventoryTools.Ui
                     new PopupMenu.PopupMenuItemSelectable("Items Window".Tr(), "filters", OpenFiltersWindow,"Open the items window.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Craft Window".Tr(), "crafts", OpenCraftsWindow,"Open the crafts window.".Tr()),
                     new PopupMenu.PopupMenuItemSeparator(),
-                    new PopupMenu.PopupMenuItemSelectable("Mob Window".Tr(), "mobs", OpenMobsWindow,"Open the mobs window.".Tr()),
+                    new PopupMenu.PopupMenuItemSelectable("Mobs".Tr(), "mobs", OpenMobsWindow,"Open the mobs compendium.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Npcs Window".Tr(), "npcs", OpenNpcsWindow,"Open the npcs window.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Duties Window".Tr(), "duties", OpenDutiesWindow,"Open the duties window.".Tr()),
                     new PopupMenu.PopupMenuItemSelectable("Airships Window".Tr(), "airships", OpenAirshipsWindow,"Open the airships window.".Tr()),
@@ -282,7 +282,7 @@ namespace InventoryTools.Ui
 
         private void OpenMobsWindow(string obj)
         {
-            MediatorService.Publish(new OpenGenericWindowMessage(typeof(BNpcsWindow)));
+            MediatorService.Publish(new InventoryTools.Mediator.OpenCompendiumListByTypeMessage(typeof(InventoryTools.Compendium.Types.BNpcCompendiumType)));
         }
 
         private void OpenNpcsWindow(string obj)

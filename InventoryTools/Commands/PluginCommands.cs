@@ -57,10 +57,10 @@ namespace InventoryTools.Commands
         }
         [Command("/mobs")]
         [Aliases("/atmobs")]
-        [HelpMessage("显示 Allagan Tools 怪物窗口。")]
+        [HelpMessage("显示 Allagan Tools 怪物图鉴。")]
         public void ShowHideMobsWindow(string command, string args)
         {
-            _mediatorService.Publish(new ToggleGenericWindowMessage(typeof(BNpcsWindow)));
+            _mediatorService.Publish(new ToggleCompendiumListByTypeMessage(typeof(InventoryTools.Compendium.Types.BNpcCompendiumType)));
         }
         [Command("/atnpcs")]
         [HelpMessage("显示 Allagan Tools NPC 窗口。")]
