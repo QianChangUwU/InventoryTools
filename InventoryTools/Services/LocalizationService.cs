@@ -1390,6 +1390,22 @@ public static class LocalizationService
         d["?\nThis operation cannot be undone!\n\n"] = "吗？\n此操作无法撤销！\n\n";
         d["Delete this "] = "删除这个";
         d[" and its inventories."] = "及其库存。";
+
+        // ===== 15.1.1 图鉴更新 =====
+        d["Current Zone"] = "当前区域";
+        d["Current "] = "当前";
+        d["Hunt Mark?"] = "恶名精英？";
+        d["Is the mob a hunt mark?"] = "该怪物是否为恶名精英？";
+        d["Locations"] = "地点";
+        d["The spawn locations of the mob. Click a flag to print a map link to chat. Right click a flag for more options."] = "怪物的刷新地点。点击旗帜可将地图链接发送到聊天栏，右键旗帜查看更多选项。";
+        d["Show {0}"] = "显示{0}";
+        d["Follow {0}"] = "跟随{0}";
+        d["You are not in a {0} this list can show."] = "你当前不在任何{0}中，此列表无法显示。";
+        d["There are no {0} recorded in {1}."] = "在{1}中没有记录到{0}。";
+        d["When {0} changes, open its tab."] = "当{0}变化时，自动打开对应页签。";
+        d["Compendium is a WIP feature, expect more here soon!"] = "图鉴功能仍在开发中，敬请期待！";
+        d["Show on Map"] = "在地图上显示";
+        d["Teleport"] = "传送";
         d["Oizys"] = "俄匊斯行星";
         d["Outfit Glamour Item"] = "幻化单品";
         d["Outfit Glamour Set"] = "幻化套装";

@@ -9,6 +9,7 @@ using AllaganLib.Shared.Extensions;
 using CriticalCommonLib.Models;
 using DalaMock.Host.Mediator;
 using Dalamud.Interface.Colors;
+using Dalamud.Plugin.Services;
 using Humanizer;
 using InventoryTools.Compendium.Interfaces;
 using InventoryTools.Compendium.Models;
@@ -51,6 +52,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
     private readonly TerritoryTypeSheet _territoryTypeSheet;
     private readonly ItemSheet _itemSheet;
     private readonly List<MobSpawnPosition> _mobSpawnPositions;
+    private readonly IClientState _clientState;
     private readonly Lazy<List<BNpcNameRow>> _rows;
     private readonly Lazy<Dictionary<uint, BNpcZoneInfo>> _zoneInfo;
     private readonly Lazy<Dictionary<uint, List<uint>>> _mobsByTerritory;
@@ -60,6 +62,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         TerritoryTypeSheet territoryTypeSheet,
         ItemSheet itemSheet,
         List<MobSpawnPosition> mobSpawnPositions,
+        IClientState clientState,
         CompendiumTable<BNpcNameRow>.Factory tableFactory,
         CompendiumColumnBuilder<BNpcNameRow>.Factory columnBuilder,
         CompendiumViewBuilder.Factory viewBuilderFactory) : base(tableFactory, columnBuilder, viewBuilderFactory)
@@ -68,6 +71,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         _territoryTypeSheet = territoryTypeSheet;
         _itemSheet = itemSheet;
         _mobSpawnPositions = mobSpawnPositions;
+        _clientState = clientState;
         _rows = new Lazy<List<BNpcNameRow>>(BuildRows);
         _zoneInfo = new Lazy<Dictionary<uint, BNpcZoneInfo>>(BuildZoneInfo);
         _mobsByTerritory = new Lazy<Dictionary<uint, List<uint>>>(BuildMobsByTerritory);
@@ -149,6 +153,8 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
                 Name = "Zone".Tr(),
                 GroupsFunc = row => GetZoneInfo(row).ZoneNames,
                 GroupMapping = zoneName => (string)zoneName,
+                CurrentGroupFunc = GetCurrentZoneName,
+                CurrentGroupLabel = "Current Zone".Tr(),
             },
             new CompendiumGrouping<BNpcNameRow>()
             {
@@ -210,6 +216,15 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             });
         }
 
+        builder.AddBooleanColumn(new()
+        {
+            Key = "is_hunt_mark",
+            Name = "Hunt Mark?".Tr(),
+            HelpText = "Is the mob a hunt mark?".Tr(),
+            Version = "15.1.1",
+            ValueSelector = row => GetHuntRank(row) != NotAHuntMark,
+        });
+
         builder.AddStringColumn(new()
         {
             Key = "zones",
@@ -217,6 +232,18 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             HelpText = "The zones the mob spawns in".Tr(),
             Version = "15.0.14",
             ValueSelector = row => string.Join(", ", GetZoneInfo(row).ZoneNames),
+        });
+
+        var groupZoneName = grouping == "zone" ? builder.GroupItem as string : null;
+        builder.AddMapLinksColumn(new()
+        {
+            Key = "locations",
+            Name = "Locations".Tr(),
+            HelpText = "The spawn locations of the mob. Click a flag to print a map link to chat. Right click a flag for more options.".Tr(),
+            Version = "15.1.1",
+            ValueSelector = row => groupZoneName == null
+                ? GetMapLinks(row)
+                : GetMapLinks(row).Where(c => c.Name == groupZoneName).ToList(),
         });
 
         if (grouping != "zone_type")
@@ -259,14 +286,6 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
             HelpText = "The items the mob drops".Tr(),
             Version = "15.0.14",
             ValueSelector = GetDrops,
-        });
-        builder.AddIntegerColumn(new()
-        {
-            Key = "id",
-            Name = "ID".Tr(),
-            HelpText = "The ID of the mob (BNpcName)".Tr(),
-            Version = "15.0.14",
-            ValueSelector = row => row.RowId.ToString(),
         });
     }
 
@@ -342,6 +361,17 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
         return GetMapLinks(row).FirstOrDefault()?.Location;
     }
 
+    public string? GetCurrentZoneName()
+    {
+        var territoryType = _territoryTypeSheet.GetRowOrDefault(_clientState.TerritoryType);
+        if (territoryType == null || territoryType.Base.PlaceName.RowId == 0)
+        {
+            return null;
+        }
+
+        return territoryType.Base.PlaceName.ValueNullable?.Name.ToImGuiString();
+    }
+
     public BNpcZoneInfo GetZoneInfo(BNpcNameRow row)
     {
         return _zoneInfo.Value.TryGetValue(row.RowId, out var zoneInfo) ? zoneInfo : new BNpcZoneInfo([], [], [], [], false);
@@ -391,6 +421,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
     private List<MapLinkEntry> GetMapLinks(BNpcNameRow row)
     {
         var mapLinks = new List<MapLinkEntry>();
+        var mobName = GetName(row);
         foreach (var spawn in row.MobSpawnPositions.DistinctBy(c => (c.TerritoryTypeId, MathF.Round(c.Position.X, 1), MathF.Round(c.Position.Y, 1))))
         {
             var territoryType = _territoryTypeSheet.GetRowOrDefault(spawn.TerritoryTypeId);
@@ -401,7 +432,7 @@ public class BNpcCompendiumType : CompendiumType<BNpcNameRow>
 
             var location = new GenericMapLocation(spawn.Position.X, spawn.Position.Y, territoryType.Base.Map, territoryType.Base.PlaceName, territoryType.RowRef);
             var zoneName = territoryType.Base.PlaceName.ValueNullable?.Name.ToImGuiString() ?? "Unknown";
-            mapLinks.Add(new MapLinkEntry(Icons.FlagIcon, zoneName, $"X: {spawn.Position.X:0.0} Y: {spawn.Position.Y:0.0}", location));
+            mapLinks.Add(new MapLinkEntry(Icons.FlagIcon, zoneName, $"X: {spawn.Position.X:0.0} Y: {spawn.Position.Y:0.0}", location, mobName));
         }
 
         return mapLinks;

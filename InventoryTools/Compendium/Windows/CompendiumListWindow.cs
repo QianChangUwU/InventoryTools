@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -38,6 +38,10 @@ public class CompendiumListWindow : CompendiumWindow
     private object? _currentTab = null;
     private bool _defaultGroupSet = false;
 
+    private object? _pendingTab = null;
+
+    private object? _lastFollowedGroup = null;
+
     public delegate Owned<CompendiumListWindow> Factory(ICompendiumType compendiumType);
 
     public CompendiumListWindow(ILogger<CompendiumListWindow> logger, WindowState windowState, CompendiumSectionStateService sectionStateService, MediatorService mediator, ImGuiService imGuiService, InventoryToolsConfiguration configuration, ICompendiumType compendiumType, IPluginLog pluginLog, IEnumerable<IMenuWindow> menuWindows, IEnumerable<ICompendiumType> compendiumTypes) : base(logger, mediator, imGuiService, configuration, compendiumType.Plural + " Window")
@@ -67,6 +71,41 @@ public class CompendiumListWindow : CompendiumWindow
     private void SetSavedGrouping(string? newGrouping)
     {
         _sectionState?.Set("grouping", newGrouping);
+    }
+
+    private string GetFollowKey(ICompendiumGrouping grouping)
+    {
+        return "follow_current_group_" + grouping.Key;
+    }
+
+    private bool IsFollowingCurrentGroup(ICompendiumGrouping grouping)
+    {
+        return ((AllaganLib.Interface.FormFields.IConfigurable<string?>)_sectionState!).Get(GetFollowKey(grouping)) == "true";
+    }
+
+    private void SetFollowingCurrentGroup(ICompendiumGrouping grouping, bool follow)
+    {
+        _sectionState?.Set(GetFollowKey(grouping), follow ? "true" : null);
+    }
+
+    private bool HasTab(object groupKey)
+    {
+        return _compendiumTabs?.Any(c => Equals(c.Key, groupKey)) ?? false;
+    }
+
+    private void UpdateFollowedGroup()
+    {
+        if (_compendiumGrouping?.CurrentGroupFunc == null || !IsFollowingCurrentGroup(_compendiumGrouping))
+        {
+            return;
+        }
+
+        var currentGroup = _compendiumGrouping.CurrentGroupFunc();
+        if (currentGroup != null && !Equals(currentGroup, _lastFollowedGroup))
+        {
+            _lastFollowedGroup = currentGroup;
+            _pendingTab = currentGroup;
+        }
     }
 
     public override void DrawWindow()
@@ -118,11 +157,14 @@ public class CompendiumListWindow : CompendiumWindow
         }
         else
         {
+            UpdateFollowedGroup();
             using (var tabBar = ImRaii.TabBar(_compendiumGrouping.Key, ImGuiTabBarFlags.FittingPolicyScroll | ImGuiTabBarFlags.ListPopupButton))
             {
                 if (tabBar)
                 {
                     _compendiumTabs ??= GetTabs(_compendiumGrouping);
+                    var pendingTab = _pendingTab;
+                    _pendingTab = null;
                     if (_compendiumTabs == null)
                     {
                         MediatorService.Publish(_table.Value.Draw(_windowState, new Vector2(0, 0)));
@@ -131,7 +173,13 @@ public class CompendiumListWindow : CompendiumWindow
                     {
                         foreach (var tab in _compendiumTabs)
                         {
-                            using (var tabItem = ImRaii.TabItem(tab.Value, ImGuiTabItemFlags.NoReorder))
+                            var tabFlags = ImGuiTabItemFlags.NoReorder;
+                            if (pendingTab != null && Equals(tab.Key, pendingTab))
+                            {
+                                tabFlags |= ImGuiTabItemFlags.SetSelected;
+                            }
+
+                            using (var tabItem = ImRaii.TabItem(tab.Value, tabFlags))
                             {
                                 if (tabItem)
                                 {
@@ -223,6 +271,7 @@ public class CompendiumListWindow : CompendiumWindow
                                 if (ImGui.MenuItem("None".Tr(), _compendiumGrouping == null))
                                 {
                                     _compendiumGrouping = null;
+                                    _lastFollowedGroup = null;
                                     _table.Value.ClearGrouping();
                                 }
                                 foreach (var grouping in groupings)
@@ -231,12 +280,15 @@ public class CompendiumListWindow : CompendiumWindow
                                     {
                                         _compendiumGrouping = grouping;
                                         _compendiumTabs = null;
+                                        _lastFollowedGroup = null;
                                         SetSavedGrouping(grouping.Key);
                                     }
                                 }
                             }
                         }
                     }
+
+                    DrawCurrentGroupMenu();
 
                     using (var menu = ImRaii.Menu("Windows"))
                     {
@@ -270,13 +322,65 @@ public class CompendiumListWindow : CompendiumWindow
                     {
                         using (ImRaii.Tooltip())
                         {
-                            ImGui.Text("Compendium is a WIP feature, expect more here soon!");
+                            ImGui.Text("Compendium is a WIP feature, expect more here soon!".Tr());
                         }
                     }
 
                 }
             }
         }
+
+    private void DrawCurrentGroupMenu()
+    {
+        var grouping = _compendiumGrouping;
+        if (grouping?.CurrentGroupFunc == null)
+        {
+            return;
+        }
+
+        var label = grouping.CurrentGroupLabel ?? "Current ".Tr() + grouping.Name;
+        using var menu = ImRaii.Menu(label);
+        if (!menu)
+        {
+            return;
+        }
+
+        var currentGroup = grouping.CurrentGroupFunc();
+        var canShow = currentGroup != null && HasTab(currentGroup);
+        using (ImRaii.Disabled(!canShow))
+        {
+            if (ImGui.MenuItem("Show ".Tr() + label) && currentGroup != null)
+            {
+                _pendingTab = currentGroup;
+            }
+        }
+
+        if (!canShow && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled))
+        {
+            using (ImRaii.Tooltip())
+            {
+                ImGui.TextUnformatted(currentGroup == null
+                    ? string.Format("You are not in a {0} this list can show.".Tr(), grouping.Name.ToLower())
+                    : string.Format("There are no {0} recorded in {1}.".Tr(), _compendiumType.Plural.ToLower(), grouping.GroupMapping?.Invoke(currentGroup) ?? currentGroup.ToString()));
+            }
+        }
+
+        var follow = IsFollowingCurrentGroup(grouping);
+        if (ImGui.MenuItem("Follow ".Tr() + label, "", follow))
+        {
+            SetFollowingCurrentGroup(grouping, !follow);
+
+            _lastFollowedGroup = null;
+        }
+
+        if (ImGui.IsItemHovered())
+        {
+            using (ImRaii.Tooltip())
+            {
+                ImGui.TextUnformatted(string.Format("When {0} changes, open its tab.".Tr(), label.ToLower()));
+            }
+        }
+    }
 
     public override void Invalidate()
     {

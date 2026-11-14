@@ -1,8 +1,9 @@
-using System.Numerics;
+﻿using System.Numerics;
 using CriticalCommonLib.Services;
 using DalaMock.Host.Mediator;
 using Dalamud.Bindings.ImGui;
 using InventoryTools.Compendium.Models;
+using InventoryTools.Services;
 using InventoryTools.Mediator;
 
 namespace InventoryTools.Compendium.MenuProviders;
@@ -14,16 +15,16 @@ public class MapLinkEntryMenuProvider(MediatorService mediatorService, IChatUtil
         ImGui.Text(item.Name);
         ImGui.Text(item.Subtitle);
         ImGui.Separator();
-        if (ImGui.Selectable("Show on Map"))
+        if (ImGui.Selectable("Show on Map".Tr()))
         {
             //TODO: add map location message
-            chatUtilities.PrintFullMapLink(item.Location);
+            chatUtilities.PrintFullMapLink(item.Location, item.LinkText);
         }
 
-        if (ImGui.Selectable("Teleport"))
+        if (ImGui.Selectable("Teleport".Tr()))
         {
             MediatorService.Publish(new RequestTeleportToMapMessage(item.Location.Map.RowId, new Vector2((float)item.Location.MapX, (float)item.Location.MapY)));
-            chatUtilities.PrintFullMapLink(item.Location);
+            chatUtilities.PrintFullMapLink(item.Location, item.LinkText);
         }
     }
 
