@@ -429,7 +429,7 @@ namespace CriticalCommonLib.Services
         [Signature("48 89 5C 24 20 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ?? ?? ?? ?? B8 ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 2B E0 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 ?? ?? ?? ?? 45 0F B7 78 02 4D 8B E8 8B F2", DetourName = nameof(ContainerInfoDetour), UseFlags = SignatureUseFlags.Hook)]
         private Hook<ContainerInfoNetworkData>? _containerInfoNetworkHook = null;
 
-        private const ushort ContainerInfoOpcode = 0x02DB;
+        private const ushort ContainerInfoOpcode = 0x0198; // CN 7.58
 
         private readonly HashSet<InventoryType> _loadedInventories = new();
 
